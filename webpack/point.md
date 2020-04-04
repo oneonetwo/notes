@@ -132,6 +132,32 @@ module.exports = {
     > 3. webpack-bundle-analyzer: 一款分析 bundle 内容的插件及 CLI 工具，以便捷的、交互式、可缩放的树状图形式展现给用户。
 5. 懒加载 懒加载或者按需加载，是一种很好的优化网页或应用的方式。
 
+    ```javascript
+        optimization: {
+            splitChunks: {
+                chunks: "async", //async只对异步的代码分割 intial只对同步的代码分割 all全部分割
+                minSize: 30000,  //引入的库大于30kb才去
+                maxSize: 50000,  //最大分割字节数 
+                minChunks: 1,    //最少引入几次
+                maxAsyncRequests: 5,  //按需加载块时并行请求的最大数量将小于或等于5
+                maxInitialRequests: 3,//初始页面加载时并行请求的最大数量将小于或等于3
+                automaticNameDelimiter: '~',
+                name: true,
+                cacheGroups: { //配置缓存组
+                    vendors: {
+                        test: /[\\/]node_modules[\\/]/,
+                        priority: -10
+                    },
+                    default: {
+                        minChunks: 2, //在拆分之前共享模块的最小块数
+                        priority: -20,
+                        reuseExistingChunk: true
+                    }
+                }
+            }
+        }
+    ```
+
 ### 缓存
     
 
