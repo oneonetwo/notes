@@ -26,3 +26,20 @@ module.exports = {
   ]
 }
 ```
+### 起步
+1. 安装webpack
+    1. npm install webpack webpack-cli -g
+    2. npx webpack -v 查看版本
+    3. npm info webpack 查看历史版本
+    4. npx webpack --config webpack.config.js 更改配置文件
+### 管理资源
+1. 静态资源图片
+    - file-loader 将文件发送到输出文件夹，并返回（相对）URL
+    - url-loader 1.	像file loader 一样工作，但如果文件小于限制，可以返回 data URL
+2. css文件  use: ['style-loader', 'css-loader', 'sass-loader'] 从左往右一次链式执行
+    - style-loader 含有 CSS 字符串的 <style> 标签，将被插入到 html 文件的 <head> 中
+    - css-loader 解析几个文件的关系后，使用 @import 加载，并且返回 CSS 代码
+    - sass-loader 加载和转译 SASS/SCSS 文件 sass-loader node-sass
+    - postcss-loader 补全css前缀， Autoprefixer时一款自动管理浏览器前缀的插件
+
+        
