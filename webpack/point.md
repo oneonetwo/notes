@@ -7,6 +7,10 @@
 3. loader 处理非JavaScript的文件
 4. plugins 插件用于打包优化，压缩，重新定义环境中的变量,先require() 它，然后添加到plugins数组中，new创建一个实例
 5. mode 模式启动相应模式下的webpack的内置优化
+6. 依赖图(dependency graph)  webpack 从命令行或配置文件中定义的一个模块列表开始，处理你的应用程序。 从这些 入口起点 开始，webpack 递归地构建一个 依赖图 ，这个依赖图包含着应用程序所需的每个模块，然后将所有这些模块打包为少量的 bundle - 通常只有一个 - 可由浏览器加载。
+7. runtime 和 manifest，管理所有模块的交互。
+    - Runtime runtime 包含：在模块交互时，连接模块所需的加载和解析逻辑。包括浏览器中的已加载模块的连接，以及懒加载模块的执行逻辑。
+    - Manifest 当编译器(compiler)开始执行、解析和映射应用程序时，它会保留所有模块的详细要点。这个数据集合称为 "Manifest"，当完成打包并发送到浏览器时，会在运行时通过 Manifest 来解析和加载模块。无论你选择哪种模块语法，那些 import 或 require 语句现在都已经转换为 __webpack_require__ 方法，此方法指向模块标识符(module identifier)。通过使用 manifest 中的数据，runtime 将能够查询模块标识符，检索出背后对应的模块。
 ```javascript
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
@@ -164,6 +168,7 @@ module.exports = {
     - 通过使用 output.filename 进行文件名替换, `[chunkhash] 替换`
     - 提取模板(Extracting Boilerplate) `{ optimization.splitChunks } ` 
     - 模块标识符(Module Identifiers) 让模块依赖的hash保持不变
+        通过使用 bundle 计算出内容散列(content hash)作为文件名称，这样在内容或文件修改时，浏览器中将通过新的内容散列指向新的文件，从而使缓存无效。一旦你开始这样做，你会立即注意到一些有趣的行为。即使表面上某些内容没有修改，计算出的哈希还是会改变。这是因为，runtime 和 manifest 的注入在每次构建都会发生变化。
         > 1. `new webpack.NamedModulesPlugin()` 建议用于开发环境
         > 2. `new webpack.HashedModuleIdsPlugin({  // 参数...})` 用于生产环境
         
