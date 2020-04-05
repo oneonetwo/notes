@@ -229,6 +229,7 @@ module.exports = {
 5. 构建性能
 6. 内容安全策略 
     - webpack 能够为其加载的所有脚本添加 nonce， 在入口指定 `__webpack_nonce__`
+    
             __webpack_nonce__ = 'c29tZSBjb29sIHN0cmluZyB3aWxsIHBvcCB1cCAxMjM=';
     - 启用 CSP
         > 1. CSP 默认情况下不启用。需要与文档(document)一起发送相应的 CSP header 或 meta 标签 <meta http-equiv="Content-Security-Policy" ...>，以告知浏览器启用 CSP。
