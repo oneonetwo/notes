@@ -309,8 +309,8 @@ module.exports = {
 1. 常规
     - Dlls:  `DLLPlugin` 和 `DLLReferencePlugin` 用某种方法实现了拆分 bundles，同时还大大提升了构建的速度。
         > 1. `new webpack.DllPlugin(options)`这个插件是在一个额外的独立的 webpack 设置中创建一个只有 dll 的 bundle(dll-only-bundle)。 这个插件会生成一个名为 manifest.json 的文件，这个文件是用来让 DLLReferencePlugin 映射到相关的依赖上去的
-        > 2. `new webpack.DllReferencePlugin(options)`这个插件是在 webpack 主配置文件中设置的， 这个插件把只有 dll 的 bundle(们)(dll-only-bundle(s)) 引用到需要的预编译的依赖。
-        > [用法](https://www.webpackjs.com/plugins/dll-plugin/)
+        > 2. `new webpack.DllReferencePlugin(options)`这个插件是在 webpack 主配置文件中设置的， 这个插件把只有 dll 的 bundle(们)(dll-only-bundle(s)) 引用到需要的预编译的依赖。  
+        > 3. [用法](https://www.webpackjs.com/plugins/dll-plugin/)
     - code sliping
     - Worker Pool
         > 1. `thread-loader` 可以将非常消耗资源的 loaders 转存到 worker pool 中。
