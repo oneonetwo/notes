@@ -52,6 +52,14 @@ module.exports = {
     - css-loader 解析几个文件的关系后，使用 @import 加载，并且返回 CSS 代码
     - sass-loader 加载和转译 SASS/SCSS 文件 sass-loader node-sass
     - postcss-loader 补全css前缀， Autoprefixer时一款自动管理浏览器前缀的插件
+3. js文件
+    - Babel 是一个工具链，主要用于将 ECMAScript 2015+ 版本的代码转换为向后兼
+        > 1. @babel/core 是babel的核心库，把代码转换成抽象语法书
+        > 2. @babel/preset-env 包含了所有把es6转成es5的规则
+        > 3. @babel/polyfill 为低版本的浏览器做语法填充  全局的垫片
+        > 4. @babel/cli支持你直接在命令行中编译代码。
+        > 5. babel-runtime作为生产版本依赖（设置 --save）局部的垫片
+
     
 ### 管理输出
  1. 使用plugin  --save-dev安装 => require引入 => new pluginsName()
@@ -101,6 +109,27 @@ module.exports = {
       - 压缩输出 引入一个能够删除未引用代码(dead code)的压缩工具(minifier)（例如 UglifyJSPlugin）。
         > 1. 通过 "mode" 配置选项轻松切换到压缩输出，只需设置为 "production" `{mode: "production"}`
         > 2. 启用 uglifyjs 压缩插件 UglifyJSPlugin = require('uglifyjs-webpack-plugin');
+5. devServer.proxy
+      - 如：对于浏览器请求，你想要提供一个 HTML 页面，但是对于 API 请求则保持代理。你可以这样做：
+      
+            proxy: {
+              "/api": {
+                target: "http://localhost:3000",
+                bypass: function(req, res, proxyOptions) {
+                  if (req.headers.accept.indexOf("html") !== -1) {
+                    console.log("Skipping proxy for browser request.");
+                    return "/index.html";
+                  }
+                }
+              }
+            }
+      - 如果要代理到同一目标的多个特定路径，则可以使用一个或多个具有context属性的对象的数组  
+      
+            proxy: [{
+                context: ["/auth", "/api"],
+                target: "http://localhost:3000",
+            }]
+
         
 ### 生产环境构建
 > 在生产环境中，我们的目标则转向于关注更小的 bundle，更轻量的 source map，以及更优化的资源，以改善加载时间
@@ -259,22 +288,24 @@ module.exports = {
             skipWaiting: true
         }),     
    - 入口文件中注册， 然后重新构建，在启动项目 则Service Worker 已经可以提供离线服务
-        if ('serviceWorker' in navigator) {
-          window.addEventListener('load', () => {
-            navigator.serviceWorker.register('/sw.js').then(registration => {
-              console.log('SW registered: ', registration);
-            }).catch(registrationError => {
-              console.log('SW registration failed: ', registrationError);
-            });
-          });
-        }
-5. 构建性能
+   
+         if ('serviceWorker' in navigator) {
+              window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js').then(registration => {
+                  console.log('SW registered: ', registration);
+                }).catch(registrationError => {
+                  console.log('SW registration failed: ', registrationError);
+                });
+              });
+            }
 6. 内容安全策略 
     - webpack 能够为其加载的所有脚本添加 nonce， 在入口指定 `__webpack_nonce__`
     
             __webpack_nonce__ = 'c29tZSBjb29sIHN0cmluZyB3aWxsIHBvcCB1cCAxMjM=';
     - 启用 CSP
         > 1. CSP 默认情况下不启用。需要与文档(document)一起发送相应的 CSP header 或 meta 标签 <meta http-equiv="Content-Security-Policy" ...>，以告知浏览器启用 CSP。
+        
+### 性能优化
     
     
     
