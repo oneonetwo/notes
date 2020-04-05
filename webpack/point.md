@@ -306,6 +306,27 @@ module.exports = {
         > 1. CSP 默认情况下不启用。需要与文档(document)一起发送相应的 CSP header 或 meta 标签 <meta http-equiv="Content-Security-Policy" ...>，以告知浏览器启用 CSP。
         
 ### 性能优化
+1. 常规
+    - Dlls:  `DLLPlugin` 和 `DLLReferencePlugin` 用某种方法实现了拆分 bundles，同时还大大提升了构建的速度。
+        > 1. `new webpack.DllPlugin(options)`这个插件是在一个额外的独立的 webpack 设置中创建一个只有 dll 的 bundle(dll-only-bundle)。 这个插件会生成一个名为 manifest.json 的文件，这个文件是用来让 DLLReferencePlugin 映射到相关的依赖上去的
+        > 2. `new webpack.DllReferencePlugin(options)`这个插件是在 webpack 主配置文件中设置的， 这个插件把只有 dll 的 bundle(们)(dll-only-bundle(s)) 引用到需要的预编译的依赖。
+        > [用法](https://www.webpackjs.com/plugins/dll-plugin/)
+    - code sliping
+    - Worker Pool
+        > 1. `thread-loader` 可以将非常消耗资源的 loaders 转存到 worker pool 中。
+        > 2. 用法： 把这个 loader 放置在其他 loader 之前， 放置在这个 loader 之后的 loader 就会在一个单独的 worker 池(worker pool)中运行
+    - 持久化缓存
+        > 1. 使用 `cache-loader` 启用持久化缓存。使用 package.json 中的 "postinstall" 清除缓存目录。
+        > 2. 用法: 在一些性能开销较大的 loader 之前添加此 loader，以将结果缓存到磁盘里。
+2. development
+    - Devtool
+        > 1. "eval" 具有最好的性能，但并不能帮助你转译代码。
+        > 2. 如果你能接受稍差一些的 mapping 质量，可以使用 cheap-source-map 选项来提高性能
+        > 3. 使用 eval-source-map 配置进行增量编译。
+    - code sliping
+3. production
+    - Source Maps 考虑这个的必要性
+    - parallel-webpack: 它允许编译工作在 worker 池中进行。
     
     
     
