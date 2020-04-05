@@ -203,6 +203,35 @@ module.exports = {
                     }
                 }
             };
+3. shimming
+4. 渐进式网络应用程序的使用方法
+> (Progressive Web Application - PWA) 在离线(offline)时应用程序能够继续运行功能。这是通过使用名为 Service Workers 的网络技术来实现的。
+    - 使用 `http-server` 包启一个服务,修改 `package.json` 来添加一个 start 脚本`{ +  "start": "http-server dist" }`
+        > 1. 请运行命令 npm run build 来构建你的项目。然后运行命令 npm start
+    - 添加 Workbox, 添加 workbox-webpack-plugin 插件，并调整 webpack.config.js 文件
+    
+        new WorkboxPlugin.GenerateSW({
+            // 这些选项帮助 ServiceWorkers 快速启用
+            // 不允许遗留任何“旧的” ServiceWorkers
+            clientsClaim: true,
+            skipWaiting: true
+        }),     
+   - 入口文件中注册， 然后重新构建，在启动项目 则Service Worker 已经可以提供离线服务
+        if ('serviceWorker' in navigator) {
+          window.addEventListener('load', () => {
+            navigator.serviceWorker.register('/sw.js').then(registration => {
+              console.log('SW registered: ', registration);
+            }).catch(registrationError => {
+              console.log('SW registration failed: ', registrationError);
+            });
+          });
+        }
+5. 构建性能
+6. 内容安全策略 
+    - webpack 能够为其加载的所有脚本添加 nonce， 在入口指定 `__webpack_nonce__`
+            __webpack_nonce__ = 'c29tZSBjb29sIHN0cmluZyB3aWxsIHBvcCB1cCAxMjM=';
+    - 启用 CSP
+        > 1. CSP 默认情况下不启用。需要与文档(document)一起发送相应的 CSP header 或 meta 标签 <meta http-equiv="Content-Security-Policy" ...>，以告知浏览器启用 CSP。
     
     
     
