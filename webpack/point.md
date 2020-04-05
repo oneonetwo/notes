@@ -219,7 +219,33 @@ module.exports = {
                     }
                 }
             };
-3. shimming
+3. shimming 两种使用场景 
+    - shimming 全局变量
+        > 1. 全局依赖（例如 jQuery 中的 $）。这些库也可能创建一些需要被导出的全局变量。这些“不符合规范的模块”就是 shimming 发挥作用的地方。
+        > 2. 使用ProvidePlugin插件
+                
+                new webpack.ProvidePlugin({
+                    _: 'lodash',
+                    join: ['lodash', 'join'] //单独值
+                })
+        > 3. 传统的模块依赖的 this 指向的是 window 对象
+    - 将polyfills 提供给到需要修补(patch)的浏览器（也就是实现按需加载）
+    
+            <script>
+                var modernBrowser = (
+                    'fetch' in window &&
+                    'assign' in Object
+                );
+
+                if (!modernBrowser) {
+                    var scriptElement = document.createElement('script');
+
+                    scriptElement.async = false;
+                    scriptElement.src = '/polyfills.bundle.js';
+                    document.head.appendChild(scriptElement);
+                }
+            </script>
+    
 4. 渐进式网络应用程序的使用方法
 > (Progressive Web Application - PWA) 在离线(offline)时应用程序能够继续运行功能。这是通过使用名为 Service Workers 的网络技术来实现的。
     - 使用 `http-server` 包启一个服务,修改 `package.json` 来添加一个 start 脚本`{ +  "start": "http-server dist" }`
