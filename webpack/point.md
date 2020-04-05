@@ -68,10 +68,10 @@ module.exports = {
 3. **HMR** 启用此功能实际上相当简单。而我们要做的，就是更新 webpack-dev-server 的配置 `{ hot: true }`
     - webpack.NamedModulesPlugin 以便更容易查看要修补(patch)的依赖
     - webpack.HotModuleReplacementPlugin
-    - > 其他代码和框架
-        - [React Hot Loader](https://github.com/gaearon/react-hot-loader)：实时调整 react 组件。
-        - [Vue Loader](https://github.com/vuejs/vue-loader)：此 loader 支持用于 vue 组件的 HMR，提供开箱即用体验。
-        - [Redux HMR](https://github.com/fluxxu/elm-hot-loader)：无需 loader 或插件！只需对 main store 文件进行简单的修改。
+    - 其他代码和框架
+        > 1. [React Hot Loader](https://github.com/gaearon/react-hot-loader)：实时调整 react 组件。
+        > 2. [Vue Loader](https://github.com/vuejs/vue-loader)：此 loader 支持用于 vue 组件的 HMR，提供开箱即用体验。
+        > 3. [Redux HMR](https://github.com/fluxxu/elm-hot-loader)：无需 loader 或插件！只需对 main store 文件进行简单的修改。
 4. **tree shaking** 
      `通常用于描述移除 JavaScript 上下文中的未引用代码(dead-code),它依赖于 ES2015 模块系统中的静态结构特性，例如 import 和 export`
      - 将文件标记为无副作用(side-effect-free) `{ "sideEffects": false }`
@@ -127,9 +127,9 @@ module.exports = {
         ` async function getComponent() {}`
 4. bundle 分析(bundle analysis)
     - 下面是一些社区支持(community-supported)的可选工具：
-    > 1. webpack-chart: webpack 数据交互饼图。
-    > 2. webpack-visualizer: 可视化并分析你的 bundle，检查哪些模块占用空间，哪些可能是重复使用的。
-    > 3. webpack-bundle-analyzer: 一款分析 bundle 内容的插件及 CLI 工具，以便捷的、交互式、可缩放的树状图形式展现给用户。
+        > 1. webpack-chart: webpack 数据交互饼图。
+        > 2. webpack-visualizer: 可视化并分析你的 bundle，检查哪些模块占用空间，哪些可能是重复使用的。
+        > 3. webpack-bundle-analyzer: 一款分析 bundle 内容的插件及 CLI 工具，以便捷的、交互式、可缩放的树状图形式展现给用户。
 5. 懒加载 懒加载或者按需加载，是一种很好的优化网页或应用的方式。
 
     ```javascript
@@ -158,7 +158,53 @@ module.exports = {
         }
     ```
 
-### 缓存
+### 高级概念
+
+1. **缓存**
+    - 通过使用 output.filename 进行文件名替换, `[chunkhash] 替换`
+    - 提取模板(Extracting Boilerplate) `{ optimization.splitChunks } ` 
+    - 模块标识符(Module Identifiers) 让模块依赖的hash保持不变
+        > 1. `new webpack.NamedModulesPlugin()` 建议用于开发环境
+        > 2. `new webpack.HashedModuleIdsPlugin({  // 参数...})` 用于生产环境
+        
+2. **创建 Library**
+    - 让我们以某种方式打包这个 library，能够实现以下几个目标：
+        > 1. 不打包 lodash, 而是使用externals 来require用户加载好的lodash
+        > 2. 设置 library 的名称为 webpack-numbers.
+        > 3. 将 library 暴露为一个名为 webpackNumbers的变量。
+        > 4. 能够访问其他 Node.js 中的 library。
+    - 该 library 的使用方式如下：
+        > 1. ES2015 模块。例如 import webpackNumbers from 'webpack-numbers'。
+        > 2. CommonJS 模块。例如 require('webpack-numbers').
+        > 3. 全局变量，当通过 script 脚本引入时
+    - 外部化 lodash,  放弃对外部 library 的控制，而是将控制权让给使用 library 的用户,使用` externals` 配置来完成：
+    - 外部扩展的限制
+    - 暴露 library 
+        > 1. 为了让你的 library 能够在各种用户环境(consumption)中可用，需要在 output 中添加 library 属性
+        > 2. 为了让 library 和其他环境兼容，添加 libraryTarget 属性。这是可以控制 library 如何以不同方式暴露的选项。
+    - 最终步骤
+        > 1. 通过设置 package.json 中的 main 字段，添加生成 bundle 的文件路径。 `{  "main": "dist/webpack-numbers.js" } `
+        > 2. 将其发布为一个 npm 包，并且在 unpkg.com 找到它并分发给你的用户。
+            
+            var path = require('path');
+            module.exports = {
+                entry: './src/index.js',
+                output: {
+                    path: path.resolve(__dirname, 'dist'),
+                    filename: 'webpack-numbers.js',
+                    library: 'webpackNumbers'
+                },
+                externals: {
+                    lodash: {
+                        commonjs: 'lodash',
+                        commonjs2: 'lodash',
+                        amd: 'lodash',
+                        root: '_'
+                    }
+                }
+            };
+    
+    
     
 
 
