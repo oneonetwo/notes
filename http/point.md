@@ -78,8 +78,8 @@
       - 创建TCP链接，经过TCP三次握手（如果是https则跟tcp不一样)
       - 建立 TCP 连接后会顺序收发数据，请求方和应答方都必须依据 HTTP 规范构建和解析报文
       - 浏览器解析报文，渲染输出页面。
-2. HTTP报文
-        ![alt 请求报文](https://static001.geekbang.org/resource/image/b1/df/b191c8760c8ad33acd9bb005b251a2df.png)
+2. HTTP报文  
+<img src="https://static001.geekbang.org/resource/image/b1/df/b191c8760c8ad33acd9bb005b251a2df.png" width="50%">
       - 请求行 `GET /HTTP/1.1`
       - 状态行 `HTTP/1.1 200 OK`
       - 起始行和头部字段经常又合称为“请求头”或“响应头”，消息正文又称为“实体”，但与“header”对应，很多时候就直接称为“body”。
