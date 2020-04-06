@@ -124,9 +124,46 @@
       > 1. 301会告诉浏览器下次请求直接到新连接就行并且每次会从浏览器缓存中读取内容，只有当用户清除浏览器的缓存才能重新从服务器获取数据
       > 2. 搜索引擎的爬虫看到 301，也会更新索引库，不再使用老的 URI。浏览器或者爬虫看到 302，会认为原来的 URI 仍然有效，但暂时不可用，下次访问还是用原 URI。
       > 3. 性能损耗，一次“重定向”实际上发送了两次 HTTP 请求，第一次请求返回响应头字段 Location 指示了要跳转的 URI
-5. 数据协商
-6. 
- 
+5. 数据协商  
+
+    | 客户端 | =》 | 服务端 |
+    | -----： | :----: | :----- |
+    | Accept | 接受的类型 | content-Type |
+    | Accept-Encoding | 限制服务端数据压缩的方式 | content-Encoding |
+    |	Accept-Language | 语言 | content-language |
+    |	User-agent | 浏览器的想灌的信息 | 
+    
+6. HTTP传输大文件的方法
+    - 通常浏览器在发送请求时都会带着 `Accept-Encoding` 头字段，里面是浏览器支持的压缩格式列表，例如 gzip、deflate、br 等，这样服务器就可以从中选择一种压缩算法，放进 `Content-Encoding` 响应头里，再把原数据压缩后发给浏览器。
+    - `chunked`分块传输编码
+      > 1. 在响应报文里用头字段 `Transfer-Encoding: chunked`   
+      > 2. “Transfer-Encoding: chunked”和“Content-Length”这两个字段是互斥的,一个响应报文的传输要么是长度已知，要么是长度未知（chunked），这一点你一定要记住。
+    - 范围请求 比如，你在看当下正热播的某穿越剧，想跳过片头，直接看正片，或者有段剧情很无聊，想拖动进度条快进几分钟
+      > 1. 允许客户端在请求头里使用专用字段来表示只获取文件的一部分，相当于是客户端的“化整为零”。
+      > 2. 服务器必须在响应头里使用字段 `Accept-Ranges: bytes`明确告知客户端：“我是支持范围请求的”,服务器要添加一个响应头字段 Content-Range
+    - 多段数据, 一次性获取多个片段数据。
+
+7. cookie 
+    - 响应头字段 Set-Cookie 和请求头字段 Cookie, 响应报文使用 Set-Cookie 字段发送“key=value”形式的 Cookie 值；请求报文里用 Cookie 字段发送多个 Cookie 值；
+    - Max-Age(长度)、Expires（节点）设置过期的时间， Domain、HttpOnly、Secure
+    - 另一个属性“SameSite”可以防范“跨站请求伪造”（XSRF）攻击，设置成“SameSite=Strict”可以严格限定 Cookie 不能随着跳转链接跨站发送
+    - 不能跨域设置cookie  ，二级域名能共享主域名的cookie
+    - 应用场景
+      > 1. 基本的一个用途是身份识别，保存用户的登录信息，实现会话事务
+      > 2. 另一个常见用途是广告跟踪
+8. 缓存 cache-control ,节约网络带宽，也可以加快响应速度
+    - 可缓存性
+      > 1. Pulic 可以在浏览器，中间代理都可以缓存这个http请求的内容
+      > 2. Private 只有发起请求的浏览器可缓存
+      > 3. No-cache 可以使用本地，代理缓存，但是需要经过服务器的验证
+    - 有限期 max-age=<seconds>   浏览器的缓存到期时间, 
+    - No-store 不能使用缓存，必须去服务器请求，
+    - No-transform  告诉代理服务器不要改变返回的内容
+    - Ctrl+F5 的“强制刷新”又是什么样的呢？ 它其实是发了一个“Cache-Control: no-cache”
+    - 缓存资源验证（cache-control设置no-cache需要做验证）  验证头
+      > 1. 最常用的是“if-Modified-Since”和“If-None-Match”这两个。需要第一次的响应报文预先提供“Last-modified”和“ETag”，然后第二次请求时就可以带上缓存里的原值，验证资源是否是最新的。
+  
+  
 
 
   
