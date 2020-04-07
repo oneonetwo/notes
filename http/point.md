@@ -184,14 +184,14 @@
 
 ### HTTP的客户端
 1. 浏览器跨域的限制（同源策略时浏览器的限制）
-  - 浏览器允许link script img 标签加载一些内容，  
+    - 浏览器允许link script img 标签加载一些内容，  
   Jsonp就是script标签加载一个链接，去访问服务器的某一个请求，并返回内容，因为服务器返回的内容是可控的，所以在请求之前，调用jsonp，返回一段调用某个函数的js代码，在src中进行了调用，这样实现了跨域
-  - 跨域资源共享(CORS)  CORS跨域限制
-    > 1. 跨域允许的方法： get  post   head
-    > 2. 允许的Content-type   text/plain     multipart/form-data   application/x-ww.
-    > 3. Cors预请求验证
-      -  options 通过options发送一个服务端的认可的请求 ，在发送post请求
-      -  Max-Age 1000秒之内不需要预请求进行验证    
+    - 跨域资源共享(CORS)  CORS跨域限制
+      > 1. 跨域允许的方法： get  post   head
+      > 2. 允许的Content-type   text/plain     multipart/form-data   application/x-ww.
+      > 3. Cors预请求验证
+      >> * options 通过options发送一个服务端的认可的请求 ，在发送post请求
+      >> * Max-Age 1000秒之内不需要预请求进行验证    
       
               response.writeHead(200, {
                 'Access-Control-Allow-Origin': 'http://127.0.0.1:8888',
