@@ -199,7 +199,6 @@
                 'Access-Control-Allow-Methods': 'POST, PUT, DELETE',
                 'Access-Control-Max-Age': '1000'
               })
-2. webSocjet
 
   
   
