@@ -33,3 +33,41 @@
                 var { x=3 } = { x: undefined };  x // 3
                 var { x=3 } = { x: null };  x // null
       ```
+3. 字符串的扩展
+    - includes(), startsWith(), endsWith(); 返回布尔值
+    - padStart(), padEnd() 补全
+    - 模板字符串 所有的空格 缩进都会保留
+4. 数组的扩展
+    - Array.from() 将类数组对象和可遍历(iterable)对象 转化为真正的数组
+    - Array,of() 将一组值转换为数组
+    - copyWithin() 在当前数组内部将指定位置的成员复制到其他位置
+    - 数组实例的find() 和 findIndex() 找出第一个符合条件的数组成员，没有则返回undefined；
+    - fill() 填充数组，接受三个参数，（元素，起始位置，结束位置）
+    - keys() values() entries() 都返回遍历器对象，可用 `for...of` 循环遍历
+    - includes() 返回布尔值，表示某个数组是否包含给定的值
+      > 1. indexOf有两个缺点 一是：不够语义化，二是 内部使用严格判断（===）
+      
+      ```javascript          
+                [NaN].indexOf(NaN)   //-1
+                [NaN].includes(NaN)  // true
+      ```
+    - 数组的空位
+      > 1. ES5对空位处理不一致
+        >> - forEach(), filter(), every(), some()都会跳过空位
+        >> - map()会跳过空位，但会保留这个值
+        >> - join(), toString()会将空位视为undefined，而undefined和null会被处理成字符串。
+      > 2. ES6明确将空位转成 undefined
+    - 数组推导
+      > 1. ES7 babel已经支持
+            
+      ```javascript          
+                var a1 = [1,2,3,4];
+                var a2 = [for (i of a1) i * 2];
+                a2 // [2,4,6,8];
+                
+                //for...of 附加 if语句
+                var years = [1954, 1974, 1990, 2008, 2010, 2020]
+                [for (year of years) if(year > 2000) if(year < 2010) year]    // 2008 
+                [for (year of years) if(year > 2000 && year < 2010) year]    // 2008 
+      ```
+        
