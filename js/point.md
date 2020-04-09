@@ -9,6 +9,7 @@
 | 删除一个视频 | `/video/del` | POST | id |  |
 | 获取某个视频详情 | `/video/details` | GET | id |  |
 | 更新任务状态 | `/video/updatestatus` | POST | tskId |  |
+| WebSocket | `/video/socket` |   | tskId | ws.send(tskId) |
 
 
 ### 接口说明
@@ -114,4 +115,24 @@
             "message": "tskId 不存在",
             "code": -1
         }
+```
+6. 服务器消息推送
+> - WebSocket示例：
+```javascript
+   if(window.WebSocket){
+        let ws = new WebSocket('ws://127.0.0.1:3000/video/socket');
+        ws.onopen = function(e){
+            ws.send(1965);
+        }
+        ws.onclose = function(e){
+            console.log("服务器关闭");
+        }
+        ws.onerror = function(e){
+            console.log("连接出错", e);
+        }
+        ws.onmessage = function(e){
+            //接受数据
+            console.log(e.data);
+        }		
+    }
 ```
