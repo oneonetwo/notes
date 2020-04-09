@@ -199,6 +199,15 @@
                 'Access-Control-Allow-Methods': 'POST, PUT, DELETE',
                 'Access-Control-Max-Age': '1000'
               })
+2. WebSocket
+    - webSocket 是HETML5开始提供的一种在单个TCP连接上进行全双工通讯协议，浏览器和服务器中需要通过一次握手，两者之前就可以创建持久性的链接，进行双向数据传输。 
+      > 1. 本质：是一个基于TCP的协议
+      > 2. 过程：客户端首先发送一个HTTP请求，附加头信息，`Upgrade: WebSocket`,`connection: Upgrade`，表明申请协议升级，服务器解析头信息，产生应答信息，状态码为`101 Switching Protocol` ,就可以通过webSocket进行通信，这个来连接会持续存在知道某一方主动关闭连接。
+      > 3. 使用：创建 `new WebSocket('ws://')`, 过去连接之后，可以通过 `send()` 进行数据发送，通过`onmessage`事件来接受服务器返回的数据
+    - 与Socket的区别
+      > 1. Socket 其实并不是一个协议，是应用层与 TCP/IP 协议族通信的中间软件抽象层，它是一组接口。当两台主机通信时，让 Socket 去组织数据，以符合指定的协议。TCP 连接则更依靠于底层的 IP 协议，IP 协议的连接则依赖于链路层等更低层次。
+      > 2. WebSocket 则是一个典型的应用层协议。
+      > 3. 总的来说：Socket 是传输控制层协议，WebSocket 是应用层协议。
 
   
   
