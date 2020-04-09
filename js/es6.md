@@ -70,4 +70,105 @@
                 [for (year of years) if(year > 2000) if(year < 2010) year]    // 2008 
                 [for (year of years) if(year > 2000 && year < 2010) year]    // 2008 
       ```
-        
+5. 函数的扩展
+    - 函数参数的默认值
+      > 1. 默认值直接写在参数定义的后面
+      > 2. 参数变量是默认声明的，所以不能用const和let再次声明
+      > 3. 函数的length属性，含义是该函数与其传入的参数个数， 制定了默认值以后，函数的length属性将返回没有指定默认值的参数个数，
+      > 4. **作用域** [阮一峰](https://es6.ruanyifeng.com/#docs/function) 
+        >> - 如果参数默认值是一个变量，则该变量所处的作用域是当前函数，然后才是全局
+        >> - 如果参数默认值是函数，那么该函数作用域是全局
+    - rest参数 搭配的变量是个数组，
+    - 扩展运算符 （...） 内部调用的是Iterator接口，因此具有Iterator接口的对象，都可以使用扩展运算符
+      > 1. rest参数的逆运算，将数组转为用逗号分割的参数序列
+      > 2. 替代apply方法
+      > 3. 合并数组，与解构赋值结合
+      > 4. 字符串 扩展运算符把字符串转成正真的数组
+      > 5. 类似数组的对象 转为真正的数组
+      > 6. Map和Set结构， Generator函数
+      
+      ``` javascript
+            /**替代apply方法**/
+            //es5
+            function f(x, y, z){};
+            var args = [0,1,2];
+            f.apply(null, args);            
+            //es6
+            function f(x, y, z){}
+            var args = [0,1,2]
+            f(...args);
+            
+            //es5 Math.max.apply(null, [1,14,5]);
+            //es6 Math.max(...[1,14,5]);
+            Math.max(1,14,5);
+            
+            var arr1 = [0,1,2];
+            var arr2 = [3,4,5];
+            //es5  Array.prototype.push.apply(arr1, arr2);
+            //es6  arr1.push(...arr2); 
+            
+            /**合并数组**/
+            [].concat(...arr1) //二元数组
+            [1,2].concat(arr1, arr2);
+            [1,2, ...arr1, ...arr2];
+            
+            /**与解构赋值结合**/
+            const [first, ...rest] = [1,2,3,4,5];  first //1   rest //[2,3,4,5]
+            const [first, ...rest] = [];  first //undefined   rest //[]
+            
+            /**Map Set Generator**/
+            let map = new Map([
+                [1, 'one'],
+                [2, 'two'],
+                [3, 'three']
+            ])
+            [...map.keys()] //[1,2,3];
+            var go = function* (){
+                yeild 1;
+                yeild 2;
+                yeild 3;
+            }
+            [...go()]  //[1,2,3]
+      ```
+    - name属性 返回函数的名字 `fun1.name  //"fun1"`
+    - 箭头函数
+      > 1. 使用注意点
+        >> - 函数体内的this对象就是定义时所在的对象，而不是调用时所在的对象；箭头函数中this时固定的
+        >> - 不可以当构造函数，不能用new
+        >> - 不能用arguments对象，使用rest参数
+        >> - 不能使用yeild命令，因此箭头函数不能用作Generator函数
+    - 函数绑定 箭头函数可以绑定this对象 ES7提案，
+      > 1. 该运算符会自动将左边的对象作为上下文环境（this对象）绑定到右边的函数
+      > 2. 由于双冒号运算符返回的还是原对象，因此可以采用链式写法
+      
+      ```javascript
+            foo::bar   //   bar.bind(foo);
+            foo::bar(...arguments)  // bar.apply(foo, arguments);            
+      ```
+
+    - 尾调用优化
+      > 1. 某个函数的最后一步调用另一个函数
+    - 尾递归
+    - 函数参数的尾逗号
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
