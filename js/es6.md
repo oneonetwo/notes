@@ -76,6 +76,7 @@
       > 2. 参数变量是默认声明的，所以不能用const和let再次声明
       > 3. 函数的length属性，含义是该函数与其传入的参数个数， 制定了默认值以后，函数的length属性将返回没有指定默认值的参数个数，
       > 4. **作用域** [阮一峰](https://es6.ruanyifeng.com/#docs/function) 
+        >> - 一旦设置了参数的默认值，函数进行声明初始化时，参数会形成一个单独的作用域（context）。等到初始化结束，这个作用域就会消失。
         >> - 如果参数默认值是一个变量，则该变量所处的作用域是当前函数，然后才是全局
         >> - 如果参数默认值是函数，那么该函数作用域是全局
     - rest参数 搭配的变量是个数组，
@@ -146,11 +147,76 @@
             foo::bar(...arguments)  // bar.apply(foo, arguments);            
       ```
 
-    - 尾调用优化
+    - 尾调用（Tail Call）
       > 1. 某个函数的最后一步调用另一个函数
-    - 尾递归
-    - 函数参数的尾逗号
+      > 2. **调用帧**: 函数调用会在内存形成一个“调用记录”，又称“调用帧”（call frame），保存调用位置和内部变量等信息。
+      > 3. **调用栈**: 如果在函数A的内部调用函数B，那么在A的调用帧上方，还会形成一个B的调用帧。等到B运行结束，将结果返回到A，B的调用帧才会消失。如果函数B内部还调用函数C，那就还有一个C的调用帧，以此类推。所有的调用帧，就形成一个“调用栈”（call stack）。
+      > 4. 尾调用优化
+        >> - 尾调用由于是函数的最后一步操作，所以不需要保留外层函数的调用帧，因为调用位置、内部变量等信息都不会再用到了，只要直接用内层函数的调用帧，取代外层函数的调用帧就可以了。
+        >> - “尾调用优化”（Tail call optimization），即只保留内层函数的调用帧。如果所有函数都是尾调用，那么完全可以做到每次执行时，调用帧只有一项，这将大大节省内存。
+    - 尾递归 函数调用自身，称为递归。如果尾调用自身，就称为尾递归。
+      > 1. 递归非常耗费内存，因为需要同时保存成千上百个调用帧，很容易发生“栈溢出”错误（stack overflow）。但对于尾递归来说，由于只存在一个调用帧，所以永远不会发生“栈溢出”错误。
+      > 2.  ES6 中只要使用尾递归，就不会发生栈溢出（或者层层递归造成的超时），相对节省内存。
       
+      ```javascript
+          //计算n的阶乘，最多需要保存n个调用记录，复杂度 O(n)
+            function factorial(n) {
+                if (n === 1) return 1;
+                return n * factorial(n - 1);
+            }
+            factorial(5) // 120
+           //成尾递归，只保留一个调用记录，复杂度 O(1) 。
+            function factorial(n, total){
+                if(n === 1 ) return total;
+                return function(n-1, n*total);
+            }
+            factorial(5,1);
+      ```
+    - 递归函数的改写
+      > 1. 尾递归的实现，往往需要改写递归函数，确保最后一步只调用自身。做到这一点的方法，就是把所有用到的内部变量改写成函数的参数。
+      > 2. 柯里化（currying），意思是将多参数的函数转换成单参数的形式
+      > 3. 对于其他支持“尾调用优化”的语言（比如 Lua，ES6），只需要知道循环可以用递归代替，而一旦使用递归，就最好使用尾递归。
+        
+      ```javascript
+      //柯里化
+            function currying(fn, n) {
+                return function (m) {
+                    return fn.call(this, m, n);
+                };
+            }
+            function tailFactorial(n, total) {
+                if (n === 1) return total;
+                return tailFactorial(n - 1, n * total);
+            }
+            const factorial = currying(tailFactorial, 1);
+            factorial(5) // 120
+       //ES6函数默认值
+            function factorial(n, total = 1) {
+                if (n === 1) return total;
+                return factorial(n - 1, n * total);
+            }
+            factorial(5) // 120
+       ```
+    - 严格模式
+      > 1. ES6 的尾调用优化只在严格模式下开启，正常模式是无效的。
+      > 2. 这是因为在正常模式下，函数内部有两个变量，可以跟踪函数的调用栈。尾调用优化发生时，函数的调用栈会改写，因此上面两个变量就会失真。
+        >> - `func.arguments`：返回调用时函数的参数。
+        >> - `func.caller`：返回调用当前函数的那个函数。
+    - 尾递归优化的实现
+      > 1. 正常模式下,采用“循环”换掉“递归”。
+      > 2. 蹦床函数（trampoline）可以将递归执行转为循环执行。
+      
+      ```javascript
+            function trampoline(f){
+                while(f && f instanceof Function){
+                    f = f();
+                }
+                return f;
+            }
+      ```
+    - 函数参数的尾逗号 ES2017 允许函数的最后一个参数有尾逗号
+    - Function.prototype.toString()  toString()方法返回函数代码一模一样的原始代码
+    
       
       
       
