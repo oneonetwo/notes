@@ -310,7 +310,8 @@ module.exports = {
     - Dlls:  `DLLPlugin` 和 `DLLReferencePlugin` DllPlugin和DllReferencePlugin提供分离包的方式可以大大提高构建时间性能。主要思想在于，将一些不做修改的依赖文件，提前打包，这样我们开发代码发布的时候就不需要再对这部分代码进行打包。
         > 1. `new webpack.DllPlugin(options)`单独webpack配置创建一个dll-only-bundle文件。 还会生成一个名为 manifest.json 的文件，这个文件是用来让 DLLReferencePlugin 映射到相关的依赖上去的
         > 2. `new webpack.DllReferencePlugin(options)`这个插件是在 webpack 主配置文件中设置的， 这个插件把只有 dll 的 bundle，引用到需要的预编译的依赖
-        > 3. [用法参考](https://blog.csdn.net/janyxh/article/details/100131082)
+        > 3. 需要手动的把bundle添加到html中 
+        > 4. [用法参考](https://blog.csdn.net/janyxh/article/details/100131082)
     - code sliping
     - Worker Pool
         > 1. `thread-loader` 可以将非常消耗资源的 loaders 转存到 worker pool 中。
