@@ -1,4 +1,4 @@
-## Es6 基础
+## [Es6 基础](https://es6.ruanyifeng.com/#README)
 1. let和const命令
     - let命令
       > 1. 块级作用域
@@ -218,6 +218,27 @@
     - Function.prototype.toString()  toString()方法返回函数代码一模一样的原始代码
     
 6. 对象的扩展
+    - Object.is()
+      > Object.is比较两个值是否严格相等， 与（===）基本一致,两处不同，代码见下
+      
+      ```javascript
+            +0 === -0 //true              Object.is(+0, -0); //false;
+            NaN === NaN //false           Object.is(NaN, NaN);   //true;
+            
+            Object.defineProperty(Object, 'is', {
+                value: function(x, y){
+                    if(x===y){
+                        return x!==0 || 1/x === 1/y;
+                    }
+                    return x!==y&&y!==y;
+                },
+                configurable: true,
+                enumerable: false,
+                writable: true
+                
+            })     
+      ```
+    - Object.assign() 
 7. Symbol
 8. Set和Map数据结构
 9. Proxy
