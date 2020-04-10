@@ -217,6 +217,17 @@
     - 函数参数的尾逗号 ES2017 允许函数的最后一个参数有尾逗号
     - Function.prototype.toString()  toString()方法返回函数代码一模一样的原始代码
     
+6. 对象的扩展
+7. Symbol
+8. Set和Map数据结构
+9. Proxy
+10 . Reflect
+11. Promise对象
+12. Iterator和for...of循环
+13. Generator 函数的语法
+14. async 函数
+15. class 的基本语法
+    
       
       
       
