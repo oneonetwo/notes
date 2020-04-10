@@ -319,6 +319,23 @@ module.exports = {
     - 持久化缓存
         > 1. 使用 `cache-loader` 启用持久化缓存。使用 package.json 中的 "postinstall" 清除缓存目录。
         > 2. 用法: 在一些性能开销较大的 loader 之前添加此 loader，以将结果缓存到磁盘里。
+        
+        ```javascript
+            module.exports = {
+              module: {
+                rules: [
+                  {
+                    test: /\.js$/,
+                    use: [
+                      'cache-loader',
+                      'babel-loader'
+                    ],
+                    include: path.resolve('src')
+                  }
+                ]
+              }
+            }
+        ```
 2. development
     - Devtool
         > 1. "eval" 具有最好的性能，但并不能帮助你转译代码。
