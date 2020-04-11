@@ -1,4 +1,4 @@
-## [Es6 基础](https://es6.ruanyifeng.com/#README)
+## [Es6 基础(1)](https://es6.ruanyifeng.com/#README)
 1. let和const命令
     - let命令
       > 1. 块级作用域
