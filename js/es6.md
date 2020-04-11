@@ -238,11 +238,50 @@
                 
             })     
       ```
-    - Object.assign() 
+    - Object.assign() 来将源对象的自身所有可枚举属性复制到目标属性。
+      > 1. 为属性指定默认值
+      
+      ```javascript
+            const DEFAULT = {
+                level: 0,
+                output: 'html'
+            }
+            function processContent(options){
+                Object.assign({}, default, options);
+            }
+      ```
+    - 属性的可枚举和遍历
+      > 1. Object.getOwnPropertyDescriptor(obj,'age')获取该属性的描述对象;        
+      有四个操作会忽略enumerable为false的属性:
+        >> - `for...in`循环：只遍历对象自身的和继承的可枚举的属性。
+        >> - `Object.keys()`：返回对象自身的所有可枚举的属性的键名。
+        >> - `JSON.stringify()`：只串行化对象自身的可枚举的属性。
+        >> - `Object.assign()`： 忽略enumerable为false的属性，只拷贝对象自身的可枚举的属性
+      > 2. ES6 一共有 5 种方法可以遍历对象的属性:
+        >> - `for...in`循环遍历对象自身和继承的可枚举属性（不含Symbol属性）；
+        >> - `Object.kyes(obj)`返回一个数组，包含自身的（不含继承的）可枚举属性的键名（不含Symbol）；
+        >> - `Object.getOwnPropertyNames(obj)`返回一个数组，包含自身的（不含继承的，包含不可枚举）所有属性的键名（不含Symbol）；
+        >> - `Object.getOwnPropertySymbols(obj)`返回一个数组，包含对象自身的所有 Symbol 属性的键名。
+        >> - `Reflect.ownKeys(obj)`返回一个数组，包含对象自身的所有键名，不管键名是 Symbol 或字符串，也不管是否可枚举。
+    - `__proto__`属性
+      > 1. `__proto__`属性读取和设置当前对象的原型对象，
+        >> - 一般代码中不使用这个属性，而是使用`Object.getPrototypeOf()`(读操作)，`Object.setPrototypeOf()`(写操作)或者`Object.create()`(生成操作)；
+    - 对象的扩展运算符
+      > 1. 对象的解构赋值 
+        >> - 扩展运算符的解构赋值，不能复制继承自原型对象的属性(浅复制)；
+      > 2. 扩展运算符（...）用于取出参数对象的所有可遍历属性，拷贝到当前对象之中。
+    - 链判断运算符 ES2020 引入了“链判断运算符”（optional chaining operator）
+      > 1. 链判断运算符有三种用法。
+        >> - obj?.prop //对象属性
+        >> - obj?.[expr] //同上
+        >> - func?.(...agrs) //函数或对象方法的调用
+    - Null 判断运算符 
+      > 1. ES2020 引入了一个新的 Null 判断运算符??。它的行为类似||，但是只有运算符左侧的值为null或undefined时，才会返回右侧的值。
+
 7. Symbol
 8. Set和Map数据结构
 9. Proxy
-10 . Reflect
+10. Reflect
 11. Promise对象
 12. Iterator和for...of循环
 13. Generator 函数的语法
