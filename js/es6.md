@@ -279,9 +279,38 @@
       > 1. ES2020 引入了一个新的 Null 判断运算符??。它的行为类似||，但是只有运算符左侧的值为null或undefined时，才会返回右侧的值。
 
 7. Symbol
-8. Set和Map数据结构
-9. Proxy
-10. Reflect
+    - ES6 引入了一种新的原始数据类型Symbol，表示独一无二的值。它是 JavaScript 语言的第七种数据类型，前六种是：undefined、null、布尔值（Boolean）、字符串（String）、数值（Number）、对象（Object）。
+    - Symbol.for()与Symbol() 都会生成新的 Symbol。区别：
+      > 1. Symbol.for()它接受一个字符串作为参数，然后搜索有没有以该参数作为名称的 Symbol 值。如果有，就返回这个 Symbol 值，否则就新建一个以该字符串为名称的 Symbol 值，并将其注册到全局。
+      > 2. Symbol()每次调用就返回一个新的 Symbol 类型的值，
+9. Proxy Reflect
+    - Proxy 对对象做了一层代理 `var proxy = new Proxy(target, handler);`
+    - Proxy 支持的拦截操作一览，一共 [13 种](https://es6.ruanyifeng.com/#docs/proxy#Proxy-%E5%AE%9E%E4%BE%8B%E7%9A%84%E6%96%B9%E6%B3%95)。
+      > 1. get(target, propKey, receiver)：拦截对象属性的读取，比如proxy.foo和proxy['foo']。
+      > 2. set(target, propKey, value, receiver)：拦截对象属性的设置，比如proxy.foo = v或proxy['foo'] = v，返回一个布尔值。
+      > 3. has(target, propKey)：拦截propKey in proxy的操作，返回一个布尔值。
+      > 4. deleteProperty(target, propKey)：拦截delete proxy[propKey]的操作，返回一个布尔值。
+      > 5. ownKeys(target)：拦截Object.getOwnPropertyNames(proxy)、Object.getOwnPropertySymbols(proxy)、Object.keys(proxy)、for...in循环，返回一个数组。该方法返回目标对象所有自身的属性的属性名，而Object.keys()的返回结果仅包括目标对象自身的可遍历属性。
+      > 6. getOwnPropertyDescriptor(target, propKey)：拦截Object.getOwnPropertyDescriptor(proxy, propKey)，返回属性的描述对象。
+      > 7. defineProperty(target, propKey, propDesc)：拦截Object.defineProperty(proxy, propKey, propDesc）、Object.defineProperties(proxy, propDescs)，返回一个布尔值。
+      > 8. preventExtensions(target)：拦截Object.preventExtensions(proxy)，返回一个布尔值。
+      > 9. getPrototypeOf(target)：拦截Object.getPrototypeOf(proxy)，返回一个对象。
+      > 10. isExtensible(target)：拦截Object.isExtensible(proxy)，返回一个布尔值。
+      > 11. setPrototypeOf(target, proto)：拦截Object.setPrototypeOf(proxy, proto)，返回一个布尔值。如果目标对象是函数，那么还有两种额外操作可以拦截。
+      > 12. apply(target, object, args)：拦截 Proxy 实例作为函数调用的操作，比如proxy(...args)、proxy.call(object, ...args)、proxy.apply(...)。
+      > 13. construct(target, args)：拦截 Proxy 实例作为构造函数调用的操作，比如new proxy(...args)。
+    - Reflect 是ES6为操作对象提供新的API
+      > 1. 大部分与Object对象的同名方法的作用都是相同的，它与Proxy对象的方法是一一对应的。
+      > 2. 比如，Object.defineProperty(obj, name, desc)在无法定义属性时，会抛出一个错误，而Reflect.defineProperty(obj, name, desc)则会返回false。
+      > 3. 让Object操作都变成函数行为。某些Object操作是命令式，比如name in obj和delete obj[name]，而Reflect.has(obj, name)和Reflect.deleteProperty(obj, name)让它们变成了函数行为。
+ 
+10.Set Map
+    - Set
+      > 1. 类似与数组，但是成员都是唯一的，没有重复的值
+      > 2. 扩展运算符（...）内部使用for...of循环，所以也可以用于 Set 结构。
+    - Map
+      > 1. 它类似于对象，也是键值对的集合，但是“键”的范围不限于字符串，各种类型的值（包括对象）都可以当作键。
+      > 2. Map 转为数组就是使用扩展运算符（...）
 11. Promise对象
 12. Iterator和for...of循环
 13. Generator 函数的语法
