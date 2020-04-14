@@ -38,7 +38,7 @@
 	  } 
     
 ```
-##### 1. 时间循环机制，头条面试题
+##### 2. 时间循环机制，头条面试题
 ```javascript
         async function async1(){
             console.log('async1 start 2')
