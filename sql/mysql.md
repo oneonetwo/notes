@@ -63,5 +63,105 @@
     ```sql
         select DISTINCT address from students;
     ```
+3. 条件查询
+    1. 逻辑条件 and or 
+    2. 比较条件  >   <   >=   <=   =   <>   between and
+    ```sql
+        select * from student where servlet>=80 and servlet<=85;
+        select * from student where servlet between 80 and 85;
+    ```
+    3. 判空条件： is null,  is not null,  ='',  <>'';
+    ```sql
+        /*查询没有性别数据的学生(数据‘男’或‘女’)*/
+        select * from student where genter is null OR genter='';
+    ```
+    4. 模糊查询： like  %代表任意个字符  _代表一个字符
+4. 联合函数查询
+    1. max(),  min(),  avg(), count()统计表列数 sum()
+    ```sql
+       select count(*) from student;
+    ```
+5. 关键字
+    1. ` limit [offset],[rows] `, offset偏移量，rows返回的行数
+    2. ` order by `,  DESC降序，ASC升序
+    3. ` group by ` *where必须放在 group by之前
+    4. ` having ` 分组后筛选
+    ```sql
+        select * from student limit 255,10;
+        
+        select * from student order by age asc, servlet asc;
+        
+        select gender, count(*) from student where gender<>'' group by gender;  
+        
+        select address, count(*) from student group by address having count(*)>2; 
+    ```
+#### 五. 数据约束
+1. default 默认值约束
+2. not null 非空约束（不能不插入值）
+3. unique 唯一约束
+4. primary key 主键约束(唯一+非空)
+5. auto increment 自增约束
+6. references 外键约束
+```sql
+    /*员工表(副表:被别的表约束的表，外键设置在副表)*/
+    Create table employee(
+　　    Id int primary key auto_increment,
+　　    name varchar(20),
+　　    deptId int,
+　　    /*添加外键约束(foreign key)*/
+　　    Constraint employee_dept_fk foreign key(deptId) references dept(id)
+     )
+    /*部门表(主表:约束别人的表)*/
+    Create table dept(
+        Id int primary key auto_increment,
+        Name varchar(20)
+    )
+```
+7. cascade 级联技术 主表更新删除，副标也会更新删除
+```sql
+    Create table employee(
+        Id int primary key auto_increment,
+        name varchar(20),
+        deptId int,
+        /*添加外键约束(foreign key)*/
+        /*添加级联修改:on update cascade*/
+        /*添加级联修改:on delete cascade*/
+        Constraint employee_dept_fk foreign key(deptId) references dept(id) on update cascade on delete cascade
+    );
+    /*部门表(主表:约束别人的表)*/
+    Create table dept(
+        Id int primary key auto_increment,
+        Name varchar(20)
+    );
+```
+#### 六. 夺表查询
+1. 内连接查询(使用最多),多表查询的步骤:
+    1. 确定查询哪些表
+    2. 确定查询哪些字段
+    3. 确定连接条件(规则:条件=表数量-1)
+    ```sql
+        SELECT employee.name,dept.name
+        FROM employee,dept
+        WHERE employee.deptId=dept.id;
+        /*另一种语法*/
+        SELECT e.name,d.name
+        FROM employee e
+        INNER JOIN dept d
+        ON e.deptId=d.id;
+    ```
+2. 左外连接查询(左表数据全部显示，如果右边不满足，则显示null)
+    ```sql
+        SELECT d.name,e.name
+        FROM dept d
+        LEFT OUTER JOIN employee e
+        ON d.id=e.deptId;
+    ```
+3. 右外连接查询(右表数据全部显示，如果左边不满足，则显示null)
+    ```sql
+        SELECT d.name,e.name
+        FROM employee e
+        RIGHT OUTER JOIN dept d
+        ON e.deptId=d.id;
+    ```
     
     
