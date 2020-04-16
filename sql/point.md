@@ -33,10 +33,10 @@
 关系型数据库采用的结构化的数据，NoSQL采用的是键值对的方式存储数据。
 在处理非结构化/半结构化的大数据时；在水平方向上进行扩展时；随时应对动态增加的数据项时可以优先考虑使用NoSQL数据库。
 
-##### 2. MySQL与MongoDB之间最基本的差别是什么?
+##### 6. MySQL与MongoDB之间最基本的差别是什么?
 > MySQL和MongoDB两者都是免费开源的数据库。MySQL和MongoDB有许多基本差别包括数据的表示(data representation)，查询，关系，事务，schema的设计和定义，标准化(normalization)，速度和性能。
 
-##### 6. 用户数据库是用mongodb好，还是用mysql好？
+##### 7. 用户数据库是用mongodb好，还是用mysql好？
 > 1. 数据结构简单. 所以用mysql还是mongodb在这里都一样.
 > 2. 可能对读性能有要求 但写速度关系不大, 一般都是大量已注册用户登录. 因此mysql一定要配合redis或者memcache, 这样的话 mongodb稍微胜出一点, mongodb本身的读速度有优化, 很可观.
 > 3. 数据结构中含有一些特殊数据 比如玩家的充值信息. mysql明显比mongodb好的太多.
