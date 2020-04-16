@@ -140,28 +140,28 @@
     2. 确定查询哪些字段
     3. 确定连接条件(规则:条件=表数量-1)
     ```sql
-        SELECT employee.name,dept.name
-        FROM employee,dept
-        WHERE employee.deptId=dept.id;
+        select employee.name,dept.name
+        from employee,dept
+        where employee.deptId=dept.id;
         /*另一种语法*/
-        SELECT e.name,d.name
-        FROM employee e
-        INNER JOIN dept d
-        ON e.deptId=d.id;
+        select e.name,d.name
+        from employee e
+        inner join dept d
+        on e.deptId=d.id;
     ```
 2. 左外连接查询(左表数据全部显示，如果右边不满足，则显示null)
     ```sql
-        SELECT d.name,e.name
-        FROM dept d
-        LEFT OUTER JOIN employee e
-        ON d.id=e.deptId;
+        select d.name,e.name
+        from dept d
+        left outer join employee e
+        on d.id=e.deptId;
     ```
 3. 右外连接查询(右表数据全部显示，如果左边不满足，则显示null)
     ```sql
-        SELECT d.name,e.name
-        FROM employee e
-        RIGHT OUTER JOIN dept d
-        ON e.deptId=d.id;
+        select d.name,e.name
+        from employee e
+        right outer join dept d
+        on e.deptId=d.id;
     ```
     
     
