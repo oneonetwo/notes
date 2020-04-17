@@ -2,7 +2,6 @@
 1. 项目下添加文件
     1. jenkins配置文件：Jenkinsfile  Jenkinsfile-QA Jenkinsfile-PROD 文件
     2. pm2配置入口文件： ecosystem.config.js
-    3. package.json: 添加"prd": "pm2 start ./bin/www"；
 2. 登录Jenkins平台  
     1. 新建Scan 多分支流水线 Triggers
     2. Branch Sources 关联git 添加git项目地址
