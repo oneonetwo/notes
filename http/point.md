@@ -144,13 +144,12 @@
       > 2. 搜索引擎的爬虫看到 301，也会更新索引库，不再使用老的 URI。浏览器或者爬虫看到 302，会认为原来的 URI 仍然有效，但暂时不可用，下次访问还是用原 URI。
       > 3. 性能损耗，一次“重定向”实际上发送了两次 HTTP 请求，第一次请求返回响应头字段 Location 指示了要跳转的 URI
 5. 数据协商  
-
-    | 客户端 | =》 | 服务端 |
-    | -----： | :----: | :----- |
+    | 客户端 | => | 服务端 |
+    | -----:| :----: | :----- |
     | Accept | 接受的类型 | content-Type |
     | Accept-Encoding | 限制服务端数据压缩的方式 | content-Encoding |
     |	Accept-Language | 语言 | content-language |
-    |	User-agent | 浏览器的想灌的信息 | 
+    |	User-agent | 浏览器的想灌的信息 | |
     
 6. HTTP传输大文件的方法
     - 通常浏览器在发送请求时都会带着 `Accept-Encoding` 头字段，里面是浏览器支持的压缩格式列表，例如 gzip、deflate、br 等，这样服务器就可以从中选择一种压缩算法，放进 `Content-Encoding` 响应头里，再把原数据压缩后发给浏览器。
