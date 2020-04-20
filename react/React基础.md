@@ -164,10 +164,52 @@
 
 ***
 ### 二. React Reference
-#### 1. ReactDOM
-#### 2. DOM 元素
-#### 3. 合成事件
-#### 4. Test Utilities
+#### 1. [React.Component](https://react.docschina.org/docs/react-component.html)
+    - [生命周期速查](http://projects.wojtekmaj.pl/react-lifecycle-methods-diagram/)
+1. 挂载时
+    - 当组件实例被创建并插入 DOM 中时，其生命周期调用顺序如下： 
+    constructor() => static getDerivedStateFromProps() => render()  => componentDidMount()`
+    > 1. constructor(props)
+        - 如果不初始化 state 或不进行方法绑定，则不需要为 React 组件实现构造函数。  
+        - 通常，在 React 中，构造函数仅用于以下两种情况：  
+            - **避免将 props 的值复制给 state！这是一个常见的错误：**
+    ```javascript
+        constructor(props) {
+            super(props);
+            // 不要在这里调用 this.setState()
+            this.state = { counter: 0 };
+            this.handleClick = this.handleClick.bind(this);
+            // 不要这样做
+            //this.state = { color: props.color };
+        }
+    ```
+    > 2. componentDidMount() 会在组件挂载后（插入 DOM 树中）立即调用。
+    > 3. static getDerivedStateFromProps(props, state)
+        - 让组件在 props 变化时更新 state。
+2. 更新时,当组件的 props 或 state 发生变化时会触发更新:
+    > 1. static getDerivedStateFromProps()
+    > 2. shouldComponentUpdate()
+    > 3. render()
+    > 4. getSnapshotBeforeUpdate()
+    > 5. componentDidUpdate()
+3. 卸载时，当组件从 DOM 中移除时会调用如下方法：
+    > 1. componentWillUnmount()
+4. 错误处理    
+    > 1. static getDerivedStateFromError()
+    > 2. componentDidCatch()
+5. 其他的APIs
+    > 1. setState()
+    > 2. forceUpdate()
+6. class属性
+    > 1. defaultProps
+    > 2. displayName
+7. 实例属性
+    - props
+    - state
+#### 2. ReactDOM
+#### 3. DOM 元素
+#### 4. 合成事件
+#### 5. Test Utilities
 -  Facebook 内部，我们使用 Jest 来轻松实现 JavaScript 测试。
 ***
 
