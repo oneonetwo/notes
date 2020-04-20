@@ -46,6 +46,7 @@
     - keys() values() entries() 都返回遍历器对象，可用 `for...of` 循环遍历
     - includes() 返回布尔值，表示某个数组是否包含给定的值
       > 1. indexOf有两个缺点 一是：不够语义化，二是 内部使用严格判断（===）
+      > 2. includes()内部使用Object.is()
       
       ```javascript          
                 [NaN].indexOf(NaN)   //-1
