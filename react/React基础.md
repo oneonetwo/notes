@@ -73,9 +73,26 @@
           )
         }
     ```
-#### 2. Context
+#### 2. [Context](https://react.docschina.org/docs/context.html#dynamic-context)
     - Context 设计目的是为了共享那些对于一个组件树而言是“全局”的数据
-1. 使用 Context 之前的考虑
+1. Context
+    > 1. React.createContext  创建一个 Context 对象
+        - 消费组件只会从组件树离自身最近的 Provider 中读取当前 context 的值
+        - 只有当组件所处的树中没有匹配到 Provider 时，其 defaultValue 参数才会生效。
+    > 2. Context.Provider
+        - 每个 Context 对象返回一个 Provide React组件，允许消费组件订阅 context 的变化；
+        - 当 Provider中的value值发生变化，他内部的所有消费组件都会重新渲染，不受制于 shouldComponentUpdate 函数，因此consumer组件在祖先组件退出更新的情况下也能更新；
+        - 通过新旧值来确定变化，使用了`Object.is()`;
+    > 3. Class.contextType;
+        - 会被重赋值为一个由 React.createContext() 创建的 Context 对象, 让消费组件用 `this.context`消费最近的context的值;
+        - 只通过该 API 订阅单一 context;
+    > 4. Context.Consumer()
+        - 让你在函数式组件中完成订阅 context; 
+    > 5. [动态 Context](https://react.docschina.org/docs/context.html#dynamic-context);
+    > 6. [在嵌套组件中更新Context](https://react.docschina.org/docs/context.html#updating-context-from-a-nested-component)
+        - 通过context传递一个函数，使得consumers组件更新context;
+    > 7. [消费多个 Context](https://react.docschina.org/docs/context.html#consuming-multiple-contexts)
+3. 使用 Context 之前的考虑
     > 1. 如果你只是想避免层层传递一些属性，组件组合（component composition）有时候是一个比 context 更好的解决方案。
     > 2. 只有最顶部的组件知道如何使用这些属性；
     ```javascript
@@ -97,7 +114,6 @@
             );
         }
     ```
-2. 
 #### 3. 错误边界
 #### 4. Refs 转发
 #### 5. 高阶组件
