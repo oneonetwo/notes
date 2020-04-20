@@ -88,10 +88,44 @@
         - 只通过该 API 订阅单一 context;
     > 4. Context.Consumer()
         - 让你在函数式组件中完成订阅 context; 
-    > 5. [动态 Context](https://react.docschina.org/docs/context.html#dynamic-context);
-    > 6. [在嵌套组件中更新Context](https://react.docschina.org/docs/context.html#updating-context-from-a-nested-component)
+    > 5. useContext
+        - useContext(MyContext) 相当于 class 组件中的 static contextType = MyContext 或者 <MyContext.Consumer>。
+        - 接收一个 context 对象（React.createContext 的返回值）并返回该 context 的当前值。
+    > 6. [动态 Context](https://react.docschina.org/docs/context.html#dynamic-context);
+    > 7. [在嵌套组件中更新Context](https://react.docschina.org/docs/context.html#updating-context-from-a-nested-component)
         - 通过context传递一个函数，使得consumers组件更新context;
-    > 7. [消费多个 Context](https://react.docschina.org/docs/context.html#consuming-multiple-contexts)
+    > 8. [消费多个 Context](https://react.docschina.org/docs/context.html#consuming-multiple-contexts)
+    ```javascript
+    //一个组件可能消费多个context
+        function Content(){
+            return (
+                <ThemeContext.Consumer>
+                    { theme => (
+                        <UserContext.Consumer>
+                            { user=>(
+                                <ProfilePage user={user} theme={theme} />           
+                            )}
+                        </UserContext.Consumer>
+                    )}
+                </ThemeContext.Consumer>
+            )
+        }
+    //useContext改良
+        funciton Content(){
+            const theme = useContext(ThemeContext);
+            const user = userContext(UserContext);
+            return (<ProfilePage user={user} theme={theme} />);
+        }
+    ```
+2. **注意事项**
+    > 1. 举个例子，当每一次 Provider 重渲染时，以下的代码会重渲染所有下面的 consumers 组件，因为 value 属性总是被赋值为新的对象：
+    ```javascript
+        <MyContext.Provider value={{something: 'something'}}>
+    ```
+    > 2. 为了防止这种情况，将 value 状态提升到父节点的 state 里：
+    ```javascript
+        <Provider value={this.state.value}>
+    ```
 3. 使用 Context 之前的考虑
     > 1. 如果你只是想避免层层传递一些属性，组件组合（component composition）有时候是一个比 context 更好的解决方案。
     > 2. 只有最顶部的组件知道如何使用这些属性；
