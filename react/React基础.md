@@ -185,24 +185,39 @@
     ```
     > 2. componentDidMount() 会在组件挂载后（插入 DOM 树中）立即调用。
     > 3. static getDerivedStateFromProps(props, state)
+        - 每次在 Render 之前调用，
         - 让组件在 props 变化时更新 state。
-2. 更新时,当组件的 props 或 state 发生变化时会触发更新:
-    > 1. static getDerivedStateFromProps()
-    > 2. shouldComponentUpdate()
-    > 3. render()
-    > 4. getSnapshotBeforeUpdate()
-    > 5. componentDidUpdate()
+2. 更新时,
+    - 当组件的 props 或 state 发生变化时会触发更新:
+    ` static getDerivedStateFromProps() => shouldComponentUpdate() => render() => getSnapshotBeforeUpdate() => componentDidUpdate() `
+    > 1. shouldCOmponentUpdate(nextProps, nextState)
+        - 首次渲染或使用 forceUpdate() 时不会调用该方法。
+    > 2. getSnapshotBeforeUpdate(prevProps, prevState)
+        - getSnapshotBeforeUpdate() 在最近一次渲染输出（提交到 DOM 节点）之前调用。（例如，滚动位置）。
+        - 应返回 snapshot 的值（或 null）。它的返回值将作为 componentDidUpdate() 的第三个参数 “snapshot” 参数传递。
+    > 3. componentDidUpdate(prevProps, prevState, snapshot)
+        - **componentDidUpdate() 中直接调用 setState()，但请注意它必须被包裹在一个条件语句里**
 3. 卸载时，当组件从 DOM 中移除时会调用如下方法：
     > 1. componentWillUnmount()
-4. 错误处理    
-    > 1. static getDerivedStateFromError()
-    > 2. componentDidCatch()
+        
+4. 错误处理  Error boundaries  
+    - Error boundaries 是 React 组件，它会在其**子组件树**中的任何位置捕获 JavaScript 错误，并记录这些错误，展示降级 UI 而不是崩溃的组件树。
+    > 1. static getDerivedStateFromError(error)
+        - 此生命周期会在后代组件抛出错误后被调用。 它将抛出的错误作为参数，并返回一个值以更新 state
+        - getDerivedStateFromError() 会在渲染阶段调用，因此不允许出现副作用。
+    > 2. componentDidCatch(error, info)
+        - 此生命周期在后代组件抛出错误后被调用。 它接收两个参数：
+        - componentDidCatch() 会在“提交”阶段被调用，因此允许执行副作用。
 5. 其他的APIs
     > 1. setState()
     > 2. forceUpdate()
+        - component.forceUpdate(callback)
+        - 调用 forceUpdate() 将致使组件调用 render() 方法，此操作会跳过该组件的 shouldComponentUpdate()。
 6. class属性
     > 1. defaultProps
+        - defaultProps 可以为 Class 组件添加默认 props。
     > 2. displayName
+        - displayName 字符串多用于调试消息。
 7. 实例属性
     - props
     - state
