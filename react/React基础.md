@@ -1,37 +1,36 @@
 ### 一. React基础
 #### 1. 代码分割
-> 1. import()  
->> 1. 由于 import() 会返回一个 promise，因此它可以和 async 函数一起使用
+  - 1. import()  
+    > 1. 由于 import() 会返回一个 promise，因此它可以和 async 函数一起使用
+    ```javascript   
+        //1.使用之前        
+            import { add } from './math';
+            add(16,26);
 
-        ```javascript   
-            //1.使用之前        
-                import { add } from './math';
+        //2.使用之后
+            function _add(callback){
+                return import(/* webpackChunkName: "mymath" */ './math').then( add => 
+                    {
+                       return callback(add)
+                    })
+            }        
+            _add((add)=>{
                 add(16,26);
+            }).then(res=>{
+                console.log(res);
+            })
 
-            //2.使用之后
-                function _add(callback){
-                    return import(/* webpackChunkName: "mymath" */ './math').then( add => 
-                        {
-                           return callback(add)
-                        })
-                }        
-                _add((add)=>{
-                    add(16,26);
-                }).then(res=>{
-                    console.log(res);
-                })
-
-            //3.使用async简化后的例子
-                 function _add(callback){
-                    const add =  await import(/* webpackChunkName: "mymath" */ './math');
-                    return callback(add);
-                }        
-                _add((add)=>{
-                    add(16,26);
-                }).then(res=>{
-                    console.log(res);
-                })
-             ```
+        //3.使用async简化后的例子
+             function _add(callback){
+                const add =  await import(/* webpackChunkName: "mymath" */ './math');
+                return callback(add);
+            }        
+            _add((add)=>{
+                add(16,26);
+            }).then(res=>{
+                console.log(res);
+            })
+         ```
 > 2. React.lazy
     1. lazy接受一个函数，这个函数动态调用`import()`,返回一个Promsie;该 Promise 需要 resolve 一个 defalut export 的 React 组件。
     2. 然后应在 Suspense 组件中渲染 lazy 组件，如此使得我们可以使用在等待加载 lazy 组件时做优雅降级（如 loading 指示器等）。
