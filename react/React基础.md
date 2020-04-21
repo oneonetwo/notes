@@ -2,7 +2,7 @@
 ###### 1. 代码分割
 1. import()  
     > 1. 由于 import() 会返回一个 promise，因此它可以和 async 函数一起使用
-    ```javascript   
+    ```typescript   
         //1.使用之前        
             import { add } from './math';
             add(16,26);
@@ -156,26 +156,72 @@
     > 3. 服务端渲染
     > 4. 它自身抛出来的错误（并非它的子组件
 #### 4. Refs 转发
-#### 5. 高阶组件
+#### 5. [高阶组件](https://react.docschina.org/docs/higher-order-components.html)
 1. 特点：
     > 1. 基于React的组合特性实现复用逻辑的色痕迹模式，参数为组件，返回值为新组件的函数。
     > 2. HOC 不会修改传入的组件，也不会使用继承来复制其行为。相反，HOC 通过将组件包装在容器组件中来组成新组件。HOC 是纯函数，没有副作用。
     > 3. 操作props,被包装组件接收来自容器组件的所有 prop，同时也接收一个新的用于 render 的 data prop。
 2. 种类及作用
-3. 应用：
-2. 约定：将不相关的 props 传递给被包裹的组件
-    > 1. 保证了 HOC 的灵活性以及可复用性。
-3. connect 是一个返回高阶组件的高阶函数！
-4. 务必复制静态方法
-    ```javascript
-        function enhance(WrappedComponent) {
-            class Enhance extends React.Component {/*...*/}
-            // 必须准确知道应该拷贝哪些方法
-            Enhance.staticMethod = WrappedComponent.staticMethod;
-            return Enhance;
-        }
-    ```
-5. 高阶函数中Refs 不会被传递,  使用React.forwardRef API
+    > 1. 代理方式
+        - 操作props
+        - 抽取状态
+        - 包装组件
+    > 2. [继承方式](https://juejin.im/post/5ad7ee045188252e93239dd7)
+        - 一般不用
+        - 操作生命周期函数是继承方式的高阶组件所特有的功能。这是由于继承方式的高阶组件返回的新组件继承于作为参数传入的组件，两个组件的生命周期是共用的，因此可以重新定义组件的生命周期函数并作用于新组件。而代理方式的高阶组件作为参数输入的组件与输出的组件完全是两个生命周期，因此改变生命周期函数也就无从说起了。
+4. connect 是一个返回高阶组件的高阶函数！
+5. 务必复制静态方法,Refs 不会被传递,高阶函数命名；
+//代理方式
+```javascript
+    function Resizable(child){
+        return Class extends Componment{
+                    constructor(props){
+                        super(props)
+                        this.state = {
+                            size: [window.innerWidth, window.innerHeight];
+                        }
+                    }
+                    let onResize = ()=>{
+                        this.setState({
+                            size: [window.innerWidth, window.innerHeight];
+                        })
+                    }
+                    componmentDidMount() {
+                        window.addEventListener('resize', this.onResize);
+                    }
+                    componmentWillUnMount(){
+                        window.removeEventListener('resize', this.onResize);
+                    }
+                    render(){
+                        const size = {this.state};
+                        return <child size={size} {...props}/>
+                    }
+                }
+    }
+
+    Class Foo extends Componment {
+        const { size } = this.props; 
+        render (){
+            return(
+                <div>
+                    {size}
+                </div>
+            )
+        } 
+    }
+
+    const WrapedFpp = Resizable(Foo);
+
+
+    function withSubscription(WrappedComponent) {
+        class WithSubscription extends React.Component {/* ... */}
+        //高阶函数命名
+        WithSubscription.displayName = `WithSubscription(${getDisplayName(WrappedComponent)})`;
+        //复制静态方法
+        WithSubscription.staticMethod = WrappedComponent.staticMethod;
+        return WithSubscription;
+    }
+```
 #### 6. Render Props
 #### 7. 与第三方库协同
 #### 8. 性能优化
