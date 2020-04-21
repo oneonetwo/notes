@@ -2,7 +2,6 @@
 ###### 1. 代码分割
 1. import()  
     > 1. 由于 import() 会返回一个 promise，因此它可以和 async 函数一起使用
-    <font size=7>
     ```javascript   
         //1.使用之前        
             import { add } from './math';
@@ -172,59 +171,81 @@
         - 一般不用
         - 操作生命周期函数是继承方式的高阶组件所特有的功能。这是由于继承方式的高阶组件返回的新组件继承于作为参数传入的组件，两个组件的生命周期是共用的，因此可以重新定义组件的生命周期函数并作用于新组件。而代理方式的高阶组件作为参数输入的组件与输出的组件完全是两个生命周期，因此改变生命周期函数也就无从说起了。
 4. connect 是一个返回高阶组件的高阶函数！
-5. 务必复制静态方法,Refs 不会被传递,高阶函数命名；
-//代理方式
-```javascript
-    function Resizable(child){
-        return Class extends Componment{
-                    constructor(props){
-                        super(props)
-                        this.state = {
-                            size: [window.innerWidth, window.innerHeight];
+5. 务必复制静态方法,Refs 不会被传递,高阶函数命名；    
+    ```javascript
+        //代理方式
+        function Resizable(child){
+            return Class extends Componment{
+                        constructor(props){
+                            super(props)
+                            this.state = {
+                                size: [window.innerWidth, window.innerHeight];
+                            }
+                        }
+                        let onResize = ()=>{
+                            this.setState({
+                                size: [window.innerWidth, window.innerHeight];
+                            })
+                        }
+                        componmentDidMount() {
+                            window.addEventListener('resize', this.onResize);
+                        }
+                        componmentWillUnMount(){
+                            window.removeEventListener('resize', this.onResize);
+                        }
+                        render(){
+                            const size = {this.state};
+                            return <child size={size} {...props}/>
                         }
                     }
-                    let onResize = ()=>{
-                        this.setState({
-                            size: [window.innerWidth, window.innerHeight];
-                        })
-                    }
-                    componmentDidMount() {
-                        window.addEventListener('resize', this.onResize);
-                    }
-                    componmentWillUnMount(){
-                        window.removeEventListener('resize', this.onResize);
-                    }
-                    render(){
-                        const size = {this.state};
-                        return <child size={size} {...props}/>
-                    }
-                }
-    }
+        }
 
-    Class Foo extends Componment {
-        const { size } = this.props; 
-        render (){
-            return(
-                <div>
-                    {size}
-                </div>
-            )
-        } 
-    }
+        Class Foo extends Componment {
+            const { size } = this.props; 
+            render (){
+                return(
+                    <div>
+                        {size}
+                    </div>
+                )
+            } 
+        }
 
-    const WrapedFpp = Resizable(Foo);
+        const WrapedFpp = Resizable(Foo);
 
 
-    function withSubscription(WrappedComponent) {
-        class WithSubscription extends React.Component {/* ... */}
-        //高阶函数命名
-        WithSubscription.displayName = `WithSubscription(${getDisplayName(WrappedComponent)})`;
-        //复制静态方法
-        WithSubscription.staticMethod = WrappedComponent.staticMethod;
-        return WithSubscription;
-    }
-```
-#### 6. Render Props
+        function withSubscription(WrappedComponent) {
+            class WithSubscription extends React.Component {/* ... */}
+            //高阶函数命名
+            WithSubscription.displayName = `WithSubscription(${getDisplayName(WrappedComponent)})`;
+            //复制静态方法
+            WithSubscription.staticMethod = WrappedComponent.staticMethod;
+            return WithSubscription;
+        }
+    ```
+#### 6. [Render Props](https://react.docschina.org/docs/render-props.html);
+1. 概念： 一种在 React 组件之间使用一个值为函数的 prop 共享代码的简单技术
+2. 也是基于React组件组合的方式，我们都知道 prop能传递组件，那么用prop传递一个函数包裹着组件就是渲染属性了。
+3. 注意：
+    > 1. 将 Render Props 与 React.PureComponent 一起使用时要小心,因为浅比较 props 的时候总会得到 false
+    ```javascript
+        class MouseTracker extends React.Component {
+            // 定义为实例方法，`this.renderTheCat`始终
+            // 当我们在渲染中使用它时，它指的是相同的函数
+            renderTheCat(mouse) {
+                return <Cat mouse={mouse} />;
+            }
+
+            render() {
+                return (
+                    <div>
+                        <h1>Move the mouse around!</h1>
+                        <Mouse render={this.renderTheCat} />
+                    </div>
+                );
+            }
+        }
+    ```
 #### 7. 与第三方库协同
 #### 8. 性能优化
 #### 9. Protals
