@@ -157,6 +157,25 @@
     > 4. 它自身抛出来的错误（并非它的子组件
 #### 4. Refs 转发
 #### 5. 高阶组件
+1. 特点：
+    > 1. 基于React的组合特性实现复用逻辑的色痕迹模式，参数为组件，返回值为新组件的函数。
+    > 2. HOC 不会修改传入的组件，也不会使用继承来复制其行为。相反，HOC 通过将组件包装在容器组件中来组成新组件。HOC 是纯函数，没有副作用。
+    > 3. 操作props,被包装组件接收来自容器组件的所有 prop，同时也接收一个新的用于 render 的 data prop。
+2. 种类及作用
+3. 应用：
+2. 约定：将不相关的 props 传递给被包裹的组件
+    > 1. 保证了 HOC 的灵活性以及可复用性。
+3. connect 是一个返回高阶组件的高阶函数！
+4. 务必复制静态方法
+    ```javascript
+        function enhance(WrappedComponent) {
+            class Enhance extends React.Component {/*...*/}
+            // 必须准确知道应该拷贝哪些方法
+            Enhance.staticMethod = WrappedComponent.staticMethod;
+            return Enhance;
+        }
+    ```
+5. 高阶函数中Refs 不会被传递,  使用React.forwardRef API
 #### 6. Render Props
 #### 7. 与第三方库协同
 #### 8. 性能优化
