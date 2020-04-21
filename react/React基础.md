@@ -148,7 +148,13 @@
             );
         }
     ```
-#### 3. 错误边界
+#### 3. [错误边界（Error Boundaries）](https://react.docschina.org/docs/error-boundaries.html#introducing-error-boundaries)
+1. 可以捕获并打印发生在其子组件树任何位置的 JavaScript 错误(render，commit阶段)，并且，它会渲染出备用 UI；
+2. 错误边界无法捕获以下场景中产生的错误：
+    > 1. 事件处理（了解更多）
+    > 2. 异步代码（例如 setTimeout 或 requestAnimationFrame 回调函数）
+    > 3. 服务端渲染
+    > 4. 它自身抛出来的错误（并非它的子组件
 #### 4. Refs 转发
 #### 5. 高阶组件
 #### 6. Render Props
