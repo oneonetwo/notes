@@ -1,5 +1,5 @@
 ### 一. React基础
-#### 1. 代码分割
+##### 1. 代码分割
 1. import()  
     > 1. 由于 import() 会返回一个 promise，因此它可以和 async 函数一起使用
     ```javascript   
