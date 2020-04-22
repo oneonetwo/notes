@@ -175,10 +175,124 @@
 2. 访问refs
     > 1. `const node = this.myRef.current;` 表示的是底层的dom或者是组件的挂载实例；
     > 2. 你不能在函数组件上中使用ref属性，因为他们没有实例；
-3. 转发refs
-    
     ```javascript
-        
+        //createRef
+        //dom添加 Ref
+        class CustomTextInput  extends Component{
+            constructor(props){
+                super(props);
+                //1. createRef创建
+                this.textInput = React.createRef();
+                //2. 回调函数
+                this.textInput2 = null;
+                this.setTextInputRef  = element => {
+                    this.textInput2 = element;
+                };
+            }
+
+            focusTextInput(){
+                //通过 "current" 来访问 DOM 节点
+                this.textInput.current.focus();
+            }
+
+            render(){
+                return (
+                    <div
+                        onClick={this.focusTextInput
+                    >
+                        <input  type="text" ref={this.textInput} />
+                        <input  type="text" ref={this.setTextInputRef} />
+
+                    </div>	
+
+
+                    )
+
+            }
+        }
+        //为 class 组件添加 Ref,
+        class AutoFocus extends Component{
+            constructor(props){
+                super(props);
+                this.textInput = React.createRef();
+            }
+            componentDidMount(){
+                //使用CustomTextInput组件中focusTextInput();
+                this.textInput.current.focusTextInput();
+            }
+            render (){
+                return (
+                    <CustomTextInput ref={this.textInput}>
+                )
+            }
+        }
+    ```
+3. 转发refs
+    > 1. 组件间传递回调形式的 refs
+    > 2. 组件派发refs
+    > 3. 高阶组件中refs转发
+    ```javascript
+        //组件间传递回调形式的 refs
+        function CustomTextInput(props){
+            return (
+                <div>
+                  <input type="text" ref={props.textInput} />
+                </div>
+            )
+        }
+
+        class Parent extends Component{
+            render(){
+                return (
+                    <div>
+                        <CustomTextInput textInput={el=> this.inputElement=el}>
+                    </div>
+                    )
+            }
+        }
+        //组件派发refs
+        const  CustomButton = React.forwardRef((props,ref)=>{
+            return (
+                <button ref = {ref}>
+                    { props.children }	
+                </button>
+            )
+        })
+
+        function Parent(){
+            const buttonRef = React.createRef();
+            return (
+                    <CustomButton ref = {buttonRef}>
+                        Click me!
+                    </CustomButton>
+            )
+
+        }
+
+        //高阶组件中refs转发
+        function logProps(Component){
+            function LogProps(props) {
+                const {forwardRef} = props;
+                return (
+                    <Component {...props} ref={forwardRef} />
+                )
+            }
+            return React.forwardRef((props,ref)=>{
+                return (
+                    <LogProps {...props} forwardRef={ref}/>
+                )
+            })
+        }
+        const CustomButtonHoc = logProps(CustomButton);
+        function Parent(){
+            const buttonRef = React.createRef();
+            return (
+                    <CustomButtonHoc ref={buttonRef}>
+                        Click me!
+                    </CustomButtonHoc>
+            )
+
+        }       
     ```
 #### 5. [高阶组件](https://react.docschina.org/docs/higher-order-components.html)
 1. 特点：
