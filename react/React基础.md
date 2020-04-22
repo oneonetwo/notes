@@ -158,10 +158,28 @@
     > 3. 服务端渲染
     > 4. 它自身抛出来的错误（并非它的子组件
     
-#### 4. Refs 
-1. 创建refs,
+#### 4. [Refs](https://react.docschina.org/docs/refs-and-the-dom.html)
+1. 使用场景
+    > 1. 管理焦点，文本选择或媒体播放。
+    > 2. 触发强制动画。
+    > 3. 集成第三方 DOM 库。
+1. 创建refs,三种方式
     > 1. React.createRef()
-
+        - 创建后，并通过ref 属性附加到React元素，在构造组件时，将refs分配给实例属性，一遍在整个组件中引用；
+    > 2. React.useRef()
+        - useRef 返回一个可变的 ref 对象，其 .current 属性被初始化为传入的参数
+        - 变更 .current 属性不会引发组件重新渲染
+    > 3. 回调Refs
+        - 不同于createRef()创建的 ref 属性，你会传递一个函数，函数中接受React组件实例或者dom作为参数，在其他地方存储和访问；
+        - React 绑定或解绑 DOM 节点的 ref 时运行某些代码
+2. 访问refs
+    > 1. `const node = this.myRef.current;` 表示的是底层的dom或者是组件的挂载实例；
+    > 2. 你不能在函数组件上中使用ref属性，因为他们没有实例；
+3. 转发refs
+    
+    ```javascript
+        
+    ```
 #### 5. [高阶组件](https://react.docschina.org/docs/higher-order-components.html)
 1. 特点：
     > 1. 基于React的组合特性实现复用逻辑的色痕迹模式，参数为组件，返回值为新组件的函数。
@@ -234,22 +252,53 @@
 3. 注意：
     > 1. 将 Render Props 与 React.PureComponent 一起使用时要小心,因为浅比较 props 的时候总会得到 false
     ```javascript
-        class MouseTracker extends React.Component {
-            // 定义为实例方法，`this.renderTheCat`始终
-            // 当我们在渲染中使用它时，它指的是相同的函数
+        class Cat extends Component {
+            render() {
+                const mouse = this.props.mouse;
+                return (
+                    <img src="/cat.jpg" style={{ position: 'absolute', left: mouse.x, top: mouse.y }} />
+                );
+            }
+        }
+
+        class Mouse extends Component {
+            constructor(props) {
+                super(props);
+                this.handleMouseMove = this.handleMouseMove.bind(this);
+                this.state = { x: 0, y: 0 };
+            }
+
+            handleMouseMove(event) {
+                this.setState({
+                    x: event.clientX,
+                    y: event.clientY
+                });
+            }
+            render() {
+                return (
+                <div style={{ height: '100vh' }} onMouseMove={this.handleMouseMove}>
+                    {this.props.render(this.state)}
+                </div>
+                );
+            }
+        }
+
+        class MouseTracker extends Component {
+          // 定义为实例方法，`this.renderTheCat`始终
+          // 当我们在渲染中使用它时，它指的是相同的函数
             renderTheCat(mouse) {
                 return <Cat mouse={mouse} />;
             }
-
             render() {
                 return (
                     <div>
-                        <h1>Move the mouse around!</h1>
+                        <h1>移动鼠标!</h1>
                         <Mouse render={this.renderTheCat} />
                     </div>
                 );
             }
         }
+        export default MouseTracker;
     ```
 #### 7. 与第三方库协同
 #### 8. 性能优化
