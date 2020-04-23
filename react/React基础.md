@@ -421,6 +421,46 @@
     1. 通过 Portal 进行事件冒泡，尽管 portal 可以被放置在 DOM 树中的任何地方，但在任何其他方面，其行为和普通的 React 子节点行为一致。
 2. 用法： `ReactDOM.createPortal(child, container)`
 3. 场景：对话框、悬浮卡以及提示框
+    ```javascript
+        import React,{ useState,useEffect,createPortal} from 'react';
+        import ReactDOM  from 'react-dom';
+        // 要渲染到的节点
+        const modalRoot =document.getElementById('modal')
+
+        function Modal(props){
+            let el = document.createElement('div');
+            // 仅当 Modal 被插入 DOM 树中才能渲染子元素。
+            console.log(props);
+            useEffect(() => {
+                console.log(modalRoot)
+                modalRoot.appendChild(el);
+                return ()=>{
+                    modalRoot.removeChild(el);
+                }
+            });
+
+            return ReactDOM.createPortal(
+                props.children,
+                el
+            )
+        }
+
+        function Parent(props){
+            let [clicks, setClicks] = useState(0);
+            return (
+                <div onClick={()=>setClicks(clicks+1)}>
+                    <p>Number of clicks: {clicks}</p>
+                    <p>the onClick handler.</p>
+                    <Modal>
+                        // 这个按钮的点击事件会冒泡到父元素
+                        // 因为这里没有定义 'onClick' 属性
+                        <button>click</button>
+                    </Modal>
+                 </div>
+                )
+        }
+
+    ```
 #### 10. Profiler API
 #### 11. 非受控组件
 #### 12. Web Components
