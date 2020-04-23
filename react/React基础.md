@@ -416,7 +416,11 @@
     ```
 #### 7. 与第三方库协同
 #### 8. 性能优化
-#### 9. Protals
+#### 9. [Protals](https://react.docschina.org/docs/portals.html)
+1. 概念: 将子节点渲染到父节点以外的dom节点的方案
+    1. 通过 Portal 进行事件冒泡，尽管 portal 可以被放置在 DOM 树中的任何地方，但在任何其他方面，其行为和普通的 React 子节点行为一致。
+2. 用法： `ReactDOM.createPortal(child, container)`
+3. 场景：对话框、悬浮卡以及提示框
 #### 10. Profiler API
 #### 11. 非受控组件
 #### 12. Web Components
