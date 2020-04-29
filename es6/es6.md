@@ -341,6 +341,44 @@
       ```
 - Es7 提案： 是一种与类（class）相关的语法，用来注释或修改类和类方法；`@ + 函数名`
     - 类的装饰
+      > 1. 装饰器就是一个对类进行处理的函数，装饰器函数的第一个参数，就是要装饰的目标类
+      ```javascript
+          @decorator
+          class A {}
+
+          //等同于
+          A = decorator(A) || A
+      ```
+      > 2. 装饰器对类的行为的改变是代码编译时发生的，而不是在运行时。本质就是，装饰器是编译时执行的函数。
+      ```javascript
+      //通过装饰器mixins，把Foo对象的方法添加到了MyClass的实例上面。可以用Object.assign()模拟这个功能
+      //mixins.js
+        export function mixins(...list){
+            return function(target){
+                Object.assign(target.prototype, ...list);
+            }
+        }
+
+        // main.js
+        import { mixins } from './mixins.js'
+        const Foo = {
+            foo(){console.log(''foo)};
+        }
+
+        @mixins(Foo)
+        class MyClass{ }
+
+        let obj = new MyClass();
+        obj.foo();
+      ```
+      > 3. 实际开发中，React 与 Redux 库结合使用时，常常需要写成下面这样。
+      ```javascript
+        class MyReactComponent extends React.Component {}
+        export default connect(mapStateToProps, mapDispatchToProps)(MyReactComponent);
+        //有了装饰器，就可以改写上面的代码。
+        @connect(mapStateToProps, mapDispatchToProps)
+        export default class MyReactComponent extends React.Component {}
+      ```
     - 方法的装饰
     - 为什么装饰器不能用于函数？
     - core-decorators.js
