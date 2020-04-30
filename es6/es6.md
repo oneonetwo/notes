@@ -312,7 +312,7 @@
     - Map
       > 1. 它类似于对象，也是键值对的集合，但是“键”的范围不限于字符串，各种类型的值（包括对象）都可以当作键。
       > 2. Map 转为数组就是使用扩展运算符（...）  
-11. 装饰器（Decorator）
+11. [装饰器（Decorator）](https://es6.ruanyifeng.com/#docs/decorator)
 - 作为一种设计模式
     - 为对象添加新的功能， 不改变其原有的结构和功能
       ```javascript
@@ -379,8 +379,86 @@
         @connect(mapStateToProps, mapDispatchToProps)
         export default class MyReactComponent extends React.Component {}
       ```
-    - 方法的装饰
+    - 方法的装饰,
+      > 1. **装饰器的第一个参数是类的原型对象，第二个参数是要装饰的属性名，第三个参数是该属性的描述对象**
+      > 2. 装饰器不仅可以装饰类，还可以装饰属性， 
+        >> - 装饰器 `readonly` `nonenumerable`
+        ```javascript
+        //只读
+        function readonly(target, name, descriptor){
+            descriptor.writable = false;
+            return descriptor;
+        }
+        //类似 Object.defineProperty(Person.prototype, 'name', descriptor);
+
+        //不可枚举
+        function nonenumberable(target, name, descriptor){
+            descriptor.enumerable = false;
+            return descriptor;
+        }
+
+        class Person {
+            @readonly
+            name() { return `${this.first} ${this.last}`};
+
+            @nonenumerable
+            get kidCount() { return this.children.length; }
+        }   
+        ```
+        >> - `log` 日志装饰器，`descript.value`很明显就是属性的值，就是被装饰的函数的自身。
+        ```javascript
+        //输出日志
+        function log(target, name, descriptor){
+            let oldValue = descriptor.value;
+            descriptor.value = function(){
+                console.log(`Calling ${name} with`, arguments);
+                return oldValue.apply(this, argument);
+            }
+            return descriptor;
+        }
+
+        class Math{
+            @log
+            add(a,b){
+                return a+b;
+            }
+        }
+        const math = new Math;
+        math.add(1,4)
+        ```
     - 为什么装饰器不能用于函数？
+      > 1. 不用于函数，因为函数存在函数提升；
     - core-decorators.js
+      > 1. 第三方模块，提供了几个常见的装饰器，
+        >> - `@autobind` 装饰器是的方法中的this对象，绑定原始的对象；
+        >> - `@readonly` 装饰器属性或者方法不可写
+        >> - `@override` 装饰器检查子类的方法，是否正确覆盖了父类的同名方法
+        >> - `@deprecate` 在控制台显示一条警告，表示该方法将被遗弃；
+    - 使用装饰器实现自动发布事件
+  
     - Mixin
-    - Trait
+      > 1. 对象继承的一种方案，
+      > 2. 可以用对象的原型，通过Object.assign方法
+      ```javascript
+        function Mixin(...list){
+            return function(target){
+                Object.assign(target.prototype, ...list);
+            }
+        }
+      ```
+      > 3. 上面的方法会改写MyClass类的prototype对象， 也可以用class的继承实现Mixin,
+      ```javascript
+      //一个办法是在MyClass和MyBaseClass之间插入一个混入类,MyMixin是一个混入类生成器，接受superclass作为参数，然后返回一个继承superclass的子类，该子类包含一个foo方法。
+      let MyMixin = (superClass) => class extends superclass{
+          foo(){
+              console.log('foo from MyMixin');
+          }
+      }
+      //目标类再去继承这个混入类，就达到了混入'foo'方法的目的
+      class Myclass extends MyMixin(BaseClass){ /*...*/ }
+      
+      let c = new Myclass();
+      c.foo()
+      
+        
+      ```
