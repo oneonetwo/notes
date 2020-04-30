@@ -440,11 +440,11 @@
       > 1. 对象继承的一种方案，
       > 2. 可以用对象的原型，通过Object.assign方法
       ```javascript
-        function Mixin(...list){
-            return function(target){
-                Object.assign(target.prototype, ...list);
-            }
-        }
+      function Mixin(...list){
+          return function(target){
+              Object.assign(target.prototype, ...list);
+          }
+      }
       ```
       > 3. 上面的方法会改写MyClass类的prototype对象， 也可以用class的继承实现Mixin,
       ```javascript
