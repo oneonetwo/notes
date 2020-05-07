@@ -1,9 +1,17 @@
 # Redux的原理
 
-## 设计思想
+## 设计思想以及流程
   1. Redux的设计思想很简单，就两句话：
       - web 用用是一个状态机，视图和状态是一一对应的；
-      - 所有的状态，都保存在对象里面； 
+      - 所有的状态，都保存在对象里面；
+  2. 首先用户发出Action，`dispatch(action)`,然后store 自动调用reducer，传入两个参数，当前的state和收到的Action，Rducer返回新的State;
+  State一旦有变化，Store就会调用监听函数，subscribe(listener); listener可以通过store.getState()得到当前的状态，并触发重新渲染
+  ```javascript
+  function listerner() {
+    let newState = store.getState();
+    component.setState(newState);   
+  }
+  ```
 ## 基本用法
   1. Store 保存数据的地方，
       - 使用 `createStore` 来生成Store
@@ -89,6 +97,9 @@
       let unsubscribe = store.subscribe(()=>console.log(store.getState()));
       unsubscript();
       ```
+  9. Reducer 的拆分
+      - Reducter负责生成State对象，
+      - Redux 提供了一个combineReducers方法，用于 Reducer 的拆分。只要定义了各个子Reducer函数，然后用这个方法，将他们合成一个大的Reducer
       
       
     
