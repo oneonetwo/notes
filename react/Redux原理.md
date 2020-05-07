@@ -100,6 +100,30 @@
   9. Reducer 的拆分
       - Reducter负责生成State对象，
       - Redux 提供了一个combineReducers方法，用于 Reducer 的拆分。只要定义了各个子Reducer函数，然后用这个方法，将他们合成一个大的Reducer
+  10. 中间件的概念
+      - 中间件就是一个函数，对store.dispatch方法进行了改造，在发出 Action 和执行 Reducer 这两步之间，添加了其他功能。
+      - 对 store.dispatch进行改造，以下为中间件的雏形
+      ```javascript 
+      let next = store.dispatch;
+      store.dispatch = function diapatchAndLog(action){
+          console.log('dispatching', action);
+          next(action);
+          console.log('next state', store.getState)
+      }
+      ```
+      - 中间件的次序有讲究。
+      ```javascript
+      const store = createStore(
+        reducer,
+        applyMiddleware(thunk, promise, logger)
+      )
+      ```
+      - **applyMiddlewares()**
+      
+  11. 异步操作的基本思路
+      - redux-thunk 中间件
+        1. redux-thunk中间件，改造store.dispatch，使得后者可以接受函数作为参数。
+      
       
       
     
