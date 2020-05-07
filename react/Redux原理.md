@@ -58,4 +58,37 @@
         payload: 2
       });
       ```
+  7. 纯函数
+      - Reducer函数最重要的特征就是他是一个纯函数，只要是同样的输入，必定得到同样的输出。
+        1. 纯函数式函数式变成的概念，必须遵守以下约束。
+          - 不得改写参数，
+          - 不能调用系统I/O的API
+          - 不能调用Date.now()或者Math.random()等不纯的犯法，因为每次会得到不一样的结果。
+      - 由于Reducer函数里面不能改变State,必须返回一个全新的对象
+      ```javascript
+      // State 是一个对象
+      function reducer(state, action) {
+        return Object.assign({}, state, { thingToChange });
+        // 或者
+        return { ...state, ...newState };
+      }
+
+      // State 是一个数组
+      function reducer(state, action) {
+        return [...state, newItem];
+      }
+      ```
+  8. store.subscribe()
+      - Store允许使用store.subscribe方法设置监听函数，一旦State发生变化，就自动执行这个函数。
+      ```javascript
+      store.subscribe(listener);
+      ```
+      - 只要把View的更新函数（react组件的render或者setState方法）放入listen，就能实现View的自动渲染；
+      - store.subscribe方法返回一个函数，调用这个函数就可以解除监听；
+      ```javascript
+      let unsubscribe = store.subscribe(()=>console.log(store.getState()));
+      unsubscript();
+      ```
+      
+      
     
