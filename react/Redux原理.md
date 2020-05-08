@@ -120,9 +120,44 @@
       ```
       - **applyMiddlewares()**
       
-  11. 异步操作的基本思路
+  11. [异步操作的基本思路](http://www.ruanyifeng.com/blog/2016/09/redux_tutorial_part_two_async_operations.html)
       - redux-thunk 中间件
         1. redux-thunk中间件，改造store.dispatch，使得后者可以接受函数作为参数。
+        
+        
+## [React-Redux 的用法](http://www.ruanyifeng.com/blog/2016/09/redux_tutorial_part_three_react-redux.html)
+> Redux的作者封装了一个React专用的库，React-Redux,后者虽然提供了便利，但是需要掌握额外的API，并且遵守他的组件拆分规范。
+  1. UI组件，有以下几个特征
+      - 只负责UI的呈现，不带有任何的业务逻辑
+      - 没有状态（不适用state这个变量）
+      - 所有数据都有参数（props）提供；
+      - 不使用任何 Redux的API;
+  2. 容器组件
+      - 负责数据管理和业务逻辑，不负责UI的呈现；
+      - 带有内部的状态
+      - 使用Redux的API
+  3. React-Redux 规定，所有的 UI 组件都由用户提供，容器组件则是由 React-Redux 自动生成。也就是说，用户负责视觉层，状态管理则是全部交给它。
+  4. connect()
+      - React-Redux提供connect方法，用于从UI组件生成容器组件
+      - connect方法接受两个参数：mapStateToProps和mapDispatchToProps，他们定义了UI组件的业务逻辑；
+        1. mapStateToProps 负责输入逻辑，将state映射到UI组件的参数（props）
+        2. mapDispatchToProps 负责输出逻辑，将用户对UI组件的操作映射成Action;
+      ```javascript
+      import { connect } from 'react-redux'
+      
+      const VisibleTodoList = connect(
+        mapStateToProps,
+        mapDispatchToProps
+      )(TodoList)
+      ```
+  5. mapStateToProps()
+      - mapStateToProps会订阅Store，每当state更新的时候，就会自动执行，重新计算UI组件的参数，从而触发UI组件的重新渲染；
+      - **connect方法可以省略mapStateToProps参数，那样的话，UI组件就不会订阅Store，就是说Store的更新不会引起UI组件的更新**
+  6. mapDispatchToProps()
+      - mapDispatchToProps是connect函数的第二个参数，用来建立 UI 组件的参数到store.dispatch方法的映射。也就是说，它定义了哪些用户的操作应该当作 Action，传给 Store。它可以是一个函数，也可以是一个对象。
+        
+      
+      
       
       
       
