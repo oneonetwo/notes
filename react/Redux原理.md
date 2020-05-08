@@ -155,6 +155,20 @@
       - **connect方法可以省略mapStateToProps参数，那样的话，UI组件就不会订阅Store，就是说Store的更新不会引起UI组件的更新**
   6. mapDispatchToProps()
       - mapDispatchToProps是connect函数的第二个参数，用来建立 UI 组件的参数到store.dispatch方法的映射。也就是说，它定义了哪些用户的操作应该当作 Action，传给 Store。它可以是一个函数，也可以是一个对象。
+  7. <Provider>组件  
+      - connect方法生成容器组件以后，需要让容器组件拿到state对象，才能生成UI组件的参数
+      - React-Redux提供Provider组件，可以让容器组件拿到state,Provider在根组件外面包了一层，它的原理是React组件的context属性.
+      ```javascript
+      let store = createStore(todoApp);
+
+      render(
+        <Provider store={store}>
+          <App />
+        </Provider>,
+        document.getElementById('root')
+      )
+      ```
+
         
       
       
