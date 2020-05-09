@@ -168,6 +168,46 @@
         document.getElementById('root')
       )
       ```
+## 逐步拆解分析
+1. 构建dispatch函数，接受一个action作为参数
+```javascript
+
+```
+2. 构建bindActionCreators函数
+```javascript
+
+```
+3. 构建combineReducers函数
+```javascript
+function combineReducers(reducers){
+    return function reducer(state, action) {
+        const changed = {}
+        for(let key in reducers){
+            changed[key] = reducers[key](state[key], action);
+        }
+        return {
+            ...state,
+            ...changed
+        }
+    }
+}
+//改造dispatch
+const dispatch = (action)=>{
+    const state = {
+        todos,
+        incrementCount
+    }
+    const setters = {
+        todos: setTodos,
+        incrementCount: setIncermentCount
+    }
+
+    const newState = reducer(state, action);
+    for(let key in newState){
+        setters[key](newState[key]);
+    }
+}
+```
 
         
       
