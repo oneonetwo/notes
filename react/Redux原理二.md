@@ -1,6 +1,12 @@
 # Redux原理·核心API
 ## CreateStore
 1. 这个方法是Redux的核心，将所有的功能连接起来，暴露操作的API供使用
+    - 第二个参数是手动指定intialState
+    - 第三个参数enhancer只有在使用中间件才会用到，通常情况下我们搭配applyMiddleware来使用，增强dispatch的功能，例如logger,thunk;
+2. 调用createStore函数会返回一些操作API，包括：
+    - getState: 获取当前的state的值
+    - dispatchL （接受action）触发reducer并执行listeners中的每一个方法
+    - subscribe: 将监听的方法注册到listeners中，通过dispatch触发
 ```javascript
 export default function createStore(reducer, initialState,enhancer){
 
