@@ -45,7 +45,9 @@ export default function createStore(reducer, initialState,enhancer){
     return store;
 }
 ```
-
+## applyMiddleware
+1. 这个方法通过使用中间件增强dispatch的功能。
+2. 了解函数的合成
 
 ## 参考
 1. https://juejin.im/post/5d1d749ae51d454fa33b1927
