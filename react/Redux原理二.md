@@ -69,6 +69,16 @@ export default function createStore(reducer, initialState,enhancer){
         }
     }
     ```
+3. 中间件的实现源码
+    ```javascript
+    export default function applyMiddleware(...middlewares){
+        return store => {
+            const chains = middlewares.map(middleware => middleware(store));
+            store.dispatch = compose(...chains)(store.dispatch);
+            return store;
+        }
+    }
+    ```
 ## 参考
 1. https://juejin.im/post/5d1d749ae51d454fa33b1927
 2. https://juejin.im/post/5b34acee6fb9a00e60442473
