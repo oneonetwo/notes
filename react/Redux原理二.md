@@ -81,8 +81,10 @@ export default function createStore(reducer, initialState,enhancer){
     ```
 ## combineReducers
 1. 合并多个reducer
+
 ## bindActionCreators
 1. 这个方法就是将我们的action和dispatch连接起来。
+
 ## thunk
 
 
