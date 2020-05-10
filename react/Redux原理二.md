@@ -47,8 +47,28 @@ export default function createStore(reducer, initialState,enhancer){
 ```
 ## applyMiddleware
 1. 这个方法通过使用中间件增强dispatch的功能。
-2. 了解函数的合成compose函数
+    - 了解函数的合成compose函数,通过数组的reduce方法，将两个方法合成一个方法，然后用这个合成的方法再去和下一个方法合成，直到结束，这样我们就得到了一个所有方法的合成函数。
+    ```javascript
+    export function compose(...func){
+        if (funcs.length === 1) {
+            return funcs[0]
+        }
 
+        return funcs.reduce((a, b) => (...args) => a(b(...args)))
+    }
+    ```
+2. 中间件的代码结构,配合中间件的代码结构来帮助理解
+    ```javascript
+    function middleware (store) {
+        return function f1 (dispatch) {
+            return function f2 (action) {
+                // do something
+                dispatch(action)
+                // do something
+            }
+        }
+    }
+    ```
 ## 参考
 1. https://juejin.im/post/5d1d749ae51d454fa33b1927
 2. https://juejin.im/post/5b34acee6fb9a00e60442473
