@@ -1,5 +1,5 @@
-### 使用compose函数,实现中间件功能
-1. 首先看两个例子
+## 使用compose函数,实现中间件功能
+### 1.  首先看两个例子
     1. 例子1： 
         - 从以下例子首先可以知道，又是闭包，compose返回的是一个函数；
         - 调用add6(6)，add6中a以闭包的形式存在内存中，就是函数参数中的初始值,那么此时add1中b是10，紧接着运行add2中，b是11,那么add3中b是13；
@@ -43,7 +43,7 @@
         var strongSay = compose(func3, func2, func1)(say);
         strongSay()
         ```
-- 由以上两个例子推到compose函数
+### 2. 由以上两个例子推到compose函数
     1. 逐步推到的，简单的，普通，容易理解的形式
     ```javascript
     function compose(...funcs){
