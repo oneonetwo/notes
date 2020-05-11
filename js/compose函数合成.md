@@ -14,7 +14,7 @@
     ```
 2. 例子2：
     - 以下例子中，func1，func2，func3都接收func这个形参，而func这个参数由于会被使用，所以会一直以闭包的形式保存在内存中，也就是说func1，func2，func3会一直存在在内存中，func1接收到的是say，func2接收到的是func1，func3接收到的是func2。
-    ```javaccript
+    ```javascript
     var say = function(){
         console.log(0000)
     }
