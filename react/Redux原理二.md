@@ -71,10 +71,41 @@ export default function createStore(reducer, initialState,enhancer){
     ```
 
 ## combineReducers
-1. 合并多个reducer
+1. combineReucers将单个reducer塞到一个对象中，每个reducer对应一个唯一键值，单个reducer状态改变时，对应键值的值也会改变，然后返回整个state。
+    ```javascript
+    //简易版
+    function combineReducers(reducers){
+        return function reducer(state, action) {
+            const changed = {}
+            for(let key in reducers){
+                changed[key] = reducers[key](state[key], action);
+            }
+            return {
+                ...state,
+                ...changed
+            }
+        }
+    }
+    ```
 
 ## bindActionCreators
-1. 这个方法就是将我们的action和dispatch连接起来。
+1. 这个方法就是将我们的action和dispatch连接起来，它返回一个方法集合，直接调用来触发dispatch。
+    ```javascript
+    //简易版
+    function bindActionCreators(actionCreators, dispatch) {
+        const ret = {}
+
+        for(let key in actionCreators) {
+            ret[key] = function(...args) {
+                const actionCreator = actionCreators[key]
+                const action = actionCreator(...args)
+                dispatch(action)
+            }
+        }
+
+        return ret
+    }
+    ```
 
 ## thunk
 
