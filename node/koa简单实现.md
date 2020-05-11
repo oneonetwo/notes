@@ -1,8 +1,8 @@
 ### LikeKoa
-```javascript
+	```javascript
 	const http = require('http');
 
-	// 把中间件组合洋葱模式
+	// 把中间件组合下  组合洋葱
 	var compose = function(middlewareList){
 			return (ctx) => {
 				var dispatch = (i) => {
@@ -42,4 +42,4 @@
 			server.listen(...args);
 		}
 	}
-```
+	```
