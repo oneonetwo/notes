@@ -47,16 +47,16 @@ export default function createStore(reducer, initialState,enhancer){
 ```
 ## applyMiddleware
 1. 这个方法通过使用中间件增强dispatch的功能。
-    - 了解函数的合成compose函数,通过数组的reduce方法，将两个方法合成一个方法，然后用这个合成的方法再去和下一个方法合成，直到结束，这样我们就得到了一个所有方法的合成函数。
+    - 了解[compose合成函数](https://github.com/oneonetwo/notes/blob/master/js/compose%E5%87%BD%E6%95%B0%E5%90%88%E6%88%90.md)，净多一层层改造后得到了新的dispatch方法，这个过程跟Koa的中间件（洋葱模型）原理一样；
     ```javascript
-    export function compose(...func){
-        if (funcs.length === 1) {
-            return funcs[0]
+    export default function applyMiddleware(...middlewares){
+        return store => {
+            const chains = middlewares.map(middleware => middleware(store));
+            store.dispatch = compose(...chains)(store.dispatch);
+            return store;
         }
-
-        return funcs.reduce((a, b) => (...args) => a(b(...args)))
     }
-    ```
+    ```    
 2. 中间件的代码结构,配合中间件的代码结构来帮助理解
     ```javascript
     function middleware (store) {
@@ -69,16 +69,7 @@ export default function createStore(reducer, initialState,enhancer){
         }
     }
     ```
-3. 中间件的实现源码
-    ```javascript
-    export default function applyMiddleware(...middlewares){
-        return store => {
-            const chains = middlewares.map(middleware => middleware(store));
-            store.dispatch = compose(...chains)(store.dispatch);
-            return store;
-        }
-    }
-    ```
+
 ## combineReducers
 1. 合并多个reducer
 
