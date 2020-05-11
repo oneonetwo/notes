@@ -107,7 +107,22 @@ export default function createStore(reducer, initialState,enhancer){
     }
     ```
 
-## thunk
+## 中间件thunk 中间件是有执行顺序的
+1. 让dispatch接受函数的功能
+    ```javascript
+    function thunk({getState}){
+        //next相当于dispatch
+        return next => action => {
+            if(typeof action === 'function'){
+                //如果action是函数，那么把next函数放到下个next中
+                action(next, getState);
+            }else{
+                next(action)
+            }
+        }
+    }
+    ```
+
 
 
 ## 参考
