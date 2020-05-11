@@ -2,7 +2,7 @@
 ```javascript
 	const http = require('http');
 
-	// 把中间件组合下  组合洋葱
+	// 把中间件组合洋葱模式
 	var compose = function(middlewareList){
 			return (ctx) => {
 				var dispatch = (i) => {
