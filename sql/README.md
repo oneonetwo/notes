@@ -1,3 +1,5 @@
+# Mysql基础
+
 [优化相关](https://www.cnblogs.com/lijiasnong/p/9963905.html)  
 [基础相关](https://www.cnblogs.com/yangyangfubin/p/8179172.html)
 #### 一. 事务
