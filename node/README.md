@@ -23,6 +23,6 @@
     4. NodeJs的事件循环机制：
         - Node 中的 Event Loop 和浏览器中的是完全不相同的东西。Node.js 采用 V8 作为 js 的解析引擎，而 I/O 处理方面使用了自己设计的 libuv，libuv 是一个基于事件驱动的跨平台抽象层，封装了不同操作系统一些底层特性，对外提供统一的 API，事件循环机制也是它里面的实现。
         - setImmediate() 对比 setTimeout()
-          - setImmediate() 设计为一旦在当前 轮询 阶段完成， 就执行脚本。
-          - setTimeout() 在最小阈值（ms 单位）过后运行脚本。
+            > - setImmediate() 设计为一旦在当前 轮询 阶段完成， 就执行脚本。  
+            > - setTimeout() 在最小阈值（ms 单位）过后运行脚本。
         - process.nextTick 不属于事件循环的任何一个阶段，它属于该阶段与下阶段之间的过渡, 即本阶段执行结束, 进入下一个阶段前, 所要执行的回调
