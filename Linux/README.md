@@ -2,10 +2,13 @@
 http://www.92csz.com/study/linux/
 
 ### Linux文件和目录管理
-1. pwd 
-2. cd
-3. echo
+1. pwd 当前所在的目录
+2. cd 
+3. echo 打印
+  - 写入的作用就是这个">"在linux中叫做重定向，即把前面生产的输出写入到后面的文件中
+  - `>` 是覆盖 `>>` 是追加
 4. mkdir
+  
 5. rm
 6. alias
 7. 环境变量PATH
