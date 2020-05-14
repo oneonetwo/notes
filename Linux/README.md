@@ -47,9 +47,13 @@ http://www.92csz.com/study/linux/
 
 ### 查找命令
 1. which
-2. whereis
-3. find
-
+    - 用来查找可执行文件的绝对路径。which只能用来查找PATH环境变量中出现的路径下的可执行文件。
+2. whereis `whereis [-bmsu] [文件名称]`
+    - whereis 通过预先生成的一个文件列表库去查找跟给出的文件名相关的文件
+3. find  `find [路径] [参数]` 下面介绍几个经常用的参数
+    - `-name filename` 直接查找该文件名的文件，这个使用最多了。 eg. `find /root -name test3`
+    - -type type ：通过文件类型查找。文件类型在前面部分已经简单介绍过，相信你已经大体上了解了。type 包含了 f, b, c, d, l, s 等等。后续的内容还会介绍文件类型的。 eg. `find ./file1 -type d`
+    
 ### ln建立链接档
 
 ### 用户以及用户组的管理
