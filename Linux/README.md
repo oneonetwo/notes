@@ -60,10 +60,30 @@ http://www.92csz.com/study/linux/
 
 ### 用户以及用户组的管理
 1. 认识/etc/passwd和/etc/shadow
-    - /etc/passwd由':'分割成7个字段分别表示  `用户名：口令：uid用户标识号：gid组标识号：注释说明：用户的家目录：shell`
+    - /etc/passwd由':'分割成7个字段分别表示  `用户名：口令：uid用户标识号：gid组标识号：注释说明：用户的家目录：shell`  
+    ![passwd](https://static.prnasia.com/pro/gift/7_1.png)
         1. 口令用x代替，存放到/etc/shadow中了
         2. uid取值范围是0~65535，0是超级用户（root）的标识号，1~499由系统保留，作为管理账号，普通用户标识号是大于或等于500的。 
         3. gid。这个字段对应着/etc/group 中的一条记录
-
-
+        4. shell，用户登录后要启动一个进程，用来将用户下达的指令传给内核，这就是shell。Linux的shell有很多种sh, csh, ksh, tcsh, bash等，而Redhat/CentOS的shell就是bash。查看/etc/passwd文件，该字段中除了/bin/bash外还有/sbin/nologin比较多，它表示不允许该账号登录。如果你想建立一个账号不让他登录，那么就可以把该字段改成/sbin/nologin，默认是/bin/bash。
+2. 新增/删除用户和用户组
+    - 新增一个组 `groupadd [-g GID] groupname`;
+    - 删除组   `groupdel groupname`;
+    - 增加用户 `useradd [-u UID] [-g GID] [-d HOME] [-M] [-s]`
+        -u 自定义UID
+        -g 使其属于已经存在的某个GID
+        -d 自定义用户的家目录
+        -M 不建立家目录
+        -s 自定义shell
+    - 删除用户 `userdel [-r] username`;  -r是连同家目录一起删除
+3. 创建修改一个用户的密码
+    - `passwd [username]` 
+4. 用户身份切换
+    - 用test账号登录linux系统，然后使用su - 就可以切换成root身份，前提是知道root的密码。
+    - 使用`echo $LOGNAME`来查看当前登录的用户名
+    - **默认只有root用户能使用sudo命令，普通用户想要使用sudo，是需要root预先设定的，即，使用visudo命令去编辑相关的配置文件/etc/sudoers。如果没有visudo这个命令，请使用” yum install -y sudo”安装。**
+        - 默认root能够sudo是因为这个文件中有一行” root ALL=(ALL) ALL” 在该行下面加入” test ALL=(ALL) ALL”就可以让test用户拥有了sudo的权利。如果每增加一用户就设置一行，这样太麻烦了。所以你可以这样设置。  
+        ![](https://static.prnasia.com/pro/gift/7_32.png)
+        - 把这一行前面的”#”去掉，让这一行生效。它的意思是，wheel这个组的所有用户都拥有了sudo的权利。接下来就需要你把想让有sudo权利的所有用户加入到wheel这个组中即可。  
+        - ![](https://static.prnasia.com/pro/gift/7_33.png)
 ### 文本编辑工具vim   一般模式、编辑模式、命令模式
