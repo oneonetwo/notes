@@ -82,8 +82,9 @@ http://www.92csz.com/study/linux/
     - 用test账号登录linux系统，然后使用su - 就可以切换成root身份，前提是知道root的密码。
     - 使用`echo $LOGNAME`来查看当前登录的用户名
     - **默认只有root用户能使用sudo命令，普通用户想要使用sudo，是需要root预先设定的，即，使用visudo命令去编辑相关的配置文件/etc/sudoers。如果没有visudo这个命令，请使用” yum install -y sudo”安装。**
-        - 默认root能够sudo是因为这个文件中有一行” root ALL=(ALL) ALL” 在该行下面加入” test ALL=(ALL) ALL”就可以让test用户拥有了sudo的权利。如果每增加一用户就设置一行，这样太麻烦了。所以你可以这样设置。  
+        1. 默认root能够sudo是因为这个文件中有一行” root ALL=(ALL) ALL” 在该行下面加入” test ALL=(ALL) ALL”就可以让test用户拥有了sudo的权利。如果每增加一用户就设置一行，这样太麻烦了。所以你可以这样设置。  
         ![](https://static.prnasia.com/pro/gift/7_32.png)
-        - 把这一行前面的”#”去掉，让这一行生效。它的意思是，wheel这个组的所有用户都拥有了sudo的权利。接下来就需要你把想让有sudo权利的所有用户加入到wheel这个组中即可。  
-        - ![](https://static.prnasia.com/pro/gift/7_33.png)
+        2. 把这一行前面的”#”去掉，让这一行生效。它的意思是，wheel这个组的所有用户都拥有了sudo的权利。接下来就需要你把想让有sudo权利的所有用户加入到wheel这个组中即可。  
+        ![](https://static.prnasia.com/pro/gift/7_33.png)
+
 ### 文本编辑工具vim   一般模式、编辑模式、命令模式
