@@ -365,7 +365,7 @@
   ```javascript
       //ES6 set的key不能重复
       [...new Set(arr)]
-      [Array.from(new Set(arr))]
+      Array.from(new Set(arr))
 
       //ES5 filter去重 
       function uniq(arr){
