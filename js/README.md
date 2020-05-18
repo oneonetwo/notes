@@ -270,7 +270,7 @@
         if(!context){
            context = window;
         }
-        self = this;
+        let self = this;
         return function(...args){
             self.apply(context, args)
         }
