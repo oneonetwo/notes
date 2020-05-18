@@ -3,7 +3,7 @@
 > [正则相关](#9-正则相关)  
 > [数组相关](#10-数组相关)
 
-##### 1. jQuery框架简单实现
+##### 1. jQuery框架架构原理
   ```javascript
       var jQuery = window.$ = function(sel){
           return new jQuery.fn.init(sel);
