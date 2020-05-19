@@ -362,6 +362,10 @@
             return WithSubscription;
         }
     ```
+6. 为什么用高阶组件代替 Mixins
+    > 1. Mixins 引入了无形的依赖,会相互依赖，相互耦合，不利于代码维护
+    > 2. 高阶组件是通过将原组件包裹（wrapping）在容器组件（container component）里面的方式来组合（composes）使用原组件。高阶组件就是一个没有副作用的纯函数。
+    
 #### 6. [Render Props](https://react.docschina.org/docs/render-props.html);
 1. 概念： 一种在 React 组件之间使用一个值为函数的 prop 共享代码的简单技术
 2. 也是基于React组件组合的方式，我们都知道 prop能传递组件，那么用prop传递一个函数包裹着组件就是渲染属性了。
