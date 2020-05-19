@@ -2,7 +2,7 @@
 1. Proxy相比于defineProperty的优势
     1. defineProperty的两个缺点  
         - Object.defineProperty无法检测数组下标的变化，直接给数据下标设置值，不能实时响应到视图，为了解决以上的问题，经过vue内部处理可以用以下几种方式来监听数组。
-            - push() pop() shift() unshift() splice() sort() reverse()
+        > 1. push() pop() shift() unshift() splice() sort() reverse()
         - Object.defineProperty只能劫持对象的属性。Vue2.x里，是通过递归+遍历 Data方式来实现对数据的监控。如果对象的属性值也是对象，那么还要做深度遍历。如果能劫持一个完整的对象才是更好的选择。
     2. Proxy有以下两个优点
         - 可以劫持整个对象，并返回一个新对象
