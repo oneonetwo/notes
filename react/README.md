@@ -558,7 +558,10 @@
     > 3. 每个useEffect可以只处理一种副作用，逻辑清晰，关注点分离；
 3. 常用的API
     > 1. useState
+    >> useState 是允许你在 React 函数组件中添加 state 的 Hook。
+      - 参数可以是变量或者函数。
     > 2. useEffect
+    >> 可以在函数组件中执行副作用，表示生命周期的 componentDidMount,componentDidUpdate,componentWillUnmount;
     > 3. useContext
     > 4. useMemo, useCallback
     > 5. useRef
