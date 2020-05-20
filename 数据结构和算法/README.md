@@ -33,7 +33,7 @@
         }
         //添加每一个word到root
         for(let word of words){
-            addWord(root, p);
+            addWord(root, word);
         }
 
         //添加fail之后的回溯节点
