@@ -552,4 +552,18 @@
     > 3. this指向复杂
       - 写到内联函数中，过渡创建新句柄，导致子组件过渡渲染；
       - 类成员函数会导致this指向不正确。
+2. hooks的优势
+    > 1. 不用实例化，所有逻辑都在函数内部，没有this指向的问题
+    > 2. 预定义的hooks函数可以很方便的把复用的状态逻辑提取出来。
+    > 3. 每个useEffect可以只处理一种副作用，逻辑清晰，关注点分离；
+3. 常用的API
+    > 1. useState
+    > 2. useEffect
+    > 3. useContext
+    > 4. useMemo, useCallback
+    > 5. useRef
+    > 6. useReducer
+4. 自定义的Hooks
+5. Hooks的使用规则
+6. Hooks的常遇见的问题
       
