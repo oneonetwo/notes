@@ -68,7 +68,7 @@
             let child = current.child[w];
             if(!child){
                 current.child[w] = {
-                    child: [],
+                    child: {},
                     val: w,
                     back: root,
                     parent: current,
