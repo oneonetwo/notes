@@ -182,11 +182,16 @@
           
           //Generator
           function* createIterator(list){
-              yield list
               for(let i = 0;i<list.length;i++){
                   yeild lsit[i];
               }
           } 
+          var arr = ['a','b','c'];
+          arr[Symbol.iterator] = function * (list){
+               for(let i = 0;i<list.length;i++){
+                  yield arr[i];
+              }
+          }
       ```
       
 3. Generator 函数
