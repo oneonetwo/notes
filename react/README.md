@@ -577,7 +577,10 @@
     - useMemo, useCallback
     - useRef
     - useReducer
-    > 1. 编写一个 useReducer 的 Hook，使用 reducer 的方式来管理组件的内部 state 呢？其简化版本可能如下所示：
+    > 1. useState的替代方案，他接受一个形如`(state, action)=>newState`的reducer,返回当前的state以及与其配套的dispatch方法。
+    > 2. **跳过 dispatch: 如果 Reducer Hook 的返回值与当前 state 相同，React 将跳过子组件的渲染及副作用的执行。（React 使用 Object.is 比较算法 来比较 state。）**
+    > 3. 某些场景下，useReducer会比useState更合适，例如state逻辑较复杂且包含多个子值，或者下一个state以来之前的state。 
+    > 4. 编写一个 useReducer 的 Hook，使用 reducer 的方式来管理组件的内部 state 呢？其简化版本可能如下所示：
     ```javascript
     function todosReducer(state, action) {
       switch (action.type) {
@@ -609,6 +612,39 @@
                 text
             })
         }
+    }
+    
+    
+    //计数器  + 惰性初始化
+    function init(initialCount){
+        return {count: initialCount};
+    }
+
+    function reduce(state, action){
+        switch (action.type){
+            case 'increment':
+                return { count: state.count+1 };
+            case 'decrement':
+                return { count: state: count-1 };
+            case 'reset':
+                return init(action.payload);
+            default:
+                throw new Error();
+        }
+    }
+
+    function Counter({initialCount}){
+        const [state, dispatch] = useReducer(reduce, initialCount, init);
+        return (
+            <>
+                <button onClick={() => dispatch({type: 'reset', payload: initialCount})}>
+                    Reset
+                </button>
+                count: {state.count}
+                <button onClick={()=>dispatch({type:'decrement'})}> - </button>
+                <button onClick={()=>dispatch({type:'increment'})}> + </button>
+            </>
+            )
     }
 
     ```
