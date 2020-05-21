@@ -566,8 +566,8 @@
     > 2. 使用多个 Effect 实现关注点分离,解决class生命周期函数经常包含不相关的逻辑；
     > 3. useEffect 会在每次更新默认就会处理。它会在调用一个新的 effect 之前对前一个 effect 进行清理
     > 4. effect的优化    
-    >> 执行只运行一次的 effect（仅在组件挂载和卸载时执行），可以传递一个空数组（[]）作为第二个参数。
-    >> 传入 [count] 作为第二个参数，只有count变化事，才会调用effect
+    >> - 执行只运行一次的 effect（仅在组件挂载和卸载时执行），可以传递一个空数组（[ ]）作为第二个参数。
+    >> - 传入 [count] 作为第二个参数，只有count变化事，才会调用effect
     ```javascript
     useEffect(() => {
       document.title = `You clicked ${count} times`;
