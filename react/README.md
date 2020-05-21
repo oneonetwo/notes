@@ -578,6 +578,39 @@
     - useRef
     - useReducer
 4. 自定义的Hooks
+    - 在 React 中有两种流行的方式来共享组件之间的状态逻辑: render props 和高阶组件，现在让我们来看看 Hook 是如何在让你不增加组件的情况下解决相同问题的。
+    > 1. 自定义的Hook是一个函数，其名称是以‘use’开头，函数内部可以调用其他的Hook
+    > 2. 可以自由的决定它的参数是什么，以及它应该返回什么（如果需要的话）
+    > 3. 自定义的Hook必须用‘use’,每次使用hook时，其中的所有state和副作用都是完全隔离的，不会共享；
+    > 4. 提取自定义的Hook,使用自定义的Hook
+    > 5. 可以创建涵盖各种场景的自定义 Hook，如表单处理、动画、订阅声明、计时器，甚至可能还有其他我们没想到的场景
+    ```javascript
+    //提取自定义的Hook
+    import React, {useState, useEffect} from 'react';
+    function useFriendStatus(friendID){
+        const [isOnline, setIsOnline] = useState(null);
+        useEffect(()=>{
+            function handleStatusChange(status){
+                setIsOnline(status.isOnline);
+            }
+            ChatAPI.subscribeToFiendStatus(friendID, handleStatusChange);
+        },return ()=>{
+            ChatAPI.unsubscribeToFiendStatus(friendID, handleStatusChange);
+        });
+
+        return isOnline;
+    }
+
+    //使用自定义的Hook
+    function FriendStatus(props){
+        const isOnline = useFriendStatus(props.friend.id);
+        if(isOnline === null){
+            return 'Loading...';
+        }
+        return isOnline? 'online': 'offline';
+    }
+    ```
+    
 5. Hooks的使用规则
 6. Hooks的常遇见的问题
       
