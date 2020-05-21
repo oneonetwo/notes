@@ -80,23 +80,23 @@
     - Context 设计目的是为了共享那些对于一个组件树而言是“全局”的数据
 1. Context
     > 1. React.createContext  创建一个 Context 对象
-        - 消费组件只会从组件树离自身最近的 Provider 中读取当前 context 的值
-        - 只有当组件所处的树中没有匹配到 Provider 时，其 defaultValue 参数才会生效。
+    >> - 消费组件只会从组件树离自身最近的 Provider 中读取当前 context 的值
+    >> - 只有当组件所处的树中没有匹配到 Provider 时，其 defaultValue 参数才会生效。
     > 2. Context.Provider
-        - 每个 Context 对象返回一个 Provide React组件，允许消费组件订阅 context 的变化；
-        - 当 Provider中的value值发生变化，他内部的所有消费组件都会重新渲染，不受制于 shouldComponentUpdate 函数，因此consumer组件在祖先组件退出更新的情况下也能更新；
-        - 通过新旧值来确定变化，使用了`Object.is()`;
+    >> - 每个 Context 对象返回一个 Provide React组件，允许消费组件订阅 context 的变化；
+    >> - 当 Provider中的value值发生变化，他内部的所有消费组件都会重新渲染，不受制于 shouldComponentUpdate 函数，因此consumer组件在祖先组件退出更新的情况下也能更新；
+    >> - 通过新旧值来确定变化，使用了`Object.is()`;
     > 3. Class.contextType;
-        - 会被重赋值为一个由 React.createContext() 创建的 Context 对象, 让消费组件用 `this.context`消费最近的context的值;
-        - 只通过该 API 订阅单一 context;
+    >> -  会被重赋值为一个由 React.createContext() 创建的 Context 对象, 让消费组件用 `this.context`消费最近的context的值;
+    >> - 只通过该 API 订阅单一 context;
     > 4. Context.Consumer()
-        - 让你在函数式组件中完成订阅 context; 
+    >> - 让你在函数式组件中完成订阅 context; 
     > 5. useContext
-        - useContext(MyContext) 相当于 class 组件中的 static contextType = MyContext 或者 <MyContext.Consumer>。
-        - 接收一个 context 对象（React.createContext 的返回值）并返回该 context 的当前值。
+    >> - useContext(MyContext) 相当于 class 组件中的 static contextType = MyContext 或者 <MyContext.Consumer>。
+    >> -  接收一个 context 对象（React.createContext 的返回值）并返回该 context 的当前值。
     > 6. [动态 Context](https://react.docschina.org/docs/context.html#dynamic-context);
     > 7. [在嵌套组件中更新Context](https://react.docschina.org/docs/context.html#updating-context-from-a-nested-component)
-        - 通过context传递一个函数，使得consumers组件更新context;
+    >> -  通过context传递一个函数，使得consumers组件更新context;
     > 8. [消费多个 Context](https://react.docschina.org/docs/context.html#consuming-multiple-contexts)
     ```javascript
     //一个组件可能消费多个context
@@ -167,13 +167,13 @@
     > 3. 集成第三方 DOM 库。
 1. 创建refs,三种方式
     > 1. React.createRef()
-        - 创建后，并通过ref 属性附加到React元素，在构造组件时，将refs分配给实例属性，一遍在整个组件中引用；
+    >> - 创建后，并通过ref 属性附加到React元素，在构造组件时，将refs分配给实例属性，一遍在整个组件中引用；
     > 2. React.useRef()
-        - useRef 返回一个可变的 ref 对象，其 .current 属性被初始化为传入的参数
-        - 变更 .current 属性不会引发组件重新渲染
+    >> - useRef 返回一个可变的 ref 对象，其 .current 属性被初始化为传入的参数
+    >> - 变更 .current 属性不会引发组件重新渲染
     > 3. 回调Refs
-        - 不同于createRef()创建的 ref 属性，你会传递一个函数，函数中接受React组件实例或者dom作为参数，在其他地方存储和访问；
-        - React 绑定或解绑 DOM 节点的 ref 时运行某些代码
+    >> - 不同于createRef()创建的 ref 属性，你会传递一个函数，函数中接受React组件实例或者dom作为参数，在其他地方存储和访问；
+    >> - React 绑定或解绑 DOM 节点的 ref 时运行某些代码
 2. 访问refs
     > 1. `const node = this.myRef.current;` 表示的是底层的dom或者是组件的挂载实例；
     > 2. 你不能在函数组件上中使用ref属性，因为他们没有实例；
@@ -303,12 +303,12 @@
     > 3. 操作props,被包装组件接收来自容器组件的所有 prop，同时也接收一个新的用于 render 的 data prop。
 2. 种类及作用
     > 1. 代理方式
-        - 操作props
-        - 抽取状态
-        - 包装组件
+    >> - 操作props
+    >> - 抽取状态
+    >> - 包装组件
     > 2. [继承方式](https://juejin.im/post/5ad7ee045188252e93239dd7)
-        - 一般不用
-        - 操作生命周期函数是继承方式的高阶组件所特有的功能。这是由于继承方式的高阶组件返回的新组件继承于作为参数传入的组件，两个组件的生命周期是共用的，因此可以重新定义组件的生命周期函数并作用于新组件。而代理方式的高阶组件作为参数输入的组件与输出的组件完全是两个生命周期，因此改变生命周期函数也就无从说起了。
+    >> - 一般不用
+    >> - 操作生命周期函数是继承方式的高阶组件所特有的功能。这是由于继承方式的高阶组件返回的新组件继承于作为参数传入的组件，两个组件的生命周期是共用的，因此可以重新定义组件的生命周期函数并作用于新组件。而代理方式的高阶组件作为参数输入的组件与输出的组件完全是两个生命周期，因此改变生命周期函数也就无从说起了。
 4. connect 是一个返回高阶组件的高阶函数！
 5. 务必复制静态方法,Refs 不会被传递,高阶函数命名；    
     ```javascript
@@ -482,8 +482,8 @@
     - 当组件实例被创建并插入 DOM 中时，其生命周期调用顺序如下： 
     constructor() => static getDerivedStateFromProps() => render()  => componentDidMount()`
     > 1. constructor(props)
-        - 如果不初始化 state 或不进行方法绑定，则不需要为 React 组件实现构造函数。  
-        - 通常，在 React 中，构造函数仅用于以下两种情况：  
+    >> - 如果不初始化 state 或不进行方法绑定，则不需要为 React 组件实现构造函数。  
+    >> - 通常，在 React 中，构造函数仅用于以下两种情况：  
             - **避免将 props 的值复制给 state！这是一个常见的错误：**
     ```javascript
         constructor(props) {
@@ -497,39 +497,39 @@
     ```
     > 2. componentDidMount() 会在组件挂载后（插入 DOM 树中）立即调用。
     > 3. static getDerivedStateFromProps(props, state)
-        - 每次在 Render 之前调用，
-        - 让组件在 props 变化时更新 state。
+    >> - 每次在 Render 之前调用，
+    >> - 让组件在 props 变化时更新 state。
 2. 更新时,
     - 当组件的 props 或 state 发生变化时会触发更新:
     ` static getDerivedStateFromProps() => shouldComponentUpdate() => render() => getSnapshotBeforeUpdate() => componentDidUpdate() `
     > 1. shouldCOmponentUpdate(nextProps, nextState)
-        - 首次渲染或使用 forceUpdate() 时不会调用该方法。
+    >> - 首次渲染或使用 forceUpdate() 时不会调用该方法。
     > 2. getSnapshotBeforeUpdate(prevProps, prevState)
-        - getSnapshotBeforeUpdate() 在最近一次渲染输出（提交到 DOM 节点）之前调用。（例如，滚动位置）。
-        - 应返回 snapshot 的值（或 null）。它的返回值将作为 componentDidUpdate() 的第三个参数 “snapshot” 参数传递。
+    >> - getSnapshotBeforeUpdate() 在最近一次渲染输出（提交到 DOM 节点）之前调用。（例如，滚动位置）。
+    >> - 应返回 snapshot 的值（或 null）。它的返回值将作为 componentDidUpdate() 的第三个参数 “snapshot” 参数传递。
     > 3. componentDidUpdate(prevProps, prevState, snapshot)
-        - **componentDidUpdate() 中直接调用 setState()，但请注意它必须被包裹在一个条件语句里**
+    >> -  **componentDidUpdate() 中直接调用 setState()，但请注意它必须被包裹在一个条件语句里**
 3. 卸载时，当组件从 DOM 中移除时会调用如下方法：
     > 1. componentWillUnmount()
         
 4. 错误处理  Error boundaries  
     - Error boundaries 是 React 组件，它会在其**子组件树**中的任何位置捕获 JavaScript 错误，并记录这些错误，展示降级 UI 而不是崩溃的组件树。
     > 1. static getDerivedStateFromError(error)
-        - 此生命周期会在后代组件抛出错误后被调用。 它将抛出的错误作为参数，并返回一个值以更新 state
-        - getDerivedStateFromError() 会在渲染阶段调用，因此不允许出现副作用。
+    >> - 此生命周期会在后代组件抛出错误后被调用。 它将抛出的错误作为参数，并返回一个值以更新 state
+    >> - getDerivedStateFromError() 会在渲染阶段调用，因此不允许出现副作用。
     > 2. componentDidCatch(error, info)
-        - 此生命周期在后代组件抛出错误后被调用。 它接收两个参数：
-        - componentDidCatch() 会在“提交”阶段被调用，因此允许执行副作用。
+    >> - 此生命周期在后代组件抛出错误后被调用。 它接收两个参数：
+    >> - componentDidCatch() 会在“提交”阶段被调用，因此允许执行副作用。
 5. 其他的APIs
     > 1. setState()
     > 2. forceUpdate()
-        - component.forceUpdate(callback)
-        - 调用 forceUpdate() 将致使组件调用 render() 方法，此操作会跳过该组件的 shouldComponentUpdate()。
+    >> - component.forceUpdate(callback)
+    >> - 调用 forceUpdate() 将致使组件调用 render() 方法，此操作会跳过该组件的 shouldComponentUpdate()。
 6. class属性
     > 1. defaultProps
-        - defaultProps 可以为 Class 组件添加默认 props。
+    >> - defaultProps 可以为 Class 组件添加默认 props。
     > 2. displayName
-        - displayName 字符串多用于调试消息。
+    >> - displayName 字符串多用于调试消息。
 7. 实例属性
     - props
     - state
@@ -545,13 +545,13 @@
 #### 1.为什么引入hooks
 1. 类组件的不足
     > 1. 难以复用的状态逻辑
-        - 缺少复用机制；
-        - 渲染属性和高阶组件会导致层级冗余臃肿
+    >> - 缺少复用机制；
+    >> - 渲染属性和高阶组件会导致层级冗余臃肿
     > 2. 趋于复杂难以维护
-        - 生命周期跟不相关的逻辑相互混杂，到处都是对状态的处理，分散不集中，容易出现bug
+    >> - 生命周期跟不相关的逻辑相互混杂，到处都是对状态的处理，分散不集中，容易出现bug
     > 3. this指向复杂
-        - 写到内联函数中，过渡创建新句柄，导致子组件过渡渲染；
-        - 类成员函数会导致this指向不正确。
+    >> - 写到内联函数中，过渡创建新句柄，导致子组件过渡渲染；
+    >> - 类成员函数会导致this指向不正确。
 2. hooks的优势
     > 1. 不用实例化，所有逻辑都在函数内部，没有this指向的问题
     > 2. 预定义的hooks函数可以很方便的把复用的状态逻辑提取出来。
