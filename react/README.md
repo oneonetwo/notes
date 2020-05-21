@@ -577,6 +577,41 @@
     - useMemo, useCallback
     - useRef
     - useReducer
+    > 1. 编写一个 useReducer 的 Hook，使用 reducer 的方式来管理组件的内部 state 呢？其简化版本可能如下所示：
+    ```javascript
+    function todosReducer(state, action) {
+      switch (action.type) {
+        case 'add':
+          return [...state, {
+            text: action.text,
+            completed: false
+          }];
+        // ... other actions ...
+        default:
+          return state;
+      }
+    }
+    //reducer 的方式来管理组件的内部 state 呢？其简化版本可能如下所示：
+    function useReducer(reducer, initialState){
+        const [state, setState] = useState(initialState);
+        function dispatch(action){
+            const nextState = reducer(state, action);
+            setState(nextState);
+        }
+        return [state, dispatch];
+    }   
+    //在组件中使用它，让 reducer 驱动它管理 state：
+    function Todos(){
+        const [todos, dispatch] = useReducer(todosReducer, []);
+        function handleChilk(text){
+            dispatch({
+                type:'add',
+                text
+            })
+        }
+    }
+
+    ```
 4. 自定义的Hooks
     - 在 React 中有两种流行的方式来共享组件之间的状态逻辑: render props 和高阶组件，现在让我们来看看 Hook 是如何在让你不增加组件的情况下解决相同问题的。
     > 1. 自定义的Hook是一个函数，其名称是以‘use’开头，函数内部可以调用其他的Hook
