@@ -578,6 +578,8 @@
     ```
     - useContext
     - useMemo, useCallback
+    > 1. 把内联回调函数及依赖项数组作为参数传入 useCallback，它将返回该回调函数的 memoized 版本，该回调函数仅在某个依赖项改变时才会更新。
+    > 2. `useCallback(fn, deps) 相当于 useMemo(() => fn, deps)。`
     - useRef
     - useReducer
     > 1. useState的替代方案，他接受一个形如`(state, action)=>newState`的reducer,返回当前的state以及与其配套的dispatch方法。
