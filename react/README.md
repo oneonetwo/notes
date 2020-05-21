@@ -556,16 +556,27 @@
     > 1. 不用实例化，所有逻辑都在函数内部，没有this指向的问题
     > 2. 预定义的hooks函数可以很方便的把复用的状态逻辑提取出来。
     > 3. 每个useEffect可以只处理一种副作用，逻辑清晰，关注点分离；
-3. 常用的API
-    > 1. useState
-    >> useState 是允许你在 React 函数组件中添加 state 的 Hook。
-    - 参数可以是变量或者函数。
-    > 2. useEffect
-    >> 可以在函数组件中执行副作用，表示生命周期的 componentDidMount,componentDidUpdate,componentWillUnmount;
-    > 3. useContext
-    > 4. useMemo, useCallback
-    > 5. useRef
-    > 6. useReducer
+3. 常用的API    
+    - useState
+    > 1. useState 是允许你在 React 函数组件中添加 state 的 Hook。
+    > 2. 参数可以是变量或者函数。
+    - useEffect
+    > 可以在函数组件中执行副作用，表示生命周期的 componentDidMount,componentDidUpdate,componentWillUnmount;
+    > 1. effect 可选的清除机制。每个 effect 都可以返回一个清除函数, React 会在组件卸载的时候执行清除操作。
+    > 2. 使用多个 Effect 实现关注点分离,解决class生命周期函数经常包含不相关的逻辑；
+    > 3. useEffect 会在每次更新默认就会处理。它会在调用一个新的 effect 之前对前一个 effect 进行清理
+    > 4. effect的优化    
+    >> 执行只运行一次的 effect（仅在组件挂载和卸载时执行），可以传递一个空数组（[]）作为第二个参数。
+    >> 传入 [count] 作为第二个参数，只有count变化事，才会调用effect
+    ```javascript
+    useEffect(() => {
+      document.title = `You clicked ${count} times`;
+    }, [count]); // 仅在 count 更改时更新
+    ```
+    - useContext
+    - useMemo, useCallback
+    - useRef
+    - useReducer
 4. 自定义的Hooks
 5. Hooks的使用规则
 6. Hooks的常遇见的问题
