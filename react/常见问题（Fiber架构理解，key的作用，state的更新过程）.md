@@ -28,3 +28,32 @@
     - 等nextUnitOfWork没有了，则表示fiber树构建完成，那么调用commitRoot函数，遍历fiberRoot，把整个fiber添加到Dom
 
 ## state的更新过程（异步，同步的问题）
+1. 前提,我们知道调用 setState, render, forceUpdate会进入调度执行渲染操作。当更新渲染时：
+    > 1. 调用 sheduleUpdate函数
+    >> - 1.创建update对象
+    >>> - 用于记录组件状态改变,链表上的一个节点 ，多个Update可以同时存在  比如 三个setState更新后，创建三个Update对象，存放在UpdateQueue队列中(单项链表)，在做一次总体的更新。
+    >>> 1. 属性有 payload: setState传进来的值，
+    >>> 2. next下个（setState）update对象,
+    >>> 3. callback setState中的回调 
+    >>> 4. expirationtime过期的时间，不同的任务执行不同的种类的exp
+    
+    >> - 2.调用enqueueUpdate把update添加到 updateQueue（单项链表）
+    >>> - updateQueue对象，挂在每个Fiber，状态更新的队列。
+    >>> 1. baseState： state最终更新的结果
+    >>> 2. firstUpdate: 队列中的第一个update
+    >>> 3. lastUpdate
+    
+    >> - 3.调用scheduleWork函数，告诉调度中心我们有更新。
+    
+    > 2. 进入requestWork(root, expirationtime)函数 
+    >> - isBatchUpdates = true;
+    >> - performSyncWork
+
+2. 现象
+    > 1. 我们直接在setState之后使用state,那么时异步的，如果在setTimeout和dom事件中使用state是同步的
+    > 2. 如果时对象形式的设置多个setState，则会进行浅合并（Object.assign）,函数当然不会。
+   
+3. 总结
+    > 1. batchedUpdate调用回调函数方法并返回，等三次setState都调用完成把三个update对象都加到updateQueue之后才会进行调度performSyncWork函数，进行更新。
+    > 2. 等setTimeOut和自己添加的事件执行时，函数的执行栈都变了，isBatchUpdate都没有为true的情况了。所以每次调用setState之后都会进行更新，所以每次打印都是新的state,同时这样子也会导致我们应用的性能变低。
+    > 3. React自身的机制比如生命周期，react中注册的事件都是符合batchedUpdate机制的。
