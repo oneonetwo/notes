@@ -577,9 +577,44 @@
     }, [count]); // 仅在 count 更改时更新
     ```
     - useContext
-    - useMemo, useCallback
-    > 1. 把内联回调函数及依赖项数组作为参数传入 useCallback，它将返回该回调函数的 memoized 版本，该回调函数仅在某个依赖项改变时才会更新。
-    > 2. `useCallback(fn, deps) 相当于 useMemo(() => fn, deps)。`
+    - useCallback
+    > 1. 缓存一个函数，这个函数如果是由父组件传递给子组件，或者自定义hooks里面的函数【通常自定义hooks里面的函数，不会依赖于引用它的组件里面的数据】，这时候我们可以考虑缓存这个函数，好处：
+    >> - 不用每次重新声明新的函数，避免释放内存、分配内存的计算资源浪费
+    >> - 子组件不会因为这个函数的变动重新渲染
+    > 2. 把内联回调函数及依赖项数组作为参数传入 useCallback，它将返回该回调函数的 memoized 版本，该回调函数仅在某个依赖项改变时才会更新。
+    > 3. `useCallback(fn, deps) 相当于 useMemo(() => fn, deps)。`
+    - useMemo,
+    > 1. 用来缓存数据的，当组件内部某个数据需要依赖特定的state,props通过计算而来，我们就用useMemo来缓存这个数据。以此来避免多次计算造成的浪费，优化性能。
+    ```javascript
+    import React, { useState, useMemo } from 'react';
+    function Info(props) {
+      let [personInfo , setPersonInfo] = useState({
+        gender: 'male'
+      })
+      function formatGender(gender) {
+        console.log('---调用了翻译性别的方法---')
+        return gender === 'male' ? '男' : '女'
+      }
+      // BAD 
+      // 不使用useMemo的情况下，修改其他属性，也会重新调用formatGender方法，浪费计算资源
+      // let gender =  formatGender(personalInfo.gender)
+
+      // GOOD
+      let gender = useMemo(()=>{
+        return formatGender(personalInfo.gender)
+      },[personalInfo.gender])
+
+      return (
+        <>
+            <div>
+              姓名： {personalInfo.name} -- 性别:  { gender } <br/>
+            </div>
+        </>
+      )
+    }
+
+    export default Info 
+    ```
     - useRef
     - useReducer
     > 1. useState的替代方案，他接受一个形如`(state, action)=>newState`的reducer,返回当前的state以及与其配套的dispatch方法。
