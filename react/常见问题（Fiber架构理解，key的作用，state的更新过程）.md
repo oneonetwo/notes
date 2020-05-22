@@ -1,7 +1,30 @@
 ## React构架设计原理
 1. createElement
-2. scheduler
-3. reconcileChildren
+    - babel转译jsx,每个节点调用createElement函数，createElement返回包含type, props,[children]的js对象。
+2. scheduler任务调度 -`确定react何时进行更新渲染工作`
+    - requestIdleCallback 是捡浏览器空闲来执行任务。循环调用performUnitOfWork函数，performUnitOfwork主要就是构建fiber树（深度优先），返回下一个nextUnitOfWork,
+      > - React不使用requestIdleCallback,requestIdleCallback这个 API 目前还处于草案阶段，所以浏览器实现率还不高，所以在这里 React 直接使用了polyfill的方案。这个方案简单来说是通过requestAnimationFrame在浏览器渲染一帧之前做一些处理，然后通过postMessage在macro task（类似 setTimeout）中加入一个回调，在因为接下去会进入浏览器渲染阶段，所以主线程是被 block 住的，等到渲染完了然后回来清空macro task。总体上跟requestIdleCallback差不多，等到主线程有空的时候回来调用;
+    - 页面是一帧一帧绘制出来的，当每秒绘制的帧数（FPS）达到 60 时，页面是流畅的，小于这个值时，用户会感觉到卡顿。
+      > - 浏览器完成高优先级处理后，如果没超过16ms说明时间是富余的，就会执行requestIdleCallback里面注册的任务，requestIdleCallback的回调函数接收dealine作为入参，deadline包含diditimeout，timeRemaining两个属性，
+    - 为了保持不会阻碍主线程太长时间，以及能及时处理用户输入，保持动画流畅 react用了调度，把工作分解成多个小单元，在完成每个小单元后，如果需要执行其他的操作，我们就让浏览器中断渲染。这个小单元就是nextUnitOfWork
+    - performUnitOfWork方法，做三件事
+      > 1. 添加元素到dom属性
+      > 2. 为元素的children创建fiber
+      > 3. 选择下一个next unit of work，并return
+      >> 1. 当我们完成 performing 中的fiber时，如果有child则作为下一个fiber(工作单元),如果没有孩子则找sibling作为下一个工作单元，如果没有child也没sibling，则找parent的sibling也就是叔叔，
+      >> 2. 找fiber的过程，使用深度优先
+  
+3. reconciliation 协调是vdom的真正实现 `比较两棵树之间的不同，确定需要更新的地方；`
+    - reconcileChildren目的是创建fiber,然后对比新旧节点，看effectTag属性是更新还是创建，还是删除。
+    - **key的作用** 调和单个节点，调和列表数组
+      > 1. 调和单个节点
+      >> - 如果key和节点类型都相等则直接复用，如果key为null我们也认为是相等的
+      > 2. 调和数组
+      >> 1. 设置newIndex,开始遍历新的children，对比oldFiber相同的index的key是否相等，如果相等，则复用节点，继续遍历，nextoldFiber = oldFiber.silbing;如果不相等则return null,结束第一次循环，
+      >> 2. 如果newIndex小于数组长度，则说明新的元素有新增或者变换了位置，创建existingChildren(存放剩余oldfiber)的map,从当前newIndex开始第二次循环，根据key在map里面找，如果有并且type相同则复用。
+      > 3. key的作用主要就是复用之前的节点的，没有key的话，数组就要每次全部删除然后重新创建，开销就非常大
+      
+    
 4. commitRoot
 
 ## state的更新过程（异步，同步的问题）
