@@ -11,8 +11,8 @@
       > 1. 添加元素到dom属性
       > 2. 为元素的children创建fiber
       > 3. 选择下一个next unit of work，并return
-      >> 1.当我们完成 performing 中的fiber时，如果有child则作为下一个fiber(工作单元),如果没有孩子则找sibling作为下一个工作单元，如果没有child也没sibling，则找parent的sibling也就是叔叔，
-      >> 2.找fiber的过程，使用深度优先
+      >> - 当我们完成 performing 中的fiber时，如果有child则作为下一个fiber(工作单元),如果没有孩子则找sibling作为下一个工作单元，如果没有child也没sibling，则找parent的sibling也就是叔叔，
+      >> - 找fiber的过程，使用深度优先
   
 3. reconciliation 协调是vdom的真正实现 `比较两棵树之间的不同，确定需要更新的地方；`
     - reconcileChildren目的是创建fiber,然后对比新旧节点，看effectTag属性是更新还是创建，还是删除。
@@ -20,8 +20,8 @@
       > 1. 调和单个节点
       >> - 如果key和节点类型都相等则直接复用，如果key为null我们也认为是相等的
       > 2. 调和数组
-      >> 1.设置newIndex,开始遍历新的children，对比oldFiber相同的index的key是否相等，如果相等，则复用节点，继续遍历，nextoldFiber = oldFiber.silbing;如果不相等则return null,结束第一次循环，
-      >> 2.如果newIndex小于数组长度，则说明新的元素有新增或者变换了位置，创建existingChildren(存放剩余oldfiber)的map,从当前newIndex开始第二次循环，根据key在map里面找，如果有并且type相同则复用。
+      >> - 设置newIndex,开始遍历新的children，对比oldFiber相同的index的key是否相等，如果相等，则复用节点，继续遍历，nextoldFiber = oldFiber.silbing;如果不相等则return null,结束第一次循环，
+      >> - 如果newIndex小于数组长度，则说明新的元素有新增或者变换了位置，创建existingChildren(存放剩余oldfiber)的map,从当前newIndex开始第二次循环，根据key在map里面找，如果有并且type相同则复用。
       > 3. key的作用主要就是复用之前的节点的，没有key的话，数组就要每次全部删除然后重新创建，开销就非常大
       
 4. commitRoot
