@@ -195,6 +195,9 @@
       ```
       
 3. Generator 函数
+[实现原理](https://cloud.tencent.com/developer/article/1604360)
+https://cloud.tencent.com/developer/article/1604360
+https://www.cnblogs.com/chengxs/p/10870674.html
     - Generator 函数是 ES6 提供的一种异步编程解决方案
     - yield表达式与return语句既有相似之处，也有区别。相似之处在于，都能返回紧跟在语句后面的那个表达式的值。区别在于每次遇到yield，函数暂停执行，下一次再从该位置继续向后执行，而return语句不具备位置记忆的功能。一个函数里面，只能执行一次（或者说一个）return语句，但是可以执行多次（或者说多个）yield表达式。
     - next 方法的参数
