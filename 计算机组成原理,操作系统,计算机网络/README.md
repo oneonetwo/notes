@@ -31,8 +31,10 @@
     3. 字节：`1Bytes = 8bits`
     4. 为什么在网上买了一个硬盘500G,格式化之后只剩465G?
         - 硬盘商一般用10进位标记容量   (500*1000^3)/1024^3 = 465;
+    ![容量单位](https://static.prnasia.com/pro/gift/rongliang.png)
 2. 速度单位
     1. 网络速度
+    ![网速](https://static.prnasia.com/pro/gift/wangsu.png)
     2. CPU频率
         - CPU的速度一般体现为CPU的时钟频率
             - cpu的时钟频率单位是`Hz`
@@ -41,7 +43,7 @@
             - 他是每秒中的周期性变动重复次数的计量（比如蜜蜂的翅膀每秒震动400次 400Hz）
             - 并不是描述计算机领域的所专有的单位
         - 就是高低电平0和1变化的次数
-        [!CPU速度](https://static.prnasia.com/pro/gift/cpusudu.png)
+        ![CPU速度](https://static.prnasia.com/pro/gift/cpusudu.png)
 #### 计算机的字符和编码集
 1. 字符编码集的历史
     1. ASCLL码  `大写字母，小写字母，常用的字符`
