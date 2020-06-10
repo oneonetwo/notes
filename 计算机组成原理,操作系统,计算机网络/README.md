@@ -35,7 +35,7 @@
     <img src="https://static.prnasia.com/pro/gift/rongliang.png" alt="容量单位" title="容量单位" width="70%"/>
 2. 速度单位
     1. 网络速度  
-    <img src="https://static.prnasia.com/pro/gift/wangsu.png" alt="网络速度" title="网络速度" style="width:70%;text-align:center" />
+    <img src="https://static.prnasia.com/pro/gift/wangsu.png" alt="网络速度" title="网络速度" width="70%" />
     2. CPU频率
         - CPU的速度一般体现为CPU的时钟频率
             - cpu的时钟频率单位是`Hz`
@@ -44,7 +44,7 @@
             - 他是每秒中的周期性变动重复次数的计量（比如蜜蜂的翅膀每秒震动400次 400Hz）
             - 并不是描述计算机领域的所专有的单位
         - 就是高低电平0和1变化的次数  
-        <img src="https://static.prnasia.com/pro/gift/cpusudu.png" style="width:70%;text-align:center" alt="CPU频率速度" title="CPU频率速度" width="70%"/>
+        <img src="https://static.prnasia.com/pro/gift/cpusudu.png" width="70%" alt="CPU频率速度" title="CPU频率速度" width="70%"/>
 #### 计算机的字符和编码集
 1. 字符编码集的历史
     1. ASCLL码  `大写字母，小写字母，常用的字符`
