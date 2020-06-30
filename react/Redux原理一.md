@@ -1,5 +1,5 @@
 # Redux的原理
-
+对不可变数据的 immutable的分析   https://cn.redux.js.org/docs/recipes/UsingImmutableJS.html
 ## 设计思想以及流程
   1. Redux的设计思想很简单，就两句话：
       - web 用用是一个状态机，视图和状态是一一对应的；
