@@ -24,7 +24,15 @@
 2. NUll 和 undefined
     - null和undefined是其他任何类型的子类型
 ### 2. any类型和联合类型
+1. any IDE没有补全，提示
+2. Union Types联合类型
+```typescript
+let notSure: any = 4;
+notSure = 'maybe it is a string';
+notSure = true;
 
+let numberOrString: number | string = 234;
+```
 ### 3. Array和Tuple
 ### 4. interface
 ### 5. 函数和类型判断
