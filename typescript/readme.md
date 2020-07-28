@@ -275,4 +275,25 @@ const a: IPlus<number> = plus;
 const b: IPlus<string> = connect;
 ```
 ### 10. 类型别名和类型断言
+```typescript
+//1. type aliases 类型别名
+type PlusType = (x: number, y: number) => number;
+function sum(x: number, y: number): number { return x+y; }
+const sum2: PlusType = sum;
+
+type NameResolver = () => string;
+type NameOrResolve = string | NameResolver;
+function getName(n: NameOrResolve): string {
+    if(typeof n){ ... }
+}
+//2. type assertion类型断言
+function getLength(input: string| number) : number {
+    //1. 类型断言
+    //const str = input as String; 
+    //2. 类型断言
+    //<string>input.length
+}
+```
 ### 11. 声明文件
+1. 在typescript 中使用非ts编写的类库的时候，必须为这个类库编写一个声明文件（d.ts）
+2. 大部分主流类库的都可以在这个社区中找到。[TypeSearch](https://microsoft.github.io/TypeSearch/);
