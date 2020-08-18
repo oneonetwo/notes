@@ -291,7 +291,7 @@ function getLength(input: string| number) : number {
     //1. 类型断言
     //const str = input as String; 
     //2. 类型断言
-    //<string>input.length
+    //（<string>input）.length
 }
 ```
 ### 11. 声明文件
