@@ -178,7 +178,8 @@
     > 1. `const node = this.myRef.current;` 表示的是底层的dom或者是组件的挂载实例；
     > 2. 你不能在函数组件上中使用ref属性，因为他们没有实例；
     ```javascript
-        //useRef
+        //useRef 两个例子
+        //1. 可变的 ref 对象，其 .current 属性被初始化为传入的参数, 更新current不会发生更新，需要state带动下
         const LikeButton = () => {
             const likeRef = useRef(0);
             function handleAlertClick() {
@@ -189,6 +190,21 @@
             return <>
                 <button onClick={()=>{likeRef.current++}}>
                 <button> onClick = { handleAlterClick} </button>
+            </>
+        }
+        // 2. useRef模拟声明周期更新
+        const LikeButton = () => {
+            const didUpdateRef = useRef(false);
+            useEffect(()=>{
+                if(didUpdateRef.current){
+                    console.log('component is updated');
+                } else {
+                    didMountRef.current = true;
+                }
+            })
+            return 
+            <>
+                <button />
             </>
         }
         //createRef 回调函数
