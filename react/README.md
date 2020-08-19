@@ -178,7 +178,20 @@
     > 1. `const node = this.myRef.current;` 表示的是底层的dom或者是组件的挂载实例；
     > 2. 你不能在函数组件上中使用ref属性，因为他们没有实例；
     ```javascript
-        //createRef
+        //useRef
+        const LikeButton = () => {
+            const likeRef = useRef(0);
+            function handleAlertClick() {
+                setTimeout(() => {
+                    alert('you click on' + likeRef.current)
+                }, 3000)  
+            }
+            return <>
+                <button onClick={()=>{likeRef.current++}}>
+                <button> onClick = { handleAlterClick} </button>
+            </>
+        }
+        //createRef 回调函数
         //dom添加 Ref
         class CustomTextInput  extends Component{
             constructor(props){
