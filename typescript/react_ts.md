@@ -32,7 +32,15 @@
         1. **可以在文件名前面加一个下划线，就能避免被编译,叫做**
         2. Example "_colors.scss":  引用 @import "colors";
 5. Button需求分析
-        
+    - type size 定义css变量，mixin类
+6. Button测试
+    - React组件特别是适合单元测试
+        1. Component - 组件
+        2. Function - 函数
+        3. 单向数据流
+    - jest facebook出品的测试框架
+        1. `jest jest.test.js --watch` 
+
     
     
     
