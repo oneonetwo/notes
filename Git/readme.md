@@ -71,8 +71,10 @@
     2. 在本地创建和远程分支对应的分支，使用`git checkout -b branch-name origin/branch-name`本地和远程分支的名称最好一致；
     3. 建立本地分支和远程分支的关联，使用`git branch --set-upstream branch-name origin/branch-name`；
 7. rebase
-    1. rebase操作可以把本地末push的分叉提交历史真理成直线；
-    2. rebase的目的是使我们在查看提交变化时更容易，因此分叉的提交要三方对比；
+    1. rebase把本地的当前分支的提交挪动了位置，放在了需要merge的分支最后一次提交之后，所以变成了一条直线；
+    2. rebase操作前后，最终提交的内容是一致的。
+    3. rebase操作可以把本地末push的分叉提交历史真理成直线；
+    4. rebase的目的是使我们在查看提交变化时更容易，因此分叉的提交要三方对比；
 ### 标签管理
 1. 创建标签
 2. 操作标签
