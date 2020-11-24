@@ -33,21 +33,35 @@
         - 命令中的--很重要，没有--，就变成了“切换到另一个分支”的命令
     2. `git reset HEAD filename.txt` 可以将暂存区的修改撤销，重新放到工作区 
 5. 删除文件 
-    1. git rm test.txt  然后git commit; 
-    2. git checkout -- test.txt 误删了，可以使用还原，
+    1. `git rm test.txt`  然后git commit; 
+    2. `git checkout -- test.txt` 误删了，可以使用还原，
         - git checkout 其实使用版本库里的版本替换工作区的版本，无论工作区是修改还是删除，都可以‘一键还原’
 ### 远程仓库
 1. 添加远程仓库
-    - ssh-keygen -t rsa -C "jingyuan@qq.com"  创建SSH Key
-    - git remote add origin git@github.com....gitname  本地仓库与远程仓库做关联
+    - `ssh-keygen -t rsa -C "jingyuan@qq.com"`  创建SSH Key
+    - `git remote add origin git@github.com....gitname`  本地仓库与远程仓库做关联
 2. 从远程仓库克隆
     - git clone   git:// https 支持多种协议
 ### 分支管理
 1. 创建和合并分支
-    - git 
+    - 查看分支 git branch 
+    - 创建分支 git branch <name>
+    - 切换分支 git checkout <name> 或者 git switch <name>
+    - 创建+切换 git checkout -b <name> 或者 git switch -c <name>
+    - 合并某分支 git merge <name>
+    - 删除分支 git branch -d <name>
 2. 解决冲突
 3. 分支管理策略
 4. Bug分支
+    1. `git stash`储藏当前分支，
+    2. 切换到master上，创建bug分支 issue-001
+    3. 修复bug后，提交，切换到master，merge分支并删除；
+    4. 切换到dev；
+        - `git stash list` 查看储藏list
+        - `git stash apply` 恢复 `git stash drop`删除
+        - 或者直接 `git stash pop` 恢复的同时stash也已经删除；  
+    5. 此时bug仍然存在在当前dev分支上,使用cherry-pick;
+        - `git cherry-pick 4c805e2`
 5. Feature分支
 6. 多人协作
 7. rebase
