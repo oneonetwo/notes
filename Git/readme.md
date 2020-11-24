@@ -63,8 +63,16 @@
     5. 此时bug仍然存在在当前dev分支上,使用cherry-pick;
         - `git cherry-pick 4c805e2`
 5. Feature分支
+    - 添加新功能，最好新建一个feature分支，完成后，合并，最后删除该feature分支；
+    - 强行删除：`git branch -D feature-vbal`
 6. 多人协作
+    1. `git remote -v`显示更详细的信息
+        - 显示了可以抓取和推送的origin的地址，吐过没有推送权限，看不见push的地址；
+    2. 在本地创建和远程分支对应的分支，使用`git checkout -b branch-name origin/branch-name`本地和远程分支的名称最好一致；
+    3. 建立本地分支和远程分支的关联，使用`git branch --set-upstream branch-name origin/branch-name`；
 7. rebase
+    1. rebase操作可以把本地末push的分叉提交历史真理成直线；
+    2. rebase的目的是使我们在查看提交变化时更容易，因此分叉的提交要三方对比；
 ### 标签管理
 1. 创建标签
 2. 操作标签
