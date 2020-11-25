@@ -1,3 +1,11 @@
+# git flow
+https://www.jianshu.com/p/41910dc6ef29
+1. Production 分支
+2. Develop分支
+3. Feature
+4. Release
+5. Hotfix
+# git简单使用
 ### git简介
 1. 安装 
     1. $ git config --global user.name "your name"
@@ -49,6 +57,8 @@
     - 切换分支 git checkout <name> 或者 git switch <name>
     - 创建+切换 git checkout -b <name> 或者 git switch -c <name>
     - 合并某分支 git merge <name>
+        - `--no--ff`是指强行关闭fast-forward方式；保留分支的历史；
+        - `--squash`把多次分支commit历史压缩为一次；
     - 删除分支 git branch -d <name>
 2. 解决冲突
 3. 分支管理策略
@@ -80,3 +90,4 @@
 2. 操作标签
 ### 自定义Git、
 1. 使用SourceTree
+
