@@ -48,7 +48,7 @@ module.exports = {
     - url-loader 
         1. 像file loader 一样工作，但如果文件小于限制，可以返回 data URL
         2. Limit：2048 小于2kb则以base64打包到js
-2. css文件  use: ['style-loader', 'css-loader', 'sass-loader'] 从左往右一次链式执行
+2. css文件  use: ['style-loader', 'css-loader', 'sass-loader'] 从右往左，从下往上依次链式执行
     - style-loader 含有 CSS 字符串的 <style> 标签，将被插入到 html 文件的 <head> 中
     - css-loader 解析几个文件的关系后，使用 @import 加载，并且返回 CSS 代码
     - sass-loader 加载和转译 SASS/SCSS 文件 sass-loader node-sass
