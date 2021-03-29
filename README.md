@@ -9,3 +9,4 @@
 
 2021.03.10
    1. 实例对象属性跟函数赋值，class类的getter setter的简单用法
+   2. 隐参  let n = ['1','2','3'].map(Number)
