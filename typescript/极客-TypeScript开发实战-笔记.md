@@ -1,23 +1,20 @@
 ## 基础篇
 
 ### 1. 重塑“类型思维”
+1. 强类型语言与弱类型
+2. 动态类型与静态类型
+3. 编写第一个 TypeScript 程序
 
-1. 类型基础
+    1. 初始化环境
+        > - `npm init -y` 生成 package.json 文件;
+        > - `npm install typescript -g` 全局安装 typescript, 能够在全局使用 `tsc 命令`, `tsc -h`查看帮助信息;
+        > - `tsc --init` 生成 tsconfig.json 文件
+        > - 可以官网的 Playground 查看编译后的 js 代码是什么样子 [https://www.typescriptlang.org/play](`https://www.typescriptlang.org/play);
 
-    1. 强类型语言与弱类型
-    2. 动态类型与静态类型
-    3. 编写第一个 TypeScript 程序
-
-        1. 初始化环境
-            > - `npm init -y` 生成 package.json 文件;
-            > - `npm install typescript -g` 全局安装 typescript, 能够在全局使用 `tsc 命令`, `tsc -h`查看帮助信息;
-            > - `tsc --init` 生成 tsconfig.json 文件
-            > - 可以官网的 Playground 查看编译后的 js 代码是什么样子 [https://www.typescriptlang.org/play](`https://www.typescriptlang.org/play);
-
-        2. 配置打包工具
-            > 1. `npm install webpack webpack-cli webpack-dev-server` 安装三个包
-            > 2. 针对不同的环境配置不同的webpack的打包文件 webpack.dev.config.js webpack.pro.config.js webpack.config.js 
-            > 3. 
+    2. 配置打包工具
+        > 1. `npm install webpack webpack-cli webpack-dev-server` 安装三个包
+        > 2. 针对不同的环境配置不同的webpack的打包文件 webpack.dev.config.js webpack.pro.config.js webpack.config.js 
+        > 3. 
 
 2. 基本类型
 3. 枚举类型
