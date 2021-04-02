@@ -1,5 +1,3 @@
-## 基础篇
-
 ### 1. 重塑“类型思维”
 1. 强类型语言与弱类型
 2. 动态类型与静态类型
@@ -21,6 +19,40 @@
         > 7. `npm install webpack-merge -D` 安装webpack-merge 把配置文件做合并 process.NODE_ENV判断是什么环境；
     3. 编辑package.json
 2. 基本类型
+	```typescript
+	//原始类型
+	let bool:boolean = true;
+	let num: number = 123;
+	let str: string = 'abc';
+	//数组
+	let arr1: number[] = [1, 2, 3];
+	let arr2: Array<number | string> = [1,2,3,'q'];
+	//元组
+	let tuple: [number, string] = [0, '1']; 可以通过push添加新元素但是还是不能越界访问
+	//函数
+	let add = (x: numebr, y: number ): number => x + y; //通常函数类型可以省略，是ts类型推断的功能；
+		//1. 定义函数类型
+	let compute: (x: numebr, y: number) => number;
+	compute = (a, b) => a+b;
+	//对象
+	let obj: { x: number, y: number} = {x: 1, y: 1};
+	obj.x = 3;//只有定义了才能去改变类型；
+	//symbol
+	let s1: symbol = Symbol();
+	//undefined; null;是任何类型的子类型
+	let u: undefied = undefined;
+	let n: null = null;
+	//void; 是一种操作符，可以让任何的表达式返回undefined,表示没有返回值的函数
+	let noReturn = ()=>{};
+	//any 不指定变量类型，默认就是any
+	let x;  
+	x = 1; x= []; x=()=>{};
+
+	//never 永远不会有返回值的函数 有两种
+	let error = ()=>{ throw new Error('error')}
+	let endless = ()=>{ while(true) {} }
+
+	```
 3. 枚举类型
 4. 接口
     1. 对象类型接口
