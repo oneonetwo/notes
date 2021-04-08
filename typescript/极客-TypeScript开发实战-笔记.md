@@ -285,9 +285,117 @@ class Bus extends Auto implements AutoInterface {
 	```
 ### 10. 高级类型 
 1. 交叉类型和联合类型 
-2. 索引类型 
-3. 映射类型 
-4. 条件类型 
+	1. 交叉类型就是将多个类型合并成一个类型， 适合对象混入的场景；
+
+	```js
+	//交叉类型
+	interface Dog{
+		run(): void;
+	}
+	interface Cat{
+		jump(): void;
+	}
+	let pet: Dog & Cat ={
+		run() {}
+		jump() {}
+	}
+	//联合类型
+	let a = 1 | 2 | 3;
+	//对象的联合类型
+	interface Square {
+		king: 'square';
+		size: number;
+	}
+	interface Rectangle{
+		king: 'rectangle';
+		width: number;
+		height: number;
+	}
+	type Shape = Square | Rectangle;
+	function area(s: Shape){
+		switch (s.king){
+			case 'square':
+				return s.size* s.size;
+			case 'rectangle':
+				return s.width * s.height;
+			//兜底升级
+			default: 
+				return ((e: never)=>{ throw new Error(e)})(s)
+		}
+	}
+	```
+### 2. 索引类型 
+1. 索引类型的查询操作符  `keyof T` 表示类型T的所有公共属性的联合类型；
+```js
+let obj = { a: 1; b: 2; c: 3}
+function getValues(obj, keys){
+	keys.map(key=> obj[key]);
+}
+getValues(obj, ['a', 'b'])
+//keyof T
+interface Obj{
+	a: number;
+	b: string;
+}
+let key: keyof Obj;   //key: number | string;
+//T[k]
+let value: Obj['a']; //value: number;
+//T extends U 改造getValues函数
+function getValues<T, K extends keyof T>(obj: T, keys: K[]): T[k][] {
+	return keys.map(key=> obj[key]);
+}
+```
+### 3. 映射类型 
+1. 本质上就是预先定义的泛型接口，通常还会结合索引类型，获取对象的属性和属性值；
+2. 通过映射类型可以把旧的类型变成新的类型；
+3. 三个同态高级操作符（只作用于类型的内部,不创建额外的属性）； Readonly  Partial Pick;
+4. 非同态（会创建新的属性）， 例如Record
+```js
+interface Obj{
+	a: number;
+	b: string;
+	c: boolean;
+}
+//转变成只读类型
+type ReadonlyObj= Readonly<Obj>;
+//所有属性变成可选
+type PartialObj= Partial<Obj>;
+//抽取一些属性类型的子集
+type PickObj= Pick<obj, 'a'|'b'> // PickObj:{a: number; b:string}
+type RecordObj= Record<'x'|'y', obj> // { x: Obj, y: Obj};
+```
+### 4. 条件类型 
+1. 由条件表达式所决定的类型， 是类型有了不唯一性,增加了语言的灵活性；
+```js
+//T extends U? X: Y;
+type TypeName<T> =
+		T extends string? "string":
+		T extends number? "number":
+		T extends boolen? "boolean":
+		T extends undefined? "undefined":
+		T extends function? "function":
+		"object";
+type T1 = TypeName<string> // type T1 = "string";
+type T2 = TypeName<string[]> //type T2 = "object"
+
+//如果T是联合类型的情况下，会变成多个类型的联合类型
+//(A | B) extends U?X:Y;  ==>   (A extends U?X:Y)|(B extends U?X:Y)
+type T3 = TypeName<string | string[]>; // type T3 = "string" | "object";
+//过滤一些类型
+type Diff<T, U> = T extends U? never: T;
+type T4 = Diff<"a"|"b"|"c"|"e", "a"|"e">; //type T4="b"|"c"
+//NotNull
+type NotNull<T> = Diff<T, null|undefined>;
+type T5 = NotNull<string|number|null|undefined> //type T5 = string|number;
+//官方已经实现了
+实现的Diff过滤  ==>    Exclude<T, U>;
+实现的NotNull  ==> NonNullable<T>;
+在类型中抽取 ==> Extract<T, U>;
+type T6 = Extract<"a"|"b"|"c", "a"|"b">;   //type T6 = "a";
+获取函数的返回值类型 ==> ReturnType<T> 
+type T7 = ReturnType<()=>string>  //type T7 = string;
+```
+
 ##工程篇
 11. ES6 和 CommonJS 的模块系统
 12. 使用命名空间
@@ -304,10 +412,26 @@ class Bus extends Auto implements AutoInterface {
 
 ## 实战篇
 
-1. 创建项目
+### 1. 创建项目
+1. 
 2. 组件与类型
     1. 函数组件与类组件
     2. 高阶组件与 Hooks
+	```js
+	interface Loading {
+		loading: boolean;
+	}
+	function HelloHoc<P>(WrappedComponent: React.ComponentType<P>){
+		return class extends Component<P & Loading>{
+			render(){
+				let { loading, ...props} = props;
+				return loading
+						?<div>loading...</div>
+						:<WrappedComponent {...props as P}/>
+			}
+		}
+	}
+	```
 3. 事件处理与数据请求
 4. 列表渲染与路由
 5. Redux 与类型
