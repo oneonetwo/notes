@@ -57,6 +57,8 @@
 4. 接口
     1. 对象类型接口
     2. 函数类型接口
+6. inertface和type的区别
+	1. interface 没法实现 交叉类型和联合类型，并且没法实现utility type；
 ### 5. 函数相关知识点整理
 1. 函数的定义
 ```javascript
@@ -394,6 +396,9 @@ type T5 = NotNull<string|number|null|undefined> //type T5 = string|number;
 type T6 = Extract<"a"|"b"|"c", "a"|"b">;   //type T6 = "a";
 获取函数的返回值类型 ==> ReturnType<T> 
 type T7 = ReturnType<()=>string>  //type T7 = string;
+//Parameters 能独处函数类型的参数的类型 Parameters<typeof 函数名>
+//Omit删除类型中的属性  Omit<Person, 'name'> 得到一个没有name属性的person
+
 ```
 
 ##工程篇
