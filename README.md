@@ -23,3 +23,5 @@
     - number.toSting(radix) number转成radix进制 
     - 位移运算
     - `num >> 1`num大于1时，右移1相当于除以2 
+4. new UrlSearchParam('?name=jingyuan@age=28')
+    - Object.fromEntries(s); 能把map变成object;
