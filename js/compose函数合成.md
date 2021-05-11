@@ -48,12 +48,11 @@
     ```javascript
     function compose(...funcs){
         return (...args)=>{
-             let res = args,index=0;
-             do{
-                res = funcs[index](...res);
-                index++;
-             }while(index<funcs.length)
-             return res;
+            let res = funcs.shift()(...args);
+            do{
+                res = funcs.shift()(res);
+            }while(funcs.length)
+            return res;
         }
     }
     ```
