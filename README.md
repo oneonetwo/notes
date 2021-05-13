@@ -25,3 +25,8 @@
     - `num >> 1`num大于1时，右移1相当于除以2 
 4. new UrlSearchParams('?name=jingyuan@age=28')
     - Object.fromEntries(s); 能把map变成object;
+#### 20210513 
+1. RegExp的技巧 
+```javascript
+/^([\w-]+:)?\/\/([^\/]+)/.test(url) && RegExp.$2 
+```
