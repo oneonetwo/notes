@@ -71,4 +71,20 @@ IntersectionObserver API '交叉观察器'使用
 1. MutationObserver接口提供了监视对DOM树所做更改的能力。它被设计为旧的Mutation Events功能的替代品，该功能是DOM3 Events规范的一部分。
 2. 性能监测对象 PerformanceObserver 用于监测性能度量事件，在浏览器的性能时间轴记录下一个新的 performance entries  的时候将会被通知 。
 3.  ResizeObserver **实验中的功能可能被重新修订** 接口可以监听到 Element 的内容区域或 SVGElement的边界框改变。内容区域则需要减去内边距padding。（有关内容区域、内边距资料见盒子模型 ）
+```js
+const query = (selector)=>{
+    return Array.from(document.querySelectorAll(selector));
+}
+const observer = new IntersectionObserver((changes)=>{
+    changes.forEach(change=>{
+        let container = change.target;
+        let content = container.querySelector('template')?.content;
+        container.appendChild(content);
+        observer.unobserve(container);
+    })
+})
 
+query('.lazy-loaded').forEach(function(item) {
+    observer.observe(item);
+})
+```
