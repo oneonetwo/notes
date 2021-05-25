@@ -31,7 +31,8 @@
 /^([\w-]+:)?\/\/([^\/]+)/.test(url) && RegExp.$2 
 ```
 ### 20210520
-grid
+css grid
+https://juejin.cn/post/6854573220306255880#heading-21
 ### 20210521
 [CSS 变量教程](http://www.ruanyifeng.com/blog/2017/05/css-variables.html)
 http://www.ruanyifeng.com/blog/2017/05/css-variables.html
@@ -65,4 +66,9 @@ const useMedia = (queries, values, defaultValue)=>{
     return value;
 }
 ```
+### 20210525
+IntersectionObserver API '交叉观察器'使用
+1. MutationObserver接口提供了监视对DOM树所做更改的能力。它被设计为旧的Mutation Events功能的替代品，该功能是DOM3 Events规范的一部分。
+2. 性能监测对象 PerformanceObserver 用于监测性能度量事件，在浏览器的性能时间轴记录下一个新的 performance entries  的时候将会被通知 。
+3.  ResizeObserver **实验中的功能可能被重新修订** 接口可以监听到 Element 的内容区域或 SVGElement的边界框改变。内容区域则需要减去内边距padding。（有关内容区域、内边距资料见盒子模型 ）
 
