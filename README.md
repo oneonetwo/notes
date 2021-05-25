@@ -35,6 +35,34 @@ grid
 ### 20210521
 [CSS 变量教程](http://www.ruanyifeng.com/blog/2017/05/css-variables.html)
 http://www.ruanyifeng.com/blog/2017/05/css-variables.html
-### react-spring react动画
+### 20210522
+react-spring react动画
 https://aleclarson.github.io/react-spring/v9/
-### window
+### 20210523 
+meida媒体查询 Window matchMedia() 方法
+https://www.runoob.com/jsref/met-win-matchmedia.html
+```js
+const columnCount = useMedia(
+//         ['(min-width: 1500px)', '(min-width: 1000px)', '(min-width: 600px)'],
+//         [5, 4, 3],
+//         2
+//     );
+const useMedia = (queries, values, defaultValue)=>{
+    const mediaQueryLists = queries.map(q => window.matchMedia(q));
+    const getValue = ()=>{
+        const index = mediaQueryLists.findIndex(mql=>mql.matches)
+        return values[index] || defaultValue;
+    }
+    const [value, setValue] = useState(getValue);
+    useEffect(()=>{
+        const handler = ()=> setValue(getValue);
+        mediaQueryLists.forEach(mql => mql.addListener(handler));
+        return ()=>{
+            mediaQueryLists.forEach(mql=> mql.removeListener(handler));
+        }
+    }, [])
+
+    return value;
+}
+```
+
