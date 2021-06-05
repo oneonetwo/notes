@@ -88,3 +88,5 @@ query('.lazy-loaded').forEach(function(item) {
     observer.observe(item);
 })
 ```
+https://zhuanlan.zhihu.com/p/174328231
+sass内置有四种编译格式：nested、expanded、compact、compressed
