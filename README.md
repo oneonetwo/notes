@@ -90,3 +90,22 @@ query('.lazy-loaded').forEach(function(item) {
 ```
 https://zhuanlan.zhihu.com/p/174328231
 sass内置有四种编译格式：nested、expanded、compact、compressed
+
+# 20210618
+react事件捕获机制
+```
+  <div onChange={ event => handleMenuChange(event.target as HTMLInputElement) } className={ styles.menuList }>
+            { menuData?.data?.filter(d => d.key==1).map(d =>
+                <label className={ styles.radioLabel } key={ d.key }>
+                    <input type="checkbox" value={d.list.map(dc=>dc.key)}  defaultChecked={ d.list.every(s=>menuIds?.includes(s.key))}/> { d.value }
+                </label>
+            ) }
+            { menuData?.data?.filter(d => d.key!=1).flatMap(d => d.list).map(d =>
+                <label className={ styles.radioLabel } key={ d.key }>
+                    <input type="checkbox" value={ d.key }  defaultChecked={ menuIds.some(id => id === d.key) }/> { d.value }
+                </label>
+            ) }
+        </div>
+```
+### bind预置参数
+
