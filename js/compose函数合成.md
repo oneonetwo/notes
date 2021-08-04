@@ -10,13 +10,13 @@
         }
     }
     let addC = compose(add(1), add(2), add(3));
-    addC(10) // 16
+    addC(4) // 10
     ```
 2. 例子2：
     - 以下例子中，func1，func2，func3都接收func这个形参，而func这个参数由于会被使用，所以会一直以闭包的形式保存在内存中，也就是说func1，func2，func3会一直存在在内存中，func1接收到的是say，func2接收到的是func1，func3接收到的是func2。
     ```javascript
-    var say = function(){
-        console.log(0000)
+    var run = function(){
+        console.log('run')
     }
     // 得到合成后的方法
     function func1(func) {
@@ -40,8 +40,8 @@
           console.log(3333)
       }
     }
-    var strongSay = compose(func3, func2, func1)(say);
-    strongSay()
+    var composeFun = compose(func1, func2, func3)(fun);
+    composeFun()
     ```
 ### 由以上两个例子推到compose函数
 1. 逐步推到的，简单的，普通，容易理解的形式
@@ -59,13 +59,10 @@
 2.  从例子中不难看出，很容易联想到数组的reduce方法，reduce形式；
     ```javascript
     function compose(...funcs){
-        if(funcs.length === 0){
-            return (...args) => args;
-        }
-        if(funcs.length === 1){
-            return funcs[0];
-        }
-        return funcs.reduce((a,b)=>(...args)=>a(b(...args)))
+        if(funcs.length == 0) return value=>value;
+        return value => funcs.reduce((a, b)=>{
+            return b(a);
+        },  value)
     }
     ```
     
