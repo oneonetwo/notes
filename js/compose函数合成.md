@@ -47,11 +47,11 @@
 1. 逐步推到的，简单的，普通，容易理解的形式
     ```javascript
     function compose(...funcs){
-        return (...args)=>{
-            let res = funcs.shift()(...args);
-            do{
-                res = funcs.shift()(res);
-            }while(funcs.length)
+        return (value)=>{
+            let res = value;
+            while(funcs.length){
+                res=funcs.shift()(res);
+            }
             return res;
         }
     }
