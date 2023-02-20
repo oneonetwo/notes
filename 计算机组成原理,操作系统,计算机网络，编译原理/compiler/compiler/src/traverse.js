@@ -5,6 +5,18 @@
 const nodeTypes = require('./nodeTypes');
 const parser = require('./parse');
 
+//替换节点
+function replace(parent, oldNode, newNode) { 
+    if (parent) { 
+        for (let key in parent) { 
+            if (parent.hasOwnProperty(key)) {
+                if (parent[key] === oldNode) { 
+                    parent[key] = newNode;
+                }
+            }
+        }
+    }
+}
 //深度优先遍历
 function traverse(ast, vistor) { 
     traverseNode(ast, null);
@@ -16,11 +28,12 @@ function traverse(ast, vistor) {
     }
     function traverseNode(node, parent){
         let methods = vistor[node.type];
+        let replaceWith = replace.bind(null, parent, node);
         if (methods) { 
             if (typeof methods === 'function') {
-                methods({ node }, parent);
+                methods({ node, replaceWith }, parent);
             } else { 
-                methods.enter({ node }, parent);
+                methods.enter({ node, replaceWith }, parent);
             }
          }
         switch (node.type) { 
@@ -60,22 +73,22 @@ function traverse(ast, vistor) {
     }    
 }
 
-module.export = traverse;
+module.exports = traverse;
 
 
-let sourceCode = '<h1 id="title"><span>hello</span>world</h1>';
-let ast = parser(sourceCode);
-traverse(ast, {
-    JSXOpeningElement: {
-        enter: (nodePath, parent) => {
+// let sourceCode = '<h1 id="title"><span>hello</span>world</h1>';
+// let ast = parser(sourceCode);
+// traverse(ast, {
+//     JSXOpeningElement: {
+//         enter: (nodePath, parent) => {
             
-            console.log('进入开始元素', nodePath.node);
-         },
-        exit: (nodePath, parent) => { 
-            console.log('离开开始元素', nodePath.node);
-        }
-    }
-})
+//             console.log('进入开始元素', nodePath.node);
+//          },
+//         exit: (nodePath, parent) => { 
+//             console.log('离开开始元素', nodePath.node);
+//         }
+//     }
+// })
 
 
 
