@@ -138,7 +138,7 @@ https://ttk-fed.github.io/blog/html/22.cookie.html
     - **`(?=pathern)`** 正向肯定查找(前瞻)，后面必须跟着什么。
     - **`(?!pathern)`** 正向否定查找(前瞻)，后边不能跟着什么。
     - **`(?<=pathern)`** 反向肯定条件查找(后顾)，不捕获。
-    - **`(?>=pathern)`** 反向否定条件查找(后顾)
+    - **`(?<!pathern)`** 反向否定条件查找(后顾)
     ```js
         //正向肯定前瞻
         console.log('1a'.match(/1(?=[a-z])([a-z])/)); // ['1a', 'a', index: 0, input: '1a', groups: undefined]
