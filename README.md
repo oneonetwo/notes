@@ -112,3 +112,54 @@ react事件捕获机制
 ### 2023.02.14
 https://ttk-fed.github.io/blog/html/22.cookie.html
 
+### 正则
+1. 是否捕获
+    - **`()`** 表示捕获分组，()会把每个分组的匹配的值都保存起来，使用`$n`(n是一个数字，表示第n个补货组的内容) 
+    - **`(?:)`** 表示非捕获分组，和捕获分组的区别在于，非捕获分组匹配的值不会保存起来。
+    - **`(?<...>)`** 表示命名捕获分组，反向引用一个命名分组的语法是 \k, 在replace()的方法的替换字符串中反向引用的是$
+    ```js
+        let values = 'user1000home';
+        //1. 捕获
+        let reg = /user(\d+)/
+        reg.exec(values); //['user1000', '1000', index: 0, input: 'user1000home', groups: undefined]
+        //2. 非捕获
+        let reg2 = /user(?:\d+)/
+        reg2.exec(values); //['user1000', index: 0, input: 'user1000home', groups: undefined]
+        //3. 命名捕获分组
+        let str = 'namejingyuanage30'; 
+        let reg3 = /name(?<name>\w+)age(?<age>\d+)/;
+        reg3.exec(str); //['namejingyuanage30', 'jingyuan', '30', index: 0, input: 'namejingyuanage30', groups: {name: 'jingyuan', age: '30'}]
+        //正则的反向引用
+        let str = 'youcanyoucan';
+        str.match(/you(?<行>\w{3}).*(\1)/) // ['youcanyoucan', 'can', 'can', index: 0, input: 'youcanyoucan', groups: {行: 'can'}]
+    ```
+
+2. 前瞻和后顾 不消费只要用判定
+    - **`(?=pathern)`** 正向肯定查找(前瞻)，后面必须跟着什么。
+    - **`(?!pathern)`** 正向否定查找(前瞻)，后边不能跟着什么。
+    - **`(?<=pathern)`** 反向肯定条件查找(后顾)，不捕获。
+    - **`(?>=pathern)`** 反向否定条件查找(后顾)
+    ```js
+        //正向肯定前瞻
+        console.log('1a'.match(/1(?=[a-z])([a-z])/)); // ['1a', 'a', index: 0, input: '1a', groups: undefined]
+        //正向否定前瞻
+        console.log('1ab'.match(/1(?![A-Z])([a-z])/));// ['1a', 'a', index: 0, input: '1ab', groups: undefined]
+        //反向肯定后顾
+        console.log('a1b'.match(/(?<=[a-z])1([a-z])/));// ['1b', 'b', index: 1, input: 'a1b', groups: undefined]
+        //反向否定后顾
+        console.log('a1b'.match(/(?<![A-Z])1([a-z])/));// ['1b', 'b', index: 1, input: 'a1b', groups: undefined]
+    ```
+3. 贪婪匹配模式 非贪婪匹配模式
+    - 贪婪：正则表达式去匹配时，会尽量多的匹配符合条件的内容
+    - 非贪婪: 尽量少的匹配符合条件的内容 `+?`，`??`，`*?`，`{n}?`，`{n,}?`，`{n,m}?` 就是量词后面加个?
+    ```js 
+        let str = 'aacbacbc';
+        //1. 贪婪
+        let reg = /a.*b/;
+        str.match(reg); // ['aacbacb', index: 0, input: 'aacbacbc', groups: undefined]
+        //2. 非贪婪
+        let reg2 = /a.*?b/;
+        str.match(reg2); //['aacb', index: 0, input: 'aacbacbc', groups: undefined]
+    ```
+
+
