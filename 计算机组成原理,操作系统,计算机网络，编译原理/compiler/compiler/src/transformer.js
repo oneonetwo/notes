@@ -2,8 +2,8 @@
  * @Description: 
  * @Author: yjy
  * @Date: 2023-02-19 00:21:07
- * @LastEditTime: 2023-02-20 08:17:57
- * @LastEditors: yjy
+ * @LastEditTime: 2023-02-20 10:20:18
+ * @LastEditors: jy
  * @Reference: 
  */
 /**
@@ -27,7 +27,7 @@ class T { //包含两种方式1.转化成新的AST节点，验证AST的类型
         return { type: nodeTypes.StringLiteral, value };
     }
     static callExpression(callee, _argements) { 
-        return {type: nodeTypes.CallExpression, callee, _argements}
+        return {type: nodeTypes.CallExpression, callee, argements: _argements}
     }
     static memberExpression(object, property) { 
         return {type: nodeTypes.MemberExpression, object, property }
@@ -66,7 +66,7 @@ function transform(node) {
                 ))
                 : T.nullLireral
         )
-        _arguments = [elementType, objectExpression, node.children.map(child => { 
+        _arguments = [elementType, objectExpression, ...node.children.map(child => { 
             return transform(child);
         })]
         return T.callExpression(callee, _arguments);
@@ -94,3 +94,80 @@ let sourceCode = '<h1 id="title"><span>hello</span>world</h1>';
 let ast = parser(sourceCode);
 transformer(ast);
 console.log(JSON.stringify(ast, null, 2));
+
+//打印
+const print = {
+    "type": "Program",
+    "body": [
+      {
+        "type": "ExpressionStatement",
+        "expression": {
+          "type": "CallExpression",
+          "callee": {
+            "type": "MemberExpression",
+            "object": {
+              "type": "Identifier",
+              "name": "React"
+            },
+            "property": {
+              "type": "Identifier",
+              "name": "createElement"
+            }
+          },
+          "_argements": [
+            {
+              "type": "StringLiteral",
+              "value": "h1"
+            },
+            {
+              "type": "ObjectExpression",
+              "properties": [
+                {
+                  "type": "Property",
+                  "key": {
+                    "type": "Identifier",
+                    "name": "id"
+                  },
+                  "value": {
+                    "type": "StringLiteral",
+                    "value": "title"
+                  }
+                }
+              ]
+            },
+            {
+              "type": "CallExpression",
+              "callee": {
+                "type": "MemberExpression",
+                "object": {
+                  "type": "Identifier",
+                  "name": "React"
+                },
+                "property": {
+                  "type": "Identifier",
+                  "name": "createElement"
+                }
+              },
+              "_argements": [
+                {
+                  "type": "StringLiteral",
+                  "value": "span"
+                },
+                {
+                  "type": "ObjectExpression"
+                },
+                {
+                  "type": "StringLiteral",
+                  "value": "hello"
+                }
+              ]
+            },
+            {
+              "type": "StringLiteral",
+              "value": "world"
+            }
+          ]
+        }
+      }
+    ]
+  }
