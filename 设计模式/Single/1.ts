@@ -1,32 +1,25 @@
 /*
- * @Descripttion: 
- * @version: 
- * @Author: D
- * @Date: 2023-02-22 19:18:59
- * @LastEditors: jy
- * @LastEditTime: 2023-02-22 19:39:18
+ * @Description: ES6实现单例
+ * @Author: yjy
+ * @Date: 2023-02-22 21:53:16
+ * @LastEditTime: 2023-02-22 21:58:05
+ * @LastEditors: yjy
+ * @Reference: 
  */
+export { }
 
-function foo(name){
-    this.name = name;
-}
-foo.prototype.hello = function(){
-    console.log('hello wrold', this.name);
-}
-function createInstance(constructor){
-    let instance;
-    return function(){
-        if(!instance){
-            constructor.apply(this, arguments);
-            //指定对象的原型对象
-            Object.setPrototypeOf(this, constructor.prototype);
-            return instance = this;
-        }else {
-            return instance;
+class Foo { 
+    private static  instance: Foo;
+    private constructor() { }
+    static getInstance() { 
+        if (Foo.instance) {
+            return Foo.instance;
+        } else { 
+            return Foo.instance = new Foo();
         }
     }
 }
 
-let w1 = createInstance(foo);
-let s = new w1('景园');
-console.log(s);
+let w1 = Foo.getInstance();
+let w2 = Foo.getInstance();
+console.log(w1 === w2)
