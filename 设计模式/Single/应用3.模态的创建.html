@@ -1,0 +1,65 @@
+/*
+ * @Description: 
+ * @Author: yjy
+ * @Date: 2023-02-23 07:52:54
+ * @LastEditTime: 2023-02-23 08:05:58
+ * @LastEditors: yjy
+ * @Reference: 
+ */
+ <!DOCTYPE html>
+ <html lang="en">
+ <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+ </head>
+ <Button id="showBtn">showBtn</Button>
+ <Button id="hideBtn">hideBtn</Button>
+ <body>
+    <script>
+class Login {
+    // element: HTMLDivElement;
+    // static getInstance: any;
+    constructor() {
+        this.element = document.createElement('div');
+        this.element.innerHTML = (
+            `
+            用户名 <input type="text"/>
+            <button>登录</button>
+            `
+        );
+        this.element.style.cssText = 'width: 100px; height: 100px; position: absolute; left: 50%; top: 50%; display: block;';
+        /* this.element.style.width='100px';
+        this.element.style.height='100px';
+        this.element.style.position='absolute';
+        this.element.style.left='50%';
+        this.element.style.top='50%'; */
+        document.body.appendChild(this.element);
+    }
+    show() {
+        this.element.style.display = 'block';
+    }
+    hide() {
+        this.element.style.display = 'none';
+    }
+}
+Login.getInstance = (function () {
+    let instance;
+    return function () {
+        if (!instance) {
+            instance = new Login();
+        }
+        return instance;
+    }
+})();
+let model = Login.getInstance();
+document.getElementById('showBtn').addEventListener('click', function (event) {
+    model.show();
+});
+document.getElementById('hideBtn').addEventListener('click', function (event) {
+    model.hide();
+});
+    </script>
+ </body>
+ </html>
