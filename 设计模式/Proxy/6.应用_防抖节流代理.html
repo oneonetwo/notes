@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        #container {
+            width: 200px;
+            height: 400px;
+            border: 1px solid red;
+            overflow: auto;
+        }
+
+        #container .content {
+            height: 4000px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="container">
+        <div class="content"></div>
+    </div>
+    <script>
+        //节流代理
+        function throttle(fn, interval) {
+            let lastTime;
+            return function () {
+                let context = this;
+                let args = Array.from(arguments);
+                let nowTime = Date.now();
+                if (lastTime) {
+                    if (nowTime - lastTime >= interval) {
+                        fn.apply(context, args);
+                        lastTime = nowTime;
+                    }
+                } else {
+                    fn.apply(context, args);
+                    lastTime = nowTime;
+                }
+            }
+        }
+        //防抖代理
+        function debounce(fn, interval){
+            let timer;
+            return function(){
+                let context = this;
+                let args = Array.from(arguments);
+                if(timer){
+                    clearTimeout(timer);
+                }
+                timer = setTimeout(fn.bind(context, ...args), interval);
+            }
+        }
+
+        let container = document.getElementById('container');
+        container.addEventListener('scroll', throttle(handleScroll, 3000));
+        let lastTime = 0;
+
+        function handleScroll(event) {
+            let nowTime = Date.now();
+            console.log('触发了滚动的事件', nowTime - lastTime);
+            lastTime = nowTime;
+        }
+    </script>
+</body>
+
+</html>
