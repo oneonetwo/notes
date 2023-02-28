@@ -1,0 +1,29 @@
+<body>
+    <div id="root">
+        <p>FullName: {{fullName}}</p>
+        <p>FirstName: <input type="text" v-model="firstName" /></p>
+        <p>LastName: <input type="text" v-model="lastName" /></p>
+    </div>
+    <script src="https://cdn.bootcss.com/vue/2.5.17-beta.0/vue.min.js"></script>
+    <script>
+        //watch
+        // new Vue({
+        //     el: '#root',
+        //     data: {
+        //         firstName: '张',
+        //         lastName: '三',
+        //         fullName: '张三'
+        //     },
+        //     watch: {
+        //         firstName(newName, oldName) {
+        //             this.fullName = newName + ' ' + this.lastName;
+        //         }
+        //     }
+        // })
+
+        //EventBus
+        let EventBus = new Vue();
+        EventBus.$on('customEvent', name => console.log(1, name));
+        EventBus.$on('customEvent', name => console.log(2, name));
+        EventBus.$emit('customEvent', 'jingyuan');
+    </script>

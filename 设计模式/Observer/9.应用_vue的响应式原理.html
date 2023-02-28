@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="name"></div>
+    <div id="age"></div>
+    <script>
+        let name = document.getElementById('name');
+        let age = document.getElementById('age');
+        class Dep{
+            subs = [];
+            attach(sub){
+                this.subs.push(sub);
+            } 
+            notify(){
+                this.subs.forEach(sub=>sub());
+            }
+        }
+        function observer(target){
+            Object.keys(target).forEach(key=>{
+                let val = target[key];
+                let dep = new Dep();
+                if(key=='name'){
+                    dep.attach(_=>name.innerHTML = val);
+                }
+                if(key=='age'){
+                    dep.attach(_=>age.innerHTML = val);
+                }
+                Object.defineProperty(target, key, {
+                    get(){
+                        return val;
+                    },
+                    set(newVal){
+                        val = newVal;
+                        dep.notify();
+                    }
+                })
+            })
+        }
+
+        let obj = {name: 'jingyuan', age: 30};
+        observer(obj);
+        setTimeout(()=>{
+            obj.name = 'huoweiwei'
+        }, 2000)
+        setTimeout(()=>{
+            obj.age = 18;
+        }, 3000)
+    </script>
+</body>
+</html>

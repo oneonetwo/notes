@@ -1,0 +1,46 @@
+<!--
+ * @Description: 
+ * @Author: yjy
+ * @Date: 2023-02-27 22:52:56
+ * @LastEditTime: 2023-02-27 22:53:37
+ * @LastEditors: yjy
+ * @Reference: 
+-->
+<!-- JQuery.Callbacks是jQuery1.7+之后引入的，用来进行函数队列的add、remove、fire、lock等操作
+并提供once、memory、unique、stopOnFalse四个option进行一些特殊的控制。
+Callbacks对象其实就是一个函数队列，获得Callbacks对象之后 ，就可以向这个集合中增加或者删除函数。add和remove功能相反，函数参数是相同的，empty()删除回调列表中的所有函数 -->
+<script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+<script>
+    function Callbacks() {
+        let observers = [];
+
+        function add(observer) {
+            observers.push(observer);
+        }
+
+        function remove(observer) {
+            let index = observers.indexOf(observer);
+            if (index != -1)
+                observers.splice(index, 1);
+        }
+
+        function fire() {
+            observers.forEach(item => item());
+        }
+        return {
+            add,
+            remove,
+            fire
+        }
+    }
+    let callbacks = Callbacks();
+
+    let a1 = () => alert(1);
+    let a2 = () => alert(2);
+    let a3 = () => alert(13);
+    callbacks.add(a1);
+    callbacks.add(a2);
+    callbacks.add(a3);
+    callbacks.remove(a3);
+    callbacks.fire();
+</script>

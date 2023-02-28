@@ -1,0 +1,21 @@
+/*
+ * @Desc绑定事件和自定义事件
+ * @Author: yjy
+ * @Date: 2023-02-27 22:18:46
+ * @LastEditTime: 2023-02-27 22:19:35
+ * @LastEditors: yjy
+ * @Reference: 
+ */
+ bang'ding
+ <script>
+     let btn = document.getElementById('btn');
+    //  btn.addEventListener('click', () => { alert(1) });
+    //  btn.addEventListener('click', () => { alert(2) });
+    //  btn.addEventListener('click', () => { alert(3) });
+    const hanler1 = _=>console.log(1);
+    const hanler2 = _=>console.log(2);
+    $('#btn').on('clickMe', handler1);
+    $('#btn').on('clickMe', handler2);
+    //触发
+    $('#btn').trigger('clickMe');
+ </script>
