@@ -3,8 +3,8 @@
  * @version: 
  * @Author: D
  * @Date: 2023-03-02 16:41:53
- * @LastEditors: jy
- * @LastEditTime: 2023-03-02 19:33:56
+ * @LastEditors: yjy
+ * @LastEditTime: 2023-03-03 07:50:13
 -->
 <!DOCTYPE html>
 <html lang="en">
@@ -31,31 +31,49 @@
     <script>
         let canvas = document.getElementById('canvas');
         let ctx = canvas.getContext('2d');
-        function getRandomColor(){
-            return '#' + (Math.random()*0xFFFFFF << 0).toString(16);
+
+        function getRandomColor() {
+            return '#' + (Math.random() * 0xFFFFFF << 0).toString(16);
         }
-        function Circle(x,y,radius) {
+
+        function Circle(x, y, radius) {
             this.radius = radius;
             this.x = x;
             this.y = y;
         }
-        Circle.prototype.render = function(){
+        Circle.prototype.render = function () {
             ctx.beginPath();
-            ctx.arc(this.x,this.y,this.radius,0,2*Math.PI);
+            ctx.arc(this.x, this.y, this.radius, 0, 2 * Math.PI);
             ctx.fillStyle = getRandomColor();
             ctx.fill();
         }
-        Circle.prototype.update = function(){
-            this.radius = 0;
+        Circle.prototype.update = function () {
+            this.radius--;
+            if (this.radius > 0) {
+                return true;
+            }
         }
-        new Circle(0, 0, 30);
+        let circles = [];
         canvas.onmousemove = function (e) {
             let circle = new Circle(e.clientX, e.clientY, 30);
-            circle.render();
-            setTimeout(()=>{
-                circle.update();
-            }, 20)
+            circles.push(circle);
         }
+        let render = () => {
+            ctx.clearRect(0, 0, 1000, 600);
+            circles.forEach(item => {
+                item.update() && item.render();
+            });
+            circles = circles.filter(item => item.radius > 0);
+            window.requestAnimationFrame(render);
+        }
+        window.requestAnimationFrame(render)
+        // setInterval(() => {
+        //     ctx.clearRect(0,0,1000,600);
+        //     circles.forEach(item => {
+        //         item.update()&&item.render();
+        //     });
+        //     circles = circles.filter(item=>item.radius>0);
+        // }, 20)
     </script>
 </body>
 
