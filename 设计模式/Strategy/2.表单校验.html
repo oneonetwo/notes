@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+</head>
+
+<body>
+    <div>
+        <form  id="userform">
+            <label for="">name</label><input name="username" type="text" />
+            <br />
+            <label for="">密码</label><input name="password" type="text" />
+            <br />
+            <label for="">手机号</label><input name="mobile" type="text" />
+            <br />
+            <input type="submit">
+        </form>
+    </div>
+    <script>
+       let Validator =  (function() {
+            let rules = {
+                notEmpty(val, msg) {
+                    if (val == '') {
+                        return msg;
+                    }
+                },
+                minLength(val, length, msg) {
+                    if (val == '' || val.length < length) {
+                        return msg;
+                    }
+                },
+                maxLength(val, length, msg) {
+                    if (val == '' || val.length > length) {
+                        return msg;
+                    }
+                }
+            };
+            let checks = [];
+            function add(element, rule) {
+                checks.push(() => {
+                    let type = rule.shift();
+                    rule.unshift(element.value);
+                    return rules[type].apply(element, rule);
+                })
+            }
+            function start() {
+                for(let check of checks){
+                    let msg = check();
+                    if (msg) return msg;
+                }
+            }
+            function addRule(name, ruleRxg){
+                rules[name] = ruleRxg;
+            }
+            return {
+                add,
+                start,
+                addRule
+            }
+        })()
+
+        Validator.addRule('isMobile', function(val, msg) {
+            if (!/^1\d{10}/.test(val)) {
+                return msg;
+            }
+        })
+        let form = document.getElementById('userform');
+        form.onsubmit = function () {
+            Validator.add(form.username, ['notEmpty', '用户名不能为空']);
+            Validator.add(form.password, ['minLength', 6, '密码小于6位最少长度']);
+            Validator.add(form.password, ['maxLength', 8, '密码大于8位最大长度']);
+            Validator.add(form.mobile, ['isMobile', '手机号不合法']);
+            let msg = Validator.start();
+            if (msg) {
+                alert(msg);
+                return false;
+            }
+            alert('校验通过');
+            return true;
+        }
+    </script>
+</body>
+
+</html>

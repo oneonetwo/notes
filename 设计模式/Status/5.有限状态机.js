@@ -25,3 +25,58 @@
  onAfter 在特定动作TRANSITION后触发
  on onAfter的简写
  */
+class StateMechine{
+    constructor(options){
+        let {init, transitions, methods} = options;
+        this.state = init;
+        transitions.forEach(({from, to, name}) => {
+            this[name] = function(){
+                    let methodName = 'on' + name[0].toUpperCase() + name.slice(1);
+                    if(this.state == from){
+                        this.state = to;
+                        methods[methodName].call(this, from, to, name);
+                    }
+                }
+        });
+    }
+}
+let stateMechine = new StateMechine({
+    init: 'solid',
+    transitions: [{
+        name: 'melt',
+        from: 'solid',
+        to: 'liquid'
+    },{
+        name: 'freeze',
+        from: 'liquid',
+        to: 'solid'
+    },{
+        name: 'vaporize',
+        from: 'liquid',
+        to: 'gas'
+    },{
+        name: 'condense',
+        from:'gas',
+        to: 'liquid'
+    }],
+    methods: {
+        onMelt: function(from, to, name){
+            console.log(`当前的状态:${this.state}, 从${from}==>>${to}, 是个${name}过程`);
+        },
+        onFreeze: function(from, to, name){
+            console.log(`当前的状态:${this.state}, 从${from}==>>${to}, 是个${name}过程`);
+
+        },
+        onVaporize: function(from, to, name){
+            console.log(`当前的状态:${this.state}, 从${from}==>>${to}, 是个${name}过程`);
+
+        },
+        onCondense: function(from, to, name){
+            console.log(`当前的状态:${this.state}, 从${from}==>>${to}, 是个${name}过程`);
+        },
+    }
+})
+stateMechine.melt();
+stateMechine.vaporize();
+stateMechine.condense();
+stateMechine.freeze();
