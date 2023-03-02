@@ -8,18 +8,18 @@
  */
 // babel https://codepen.io/zhufengnodejs/pen/LXogOy
 const States = {
-'show':function(){
-  console.log("banner显示，点击可以关闭");
-  this.setState({
-    currentState: "hide"
-  })
-},
-'hide':function(){
-    console.log("banner隐藏，点击可以打开");
-    this.setState({
-      currentState: "show"
-    })
-}
+        'show':function(){
+          console.log("banner显示，点击可以关闭");
+          this.setState({
+            currentState: "hide"
+          })
+        },
+        'hide':function(){
+            console.log("banner隐藏，点击可以打开");
+            this.setState({
+              currentState: "show"
+            })
+        }
 }
 class Banner extends React.Component{
 state={currentState:'show'}
