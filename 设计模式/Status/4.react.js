@@ -6,6 +6,7 @@
  * @LastEditors: yjy
  * @Reference: 
  */
+// babel https://codepen.io/zhufengnodejs/pen/LXogOy
 const States = {
 'show':function(){
   console.log("banner显示，点击可以关闭");
