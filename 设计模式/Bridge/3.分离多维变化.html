@@ -1,0 +1,59 @@
+<!--
+ * @Description: 
+ * @Author: yjy
+ * @Date: 2023-03-07 21:49:44
+ * @LastEditTime: 2023-03-07 21:54:02
+ * @LastEditors: yjy
+ * @Reference: 
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+ <style>
+     * {
+         margin: 0;
+         padding: 0;
+     }
+
+     canvas {
+         border: 1px solid #000;
+     }
+ </style>
+ </head>
+
+ <body>
+     <canvas id="canvas" width="600" height="600"></canvas>
+     <script>
+         //形状 颜色 坐标
+         function Position(x, y) {
+             this.x = x;
+             this.y = y;
+         }
+
+         function Color(color) {
+             this.color = color;
+         }
+
+
+         function Ball(x, y, color) {
+             this.position = new Position(x, y);
+             this.color = new Color(color);
+         }
+         Ball.prototype.draw = function () {
+             let canvas = document.getElementById('canvas');
+             let ctx = canvas.getContext('2d');
+             ctx.beginPath();
+             ctx.arc(this.position.x, this.position.y, 100, 0, 2 * Math.PI);
+             ctx.fillStyle = this.color.color;
+             ctx.fill();
+         }
+         new Ball(300, 300, 'red').draw();
+     </script>
+ </body>
+
+ </html>

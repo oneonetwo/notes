@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <ul>
+        <li data-id="1">1</li>
+        <li data-id="2">2</li>
+    </ul>
+    <p id="content">
+
+    </p>
+    <script>
+        let lis = document.querySelectorAll('li');
+        for (let i = 0; i < lis.length; i++) {
+            lis[i].addEventListener('click', getUserById);
+        }
+
+        function getUserById(event) {
+            let id = this.dataset.id;
+            let xhr = new XMLHttpRequest();
+            xhr.open('GET', `user/${id}`, true);
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == 4 && xhr.status == 200) {
+                    let uer = xhr.response;
+                    document.getElementById('content').innerHTML = user.name;
+                }
+            }
+            xhr.send();
+        }
+
+        //用桥接模式改进
+        function addBridage() {
+            let id = this.dataset.id;
+            getUserById(id, (user)=>{
+                document.getElementById('content').innerHTML = user.name;
+            });
+        }
+
+        function getUserById(id, callback) {
+            let xhr = new XMLHttpRequest();
+            xhr.open('GET', `user/${id}`, true);
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4 && xhr.status === 5) {
+                    callback(xhr.response);
+                }
+            }
+            xhr.send();
+        }
+    </script>
+</body>
+
+</html>
