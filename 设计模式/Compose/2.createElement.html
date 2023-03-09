@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+</head>
+<body>
+    <div id="root"></div>
+    <script>
+        // '<h1 title="foo">Hello</h1>';
+        //Babel转义
+        const container = document.getElementById("root")
+        const element = createElement(
+                'div',
+                { id: 'foo'},
+                createElement('a', null, 'bar'),
+                'hello',
+                'world'
+            )
+        render(element, container);
+        function ReactElement(type, props){
+            this.type =type;
+            this.props = props;
+        }
+        function createElement(type, props, ...children){
+            return new ReactElement(type, {
+                ...props,
+                children: children.map(child=>{
+                    return typeof child === 'object'
+                        ?child
+                        :createTextElement(child);
+                })
+            })
+        }
+        function createTextElement(text){
+            return {
+                type: 'TEXT_ELEMENT',
+                props: {
+                    nodeValue: text,
+                    children: []
+                }
+            }
+        }
+        
+        function render(element, container){
+            let {type, props} = element;
+            const dom = element.type === 'TEXT_ELEMENT'
+                ?document.createTextNode('')
+                :document.createElement(element.type);
+            const isProperty = key=>key!='children';
+            Object.keys(props).forEach(name=>{
+                if(isProperty(name)){
+                    //是属性添加
+                    dom[name] = props[name];
+                }
+            })
+            props.children.forEach(child=>render(child, dom));
+            container.appendChild(dom);
+        }
+
+    </script>
+</body>
+</html>
