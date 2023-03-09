@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        class FormContainer {
+            constructor(type) {
+                this.element = document.createElement(type);
+                this.children = [];
+            }
+            add(child) {
+                this.children.push(child);
+                this.element.appendChild(child.element);
+                return this;
+            }
+        }
+        class FieldContainer {
+            constructor(type) {
+                this.element = document.createElement(type);
+                this.children = [];
+            }
+            add(child) {
+                this.children.push(child);
+                this.element.appendChild(child.element);
+                return this;
+            }
+        }
+        class LabelItem {
+            constructor(title) {
+                this.element = document.createElement('label');
+                this.element.innerHTML = title;
+            }
+        }
+        class InputItem {
+            constructor(title) {
+                this.element = document.createElement('input');
+                this.element.name = title;
+            }
+        }
+        class TipItem {
+            constructor(title) {
+                this.element = document.createElement('span');
+                this.element.innerHTML = title;
+            }
+        }
+        let userform = new FormContainer('form').add(
+            new FieldContainer('p').add(
+                new LabelItem('用户名')
+            ).add(
+                new InputItem('username')
+            ).add(
+                new TipItem('用户名长度为6-8位')
+            )
+        ).add(new FieldContainer('p').add(
+            new LabelItem('密码')
+        ).add(
+            new InputItem('password')
+        ).add(
+            new TipItem('确认密码')
+        ));
+        document.body.appendChild(userform.element);
+    </script>
+
+</body>
+
+</html>
