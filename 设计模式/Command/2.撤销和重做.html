@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>弹出菜单</title>
+</head>
+<body>
+    <p id="number">0</p>
+    <button id="addBtn">+</button>
+    <button id="undoBtn">undo</button>
+    <button id="redoBtn">redo</button>
+<script>
+ let addBtn = document.getElementById('addBtn');
+ let undoBtn = document.getElementById('undoBtn');
+ let redoBtn = document.getElementById('redoBtn');
+ let number = document.getElementById('number');
+
+ class Worker{
+    constructor(){
+        this.history=[];
+        this.index = -1;
+        this.step=1;
+    }
+    _getNumber(){
+        return parseInt(number.innerHTML);
+    }
+    add(){
+        let val = this._getNumber() + this.step;
+        number.innerHTML = val;
+        this.history.push(val)
+        this.index = this.history.length-1;
+    }
+    undo(){
+        if(this.index>0){
+            let val = this.history[--this.index];
+            number.innerHTML = val;
+        }
+    }
+    redo(){
+        if(this.index<this.history.length-1){
+            let val = this.history[++this.index];
+            number.innerHTML = val;
+        }
+    }
+ }
+
+ class AddCommand{
+    execute(){
+        worker.add();
+    }
+ }
+ class UndoCommand{
+    execute(){
+        worker.undo();
+    }
+ }
+ class RedoCommand{
+    execute(){
+        worker.redo();
+    }
+ }
+ let worker = new Worker(); 
+let  addCommand =  new AddCommand();
+let  undoCommand =  new UndoCommand();
+let  redoCommand =  new RedoCommand();
+addBtn.onclick = ()=>addCommand.execute();
+undoBtn.onclick = ()=>undoCommand.execute();
+redoBtn.onclick = ()=>redoCommand.execute();
+</script>    
+</body>
+</html>
