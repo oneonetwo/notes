@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .dialog {
+            width: 400px;
+            height: 300px;
+            position: absolute;
+            padding: 20px;
+            top: 50%;
+            left: 50%;
+            margin-left: -200px;
+            margin-top: -150px;
+            border: 1px solid#000;
+            background-color: #EEE;
+            border-radius: 5px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .dialog button {
+            width: 100px;
+            height: 30px;
+            position: absolute;
+            border: none;
+            outline: none;
+
+        }
+
+        .dialog .confirm-button {
+            right: 140px;
+            bottom: 20px;
+        }
+
+        .dialog .cancel-button {
+            right: 20px;
+            bottom: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <script>
+        class Dialog {
+            constructor(options) {
+                this.title = options.title || '标题';
+                this.content = options.content || '内容';
+                this.onConfirm = options.onConfirm || this.hide;
+                this.onCancel = options.onCancel || this.hide;
+                this.init();
+                this.initEventHandler();
+            }
+            init() {
+                this.panel = document.createElement('div');
+                this.panel.className = 'dialog';
+
+                this.titleP = document.createElement('p');
+                this.titleP.innerHTML = this.title;
+                this.panel.appendChild(this.titleP);
+
+                this.contentP = document.createElement('p');
+                this.contentP.innerHTML = this.content;
+                this.panel.appendChild(this.contentP);
+
+                this.confirmBtn = document.createElement('button');
+                this.confirmBtn.className = 'button confirm-button';
+                this.confirmBtn.innerHTML = '确定';
+                this.panel.appendChild(this.confirmBtn);
+
+                this.cancelBtn = document.createElement('button');
+                this.cancelBtn.className = 'button cancel-button';
+                this.cancelBtn.innerHTML = '取消';
+                this.panel.appendChild(this.cancelBtn);
+
+                document.body.appendChild(this.panel);
+            }
+            initEventHandler() {
+                this.confirmBtn.addEventListener('click', () => {
+                    this.onConfirm();
+                    this.hide();
+                });
+                this.cancelBtn.addEventListener('click', () => {
+                    this.onCancel();
+                    this.hide();
+                });
+            }
+            show() {
+                this.panel.style.display = 'block';
+            }
+            hide() {
+                this.panel.style.display = 'none';
+            }
+        }
+
+        class ContentDialog extends Dialog {
+            init() {
+                super.init();
+                this.titleP.parentNode.removeChild(this.titleP);
+            }
+        }
+
+        class ConfirmDialog extends Dialog {
+            init() {
+                super.init();
+                this.cancelBtn.parentNode.removeChild(this.cancelBtn);
+            }
+        }
+
+        let dialog = new ContentDialog({
+            title: '标题',
+            content: '内容'
+        });
+    </script>
+</body>
+
+</html>
