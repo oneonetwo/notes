@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <input type="radio" value="red" name="color" checked />红
+    <input type="radio" value="yellow" name="color" />黄
+    <input type="radio" value="blue" name="color" />蓝
+
+    <button onclick="draw()">绘制</button>
+
+    <div id="container">
+
+    </div>
+
+    <script>
+        let container = document.getElementById('container');
+        class MyDiv {
+            constructor() {
+                this.element = document.createElement('div');
+            }
+            setColor(color) {
+                this.element.style = `width:100px;height:100px;background-color:${color}`;
+            }
+        }
+        let div = new MyDiv();
+
+        function draw() {
+            let color = Array.from(document.getElementsByName('color')).find(item => item.checked).value || 'red';
+            div.setColor(color);
+            container.appendChild(div.element);
+        }
+    </script>
+</body>
+
+</html>

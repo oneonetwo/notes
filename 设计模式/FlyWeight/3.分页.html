@@ -1,0 +1,62 @@
+<!--
+ * @Description: 
+ * @Author: yjy
+ * @Date: 2023-03-12 23:11:39
+ * @LastEditTime: 2023-03-12 23:11:59
+ * @LastEditors: yjy
+ * @Reference: 
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <ul id="news">
+
+    </ul>
+    <button id="nextPage" onclick="goNext()">下一页</button>
+
+    <script>
+        let list = [];
+        for (let i = 0; i < 20; i++) {
+            list[i] = `新闻${i+1}`
+        }
+        let getLi = (function () {
+            let lis = [];
+            return function () {
+                let element;
+                if (lis.length < 5) {
+                    element = document.createElement('li');
+                    lis.push(element);
+                } else {
+                    element = lis.shift();
+                    lis.push(element);
+                }
+                return element;
+            }
+        })();
+
+        let pageNum = 0;
+        let pageSize = 5;
+        let news = document.getElementById('news');
+
+        function goNext() {
+            pageNum++;
+            let start = (pageNum - 1) * pageSize;
+            for (let i = 1; i <= 5; i++) {
+                let element = getLi();
+                element.innerHTML = `新闻${start+i}`;
+                news.appendChild(element);
+            }
+        }
+        goNext();
+    </script>
+</body>
+
+</html>
