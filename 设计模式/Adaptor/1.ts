@@ -4,8 +4,9 @@
  * @Author: D
  * @Date: 2023-02-23 19:42:42
  * @LastEditors: jy
- * @LastEditTime: 2023-02-23 19:55:40
+ * @LastEditTime: 2023-03-13 17:08:43
  */
+export{}
 class Socket {
     output(){
         return '220v';
