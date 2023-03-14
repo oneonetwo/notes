@@ -4,7 +4,7 @@
  * @Author: D
  * @Date: 2023-02-22 10:37:52
  * @LastEditors: jy
- * @LastEditTime: 2023-02-22 13:51:45
+ * @LastEditTime: 2023-03-14 18:06:35
  */
 interface jQuery {
 	length: number;
@@ -21,7 +21,7 @@ class jQuery {
 	html(htmlText: string|undefined) {
 		if (htmlText) {
 			for (let i = 0; i < this.length; i++) {
-				this[0].innerHTML = htmlText;
+				this[i].innerHTML = htmlText;
 				return this;
 			}
 		} else {
