@@ -11,64 +11,64 @@
 //     }
 // }
 //2. 装饰器工厂
-function flyable(numbers) { 
-    return function (target) { 
-        console.log(target);
-        target.prototype.swings = numbers;
-        target.prototype.fly = function () {
-            console.log('我能飞')
-        }
-    }
-}
-interface Animal { 
-    swings: number;
-    fly: Function;
-}
-@flyable;
-class Animal { 
-    constructor() { }
-}
-let animal: Animal = new Animal();
-console.log(animal.swings);
-animal.fly();
+// function flyable(number){
+//     return function(target){
+//         target.prototype.swings = number;
+//         target.prototype.fly = function(){
+//             console.log(`我能飞${this.swings}米`)
+//         }
+//     }
+// }
+// interface Animal { 
+//     swings: number;
+//     fly: Function;
+// }
+// @flyable(5)
+// class Animal {
+//     constructor() { }
+// }
+// let animal: Animal = new Animal();
+// console.log(animal.swings);
+// animal.fly();
 
-namespace b { 
-    //类的实例属性接受参数target key; target是原型
-    function instancePropertyDecorator(target, key) { 
-        target.protoName = '我是类的原型上的属性'
-        console.log('instance')
-    }
-    //类的静态属性接受的是target key target是构造函数
-    function classPropertyDecorator(target, key ) { 
-        console.log('classProperDecorator', target, key);
-    }
-    //类的实例方法接受是target是原型 key方法名， descriptor属性描述符
-    function instanceMethodDecorator(target, key, descriptor) { 
-        console.log('instanceMethodDecorator', target, key, descriptor);
-    }
-    //类的实例方法接受是target是构造函数 key方法名， descriptor属性描述符
-    function classMethodDecorator(target, key, descriptor) { 
-        console.log('classMethodDecorator', target, key, descriptor);
-    }
-    interface Person { 
-        protoName: string;
-    }
-    class Person { 
-        @instancePropertyDecorator;
-        instanceProperty: string;//实例属性
-        @classPropertyDecorator;
-        static classProperty: string; //类的静态属性
-        @instanceMethodDecorator;
-        instanceMethod() { }//实例的方法
-        @classMethodDecorator;
-        static classMethod() { }//类的静态方法
-    }
-}
+// namespace b { 
+//     //类的实例属性接受参数target key; target是原型
+//     function instancePropertyDecorator(target, key) { 
+//         target.protoName = '我是类的原型上的属性'
+//         console.log('instance')
+//     }
+//     //类的静态属性接受的是target key target是构造函数
+//     function classPropertyDecorator(target, key ) { 
+//         console.log('classProperDecorator', target, key);
+//     }
+//     //类的实例方法接受是target是原型 key方法名， descriptor属性描述符
+//     function instanceMethodDecorator(target, key, descriptor) { 
+//         console.log('instanceMethodDecorator', target, key, descriptor);
+//     }
+//     //类的实例方法接受是target是构造函数 key方法名， descriptor属性描述符
+//     function classMethodDecorator(target, key, descriptor) { 
+//         console.log('classMethodDecorator', target, key, descriptor);
+//     }
+//     interface Person { 
+//         protoName: string;
+//     }
+//     class Person { 
+//         @instancePropertyDecorator
+//         instanceProperty: string;//实例属性
+//         @classPropertyDecorator
+//         static classProperty: string; //类的静态属性
+//         @instanceMethodDecorator
+//         instanceMethod() { }//实例的方法
+//         @classMethodDecorator
+//         static classMethod() { }//类的静态方法
+//     }
+// }
 //实现两个常用的装饰器 readonly 
 namespace d{ 
-    function readonly(target, key) { 
+    function readonly(target:any, key:any) { 
         Object.defineProperty(target, key, {
             writable: false,
+            value: 10
         })
     }
     function deprecate(target, key, descriptor) { 
@@ -77,22 +77,16 @@ namespace d{
             console.log(`${target.constructor.name}类的${key}方法很快就会被放弃`);
             return oldFun(...args);
         }
-        Object.defineProperty(target, key, {
-            value: function () { 
-                console.log('这个方法以后可能会放弃');
-                return oldFun.apply(target, arguments);
-
-            }
-        })
     }
     class Circle { 
-        @readonly;
-        pi: number = 3.12
-        @deprecate;
-        getName() { 
-            console.log('getName');
+        @readonly
+        pi: number;
+        @deprecate
+        getName(name) { 
+            console.log('getName:'+name);
         }
     }
     let c = new Circle();
     console.log(c.pi);
+    console.log(c.getName(123))
 }
