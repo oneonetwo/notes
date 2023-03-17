@@ -2,17 +2,19 @@
  * @Description:
  * @Author: yjy
  * @Date: 2023-03-07 21:22:06
- * @LastEditTime: 2023-03-07 21:22:17
- * @LastEditors: yjy
+ * @LastEditTime: 2023-03-17 10:41:04
+ * @LastEditors: jy
  * @Reference: 
  */
-class A {
+abstract class A {
+    bridge: B;
     constructor(bridge) {
         this.bridge = bridge;
     }
     go() {
         console.log(`从${this.from()}到${this.bridge.to()}`);
     }
+    abstract from() :void;
 }
 class A1 extends A {
     from() {
