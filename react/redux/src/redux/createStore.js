@@ -4,10 +4,13 @@
  * @Author: D
  * @Date: 2023-03-21 11:50:58
  * @LastEditors: jy
- * @LastEditTime: 2023-03-21 14:13:33
+ * @LastEditTime: 2023-03-22 14:04:07
  */
-function createStore(reducer){
-    let state;
+function createStore(reducer, preloadedState, enhancer){
+    if(typeof enhancer!=='undefined'){
+        return enhancer(createStore)(reducer, preloadedState);
+    }
+    let state = preloadedState;
     let listeners = [];
     function getState(){
         return state;

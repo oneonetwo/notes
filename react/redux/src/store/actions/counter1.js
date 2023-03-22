@@ -10,9 +10,9 @@ const actions = {
         return { type: types.RESET };
     },
     thunkAdd1() {
-        return function (dispatch, getState) {
-            setTimeout(function () {
-                dispatch({ type: types.ADD1 });
+        return function(dispatch, getState){
+            setTimeout(() => {
+                dispatch({type: types.ADD1})
             }, 2000);
         }
     },

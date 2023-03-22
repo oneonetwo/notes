@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import CounterHook from "./components/counter_hook";
+import CounterMiddleware from "./components/counter_middleware";
 
 
 
@@ -12,7 +12,7 @@ function App() {
     
 	return (
 		<Provider store={store}>
-			<CounterHook/>
+			<CounterMiddleware/>
 		</Provider>
 	);
 }
