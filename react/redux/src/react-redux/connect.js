@@ -1,7 +1,7 @@
 import React, { Component, useContext, useLayoutEffect, useReducer } from "react";
 import { useMemo } from "react";
 
-import { bindActionCreators } from "../../redux";
+import { bindActionCreators } from "../redux";
 import ReactReduxContext from "./react-context";
 
 

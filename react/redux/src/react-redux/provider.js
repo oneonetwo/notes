@@ -1,4 +1,3 @@
-import store from "../../store"
 import ReactReduxContext from "./react-context"
 
 const Provider = props=> {
