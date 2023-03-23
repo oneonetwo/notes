@@ -1,13 +1,50 @@
 # Webpack基础
 [webpack官网: https://www.webpackjs.com/concepts/](https://www.webpackjs.com/concepts/)    
-    webpack是一个现在的javaScript应用程序静态模块打包器，当webpack处理应用程序时，会递归的构建一个依赖关系图，其中包含应用程序需要的每个模块，然后将这些模块打包成一个或者多个bundle  
+- webpack 是一个用于现代 JavaScript 应用程序的 静态模块打包工具。当 webpack 处理应用程序时，它会在内部从一个或多个入口点构建一个 依赖图(dependency graph)，然后将你项目中所需的每一个模块组合成一个或多个 bundles，它们均为静态资源，用于展示你的内容。
     
-###  概念
-1. entry ： 入口一个或者多个
-2. output： 出口输入bundle
-3. loader ：处理非JavaScript的文件
-4. plugins： 插件用于打包优化，压缩，重新定义环境中的变量,先require() 它，然后添加到plugins数组中，new创建一个实例
-5. mode ：模式启动相应模式下的webpack的内置优化
+### 1. entry: 入口一个或者多个
+### 2. output: 出口输入bundle
+### 3. loader: 处理非JavaScript的文件
+1. raw-loader 原生loader对引入的文件不做处理（防止默认为js文件）。
+2. css的解析
+    - css-loader style-loader less less-loader node-sass sass-loader
+
+3. 图片的解析
+    1. file-loader url-loader  html-loader
+        - file-loader 可以指定要复制和放置资源文件的位置
+        - url-loader   允许你有条件地将文件转换为内联的 base-64 URL (当文件小于给定的阈值)，这会减少小文件的 HTTP 请求数。如果文件大于该阈值，会自动的交给 file-loader 处理。
+        - html-loader 将 HTML 导出为字符串。当编译器需要时，将压缩 HTML 字符串。 默认情况下，每个可加载属性（例如 - <img src="image.png"/> ）都将被导入（ const img = require ('./image.png') 或 import img from "./image.png"" ）
+    2. 三种方式
+        - css中url导入图片, css-loader解析处理
+        - 放在静态文件根目录，html的img的src直接引用。html-loader解析处理。
+        - 通过import require的方式引用
+4. 
+
+
+### 4. plugins： 插件用于打包优化，压缩，重新定义环境中的变量,先require() 它，然后添加到plugins数组中，new创建一个实例
+1. 
+
+### 5. mode ：模式启动相应模式下的webpack的内置优化
+### 6. devServer 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 6. 依赖图(dependency graph) ： webpack 从命令行或配置文件中定义的一个模块列表开始，处理你的应用程序。 从这些 入口起点 开始，webpack 递归地构建一个 依赖图 ，这个依赖图包含着应用程序所需的每个模块，然后将所有这些模块打包为少量的 bundle - 通常只有一个 - 可由浏览器加载。
 7. runtime 和 manifest，管理所有模块的交互。
     - Runtime： runtime 包含：在模块交互时，连接模块所需的加载和解析逻辑。包括浏览器中的已加载模块的连接，以及懒加载模块的执行逻辑。
