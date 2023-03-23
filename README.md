@@ -1,9 +1,9 @@
 ## 2023.03.01开始实现目录
-### - 编译器原理（AST语法书）    Done
-### - 设计模式                 Done
-### - ES6 promise async-await generator        Done
-### - react-router             Done
-### - redux react-redux applyMiddleware compose        Done
+### - 编译器原理（AST语法书）  <img width="30px" src="https://image.16pic.com/00/93/46/16pic_9346786_s.png?imageView2/0/format/png"/>
+### - 设计模式                 <img width="30px" src="https://image.16pic.com/00/93/46/16pic_9346786_s.png?imageView2/0/format/png"/>
+### - ES6 promise async-await generator <img width="30px" src="https://image.16pic.com/00/93/46/16pic_9346786_s.png?imageView2/0/format/png"/>
+### - react-router             <img width="30px" src="https://image.16pic.com/00/93/46/16pic_9346786_s.png?imageView2/0/format/png"/>
+### - redux react-redux applyMiddleware compose        <img width="30px" src="https://image.16pic.com/00/93/46/16pic_9346786_s.png?imageView2/0/format/png"/>
 ### - Webpack
 ### - React
 ### - Node
