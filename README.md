@@ -7,6 +7,7 @@
 #### - Webpack
 #### - React
 #### - Node
+#### - 运维方面 linux Docker K8s Mysql
 
 
 # clockintable
