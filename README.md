@@ -4,6 +4,9 @@
 #### - ES6 promise async-await generator        Done
 #### - react-router             Done
 #### - redux react-redux applyMiddleware compose        Done
+#### - Webpack
+#### - React
+#### - Node
 
 
 # clockintable
