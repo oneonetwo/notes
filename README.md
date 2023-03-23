@@ -1,13 +1,13 @@
-## 2023.03.01开始复习目录
-#### - 编译器原理（AST语法书）    Done
-#### - 设计模式                 Done
-#### - ES6 promise async-await generator        Done
-#### - react-router             Done
-#### - redux react-redux applyMiddleware compose        Done
-#### - Webpack
-#### - React
-#### - Node
-#### - 运维方面 linux Docker K8s Mysql
+## 2023.03.01开始实现目录
+### - 编译器原理（AST语法书）    Done
+### - 设计模式                 Done
+### - ES6 promise async-await generator        Done
+### - react-router             Done
+### - redux react-redux applyMiddleware compose        Done
+### - Webpack
+### - React
+### - Node
+### - 运维方面 linux Docker K8s Mysql
 
 
 # clockintable
