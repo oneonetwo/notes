@@ -1,3 +1,9 @@
+# 每次学习必须要做到的，两个记录文档，一个总结归纳文档（readme.md），一个随堂文档(follow.md)。
+> 1. README.md 包含 分类，归纳，总结大纲，小到每个名词，知识点，关键词。
+> 2. follow.md 包含哪天看了哪一堂课，讲述的顺序，步骤，不涉及详细的知识点。
+>> - 时间： 年月日 星期几 下午 上午
+>> - 第几章的第几节  具体的学习步骤是什么，根据这个步骤能不能自己  想出来所有的细节，能不能自己实现涉及的事物。
+    
 ## 2023.03.01开始实现目录
 ### - 编译器原理（AST语法书）  <img width="30px" src="https://image.16pic.com/00/93/46/16pic_9346786_s.png?imageView2/0/format/png"/>
 ### - 设计模式                 <img width="30px" src="https://image.16pic.com/00/93/46/16pic_9346786_s.png?imageView2/0/format/png"/>
