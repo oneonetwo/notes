@@ -3,7 +3,11 @@
 - webpack 是一个用于现代 JavaScript 应用程序的 静态模块打包工具。当 webpack 处理应用程序时，它会在内部从一个或多个入口点构建一个 依赖图(dependency graph)，然后将你项目中所需的每一个模块组合成一个或多个 bundles，它们均为静态资源，用于展示你的内容。
     
 ### 1. entry: 入口一个或者多个
+    
 ### 2. output: 出口输入bundle
+    1. path: 输出的文件夹的绝对路径
+    2. publicPath: '/cdn/'
+        - 打包出来的index.html的src都会 `publicPath + filename`;
 ### 3. loader: 处理非JavaScript的文件
 1. raw-loader 原生loader对引入的文件不做处理（防止默认为js文件）。
 2. css的解析
@@ -18,8 +22,42 @@
         - css中url导入图片, css-loader解析处理
         - 放在静态文件根目录，html的img的src直接引用。html-loader解析处理。
         - 通过import require的方式引用
-4. 
+4. ES6和ES7的转义
+    1. Babel是一个编译JavaScript的平台，可以把ES6和ES7,React的JSX转义为ES5;
+    2. babel-loader @babel/core @babel/core @babel/preset-env @babel/preset-react @babel/polyfill
+        1. babel-loader使用babel和webpack转译javascript文件。
+        2. @babel/@babel/core Babel的编译的核心包。
+        3. @babel/@babel/preset-ent为每一个环境的预设
+            -  `useBuiltIns: usage`会根据项目中用到的polyfill，按需引入
+        4. @babel/@babel/preset-react React插件的babel预设
+        5. @babel/plugin-proposal-decorators 把类和对象装饰器编译成ES5的babel插件
+        6. @babel/plugin-proposal-class-properties 转化静态属性以及使用属性初始化语法声明的属性。
+            -  使用解析Decorator装饰配置，babel使用两个插件。配置jsconfig.json
+        7. @babel/polyfill已经必废弃
+            - 需要安装core-js@3 regenerator-runtime/runtime
+    3. 解析步骤
+        1. 先把ES6转成ES6语法树babelcore.
+        2. 然后调用预设preset-env把ES6语法树转成ES5语法树 preset-env
+        3. 再把ES5语法树重新生成es5代码 babelCore
+    4. legacy 和 loose 参数
+        - legacy：true 使用stage1过期的语法
+        - loose：true使用object.defineProperty()的语法解析对象的属性。
+    5. polyfill-service 
+        - polyfill.io自动化的javascript Polyfill服务
+        - polyfill.io通过分析请求头信息中的 UserAgent实现自动爱在浏览器所需要的的polyfills
+        - <script src="https://polyfill.io/v3/polyfill.min.js"></script>  
 
+5. ESLint代码校验
+    1. eslint(核心包), eslint-loader(loader), babel-eslint(es6的转化工具)
+    2. 两步配置pugins, 添加.eslintrc.js文件
+        1. 配置文件中的rule有很多，如果不知道，可以参考 eslint-config-airbnb 
+    3. airbnb
+        1. npm i eslint-config-airbnb eslint-loader eslint eslint-plugin-import eslint-plugin-react eslint-plugin-react-hooks  eslint-plugin-jsx-a11y   -D
+    4. 自动修复
+        1. 安装自动吸附vscode的插件eslint
+        2. 配置自动修复配置
+
+8. source-map
 
 ### 4. plugins： 插件用于打包优化，压缩，重新定义环境中的变量,先require() 它，然后添加到plugins数组中，new创建一个实例
 1. 

@@ -4,7 +4,7 @@
  * @Author: D
  * @Date: 2023-03-23 15:53:41
  * @LastEditors: jy
- * @LastEditTime: 2023-03-23 18:28:08
+ * @LastEditTime: 2023-03-24 17:38:32
  */
 const { resolve, join } = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
@@ -19,6 +19,33 @@ module.exports = {
 	},
 	module: {
 		rules: [
+			{
+				test: /\.jsx?$/,
+				loader: 'eslint-loader', //先进行代码校验，在编译代码
+				enforce: 'pre', //强制指定顺序，pre之前 pre normal inline post
+				options: {fix: true}, //开启自动修复
+				include: resolve(__dirname, 'src'), //只检查src的目录的名单，白名单。
+				exclude: /node_modules/ //排除不用检查的代码
+			},
+            { test: /\.jsx?$/, use: [{
+				loader: "babel-loader",
+				options: {
+					presets: [
+						[
+							"@babel/preset-env",//可以转化js语法
+							{
+								useBuiltIns: 'usage', //按需加载 polyfill
+								corejs: 3,//指定corejs的版本号 2或者3 polyfill
+							}
+						], 
+						"@babel/preset-react"//可以转化jsx语法
+					],
+					plugins: [
+						["@babel/plugin-proposal-decorators", {"legacy": true}],
+						// ["@babel/plugin-proposal-class-properties", {"loose": true}],  //不需要这个了
+					]
+				}
+			}]},
             { test: /\.txt$/, use: "raw-loader" },
             { test: /\.css$/, use: ["style-loader", "css-loader"]},
             { test: /\.scss$/, use: ["style-loader", "css-loader", "sass-loader"]},

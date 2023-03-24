@@ -1,4 +1,7 @@
-import './index.css';
-import './index.scss';
-import './index.less';
 
+let p = new Promise((resolve, reject)=>{
+    setTimeout(() => {
+        resolve(123);
+    }, 100);
+})
+p.then(data=>console.log(data));

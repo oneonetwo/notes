@@ -1,8 +1,0 @@
-2023.03.23
-初识
-1. module.exports 的基础api:    entry, output, loader, plugins, mode 
-2. raw-load html-webpack-plugin
-3. webpack-dev-server
-4. css-loader用来翻译@import 和url style-loader把css插入到html中。 less less-loader  node-sass sass-loader 来支持less, sass
-5. 使用个图片的三种方式。 不想使用es6导出模块就用esModule: fasle 
-    filer-loader文件拷贝  url-loader是对file-loader的增强可以给图片转为base64或者文件，
