@@ -140,7 +140,8 @@
             PRODUCTION: JSON.stringify(process.env.NODE_ENV),
         })
     ```
-
+3. 设置mode的值
+    `webpack --mode=development`
 
 ### 10. 开发和线上的环境配置
 
