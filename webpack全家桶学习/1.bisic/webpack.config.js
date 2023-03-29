@@ -4,14 +4,18 @@
  * @Author: D
  * @Date: 2023-03-23 15:53:41
  * @LastEditors: jy
- * @LastEditTime: 2023-03-29 17:43:08
+ * @LastEditTime: 2023-03-29 19:56:09
  */
 const { resolve, join } = require("path");
+const HtmlWebpackExternalsPlugin = require('html-webpack-externals-plugin');
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const webpack = require("webpack");
-const HtmlWebpackExternalsPlugin = require('html-webpack-externals-plugin')
 
-module.exports = {
+module.exports = (env)=>{
+	console.log('env', env);
+	console.log('process', process.env.NODE_ENV);
+
+	return {
 	mode: "development", //production development none
 	devtool: 'cheap-source-map',
 	entry: "./src/index.js",
@@ -46,10 +50,10 @@ module.exports = {
 					presets: [
 						[
 							"@babel/preset-env",//可以转化js语法
-							{
-								useBuiltIns: 'usage', //按需加载 polyfill
-								corejs: 3,//指定corejs的版本号 2或者3 polyfill
-							}
+							// {
+							// 	useBuiltIns: 'usage', //按需加载 polyfill
+							// 	corejs: 3,//指定corejs的版本号 2或者3 polyfill
+							// }
 						], 
 						"@babel/preset-react"//可以转化jsx语法
 					],
@@ -92,6 +96,13 @@ module.exports = {
 					global: '_'
 				}
 			]
+		}),
+		new webpack.DefinePlugin({
+			PRODUCTION: JSON.stringify(process.env.NODE_ENV),
+			VERSION: JSON.stringify('5fa3b9'),
+			BROWSER_SUPPORTS_HTML5: true,
+			TWO: '1+1',
+			'typeof window': JSON.stringify('object'),
 		})
 		// new webpack.ProvidePlugin({
 		// 	_: 'lodash'
@@ -113,4 +124,5 @@ module.exports = {
 		port: 8080, //HTTP服务器的端口号
 		open: true, //自动打开浏览器
 	},
+	}
 };

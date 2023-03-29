@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "webpack",
-    "start": "webpack serve"
+    "build": "cross-env NODE_ENV=production webpack --env=production",
+    "start": "set NODE_ENV=development && webpack serve --env=development"
   },
   "keywords": [],
   "author": "",
@@ -30,6 +30,7 @@
     "babel-eslint": "^10.1.0",
     "babel-loader": "^9.1.2",
     "core-js": "^3.29.1",
+    "cross-env": "^7.0.3",
     "css-loader": "^6.7.3",
     "eslint": "^7.32.0",
     "eslint-config-airbnb": "^19.0.4",

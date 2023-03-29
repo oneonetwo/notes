@@ -5,6 +5,7 @@
 // require('lodash');
 
 // cdn方式引入
-import _ from 'lodash';
+// import _ from 'lodash';
+// alert(_.join(['a', 'b', 'c'], '_'));
 
-alert(_.join(['a', 'b', 'c'], '_'));
+console.log('PRODUCTION', PRODUCTION);

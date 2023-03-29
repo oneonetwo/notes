@@ -56,75 +56,97 @@
     4. 自动修复
         1. 安装自动吸附vscode的插件eslint
         2. 配置自动修复配置
-
-8. source-map
-    1. 定义：
-        - 是为了解决开发代码和实际运行代码不一致时，帮助我们debug带原始开发代码的技术。
-        - webpack通过配置可以自动给我们生成source map文件， map文件时一种对应编译文件和源文件的方法。
-    2. 使用
-        1.  webpack.config.js
-            - devtool: 'cheap-source-map',
-        2. 5个关键字： 看下配置很多，其实就是五个关键字的组合。
-            1. eval 使用eval包裹代码块，has best performance, 会缓存sourcemap在rebuild的时候。
-            2. sourcemap 产生.map文件
-            3. cheap 提示报错不包含列信息，也不包含loader的sourcemap.
-            4. module 包含loader的sourcemap(比如jsx to js, babel的sourceMap) 否则无法定义源文件
-            5. inline 将.map作为DataURI嵌入，不单独生成.map文件。
-    3. 分类
-        - source-map 最全的信息，不需要写module, 包含行和列的信息，包含loader的sourcemap
-        - cheap-source-map  只包含行，不包含列，也不包含loader的sourcemap, 又想包含loader则需要加module
-    4. 最加实践： 
-        1. 开发环境： 我们在开发环境对sourceMap的要求是： 快（eval）, 信息全（module）, 此时代码没有压缩我们并不在意列信息所以用 cheap, 所有在开发环境的最佳配置: `devtool: cheap-module-eval-source-map`;
-        2. 生产环境：一般情况下我们并不希望任何人都可以在浏览器中直接看到我们未编译的源码，所以我们不应该直接提供sourceMap给浏览器，但我们又需要sourceMap来定位我们的错误信息，这时我们可以设置 `hidden-source-map`, 一方面webpack会生成sourcemap文件以提供给错误收集工具比如sentry,另一方面又不会为bundle添加引用注释，以避免浏览器使用。 
-
-9. 打包第三方类库。 用lodash举例。
-    1. 直接引用
-        - `import _ from 'lodash'`
-    2. 插件引入：webpack配置了ProvidePlugin后，在使用时将不需要import和require引用，直接使用即可
-        - `new webpack.ProvidePlugin({ _: 'lodash'})`
-        - 确定： 不能全局使用
-
-    3. expose-loader: 解决了ProvidePlugin不能全局引用的问题,https://www.npmjs.com/package/expose-loader
-        - 需要安装 expose-loader  lodash
-        - 缺点： 
-        ```
-              rules: [
-                {
-                    test: require.resolve("lodash"),
-                    loader: "expose-loader",
-                    options: {
-                        globalName: "_",
-                        override: true,
-                    },
-                },
-                ],
-        ```
-    4. cdn的方式引入 外链的方式引入
-        - 手动在index.html引入cdn的链接，然后配置externals, 直接就是全局的不需要在单独引入
-        ```
-            externals: [{
-                _: 'lodash'
-            }]
-        ```
-    5. Html-webpack-externals-plugin 方式引入
-        - 只有当模块中使用了lodash, 那就可以动态的加载cdn的引入到index.html中。
-        ```
-            //entry还可以配置相对的static路径
-         	new HtmlWebpackExternalsPlugin({
-                externals: [
-                    {
-                        module: 'lodash',
-                        entry: 'https://cdn.bootcdn.net/ajax/libs/lodash.js/4.17.21/lodash.js',
-                        global: '_'
-                    }
-                ]
-            })
-        ```
 ### 4. plugins： 插件用于打包优化，压缩，重新定义环境中的变量,先require() 它，然后添加到plugins数组中，new创建一个实例
 1. 
 
 ### 5. mode ：模式启动相应模式下的webpack的内置优化
 ### 6. devServer 
+
+### 7. source-map
+1. 定义：
+    - 是为了解决开发代码和实际运行代码不一致时，帮助我们debug带原始开发代码的技术。
+    - webpack通过配置可以自动给我们生成source map文件， map文件时一种对应编译文件和源文件的方法。
+2. 使用
+    1.  webpack.config.js
+        - devtool: 'cheap-source-map',
+    2. 5个关键字： 看下配置很多，其实就是五个关键字的组合。
+        1. eval 使用eval包裹代码块，has best performance, 会缓存sourcemap在rebuild的时候。
+        2. sourcemap 产生.map文件
+        3. cheap 提示报错不包含列信息，也不包含loader的sourcemap.
+        4. module 包含loader的sourcemap(比如jsx to js, babel的sourceMap) 否则无法定义源文件
+        5. inline 将.map作为DataURI嵌入，不单独生成.map文件。
+3. 分类
+    - source-map 最全的信息，不需要写module, 包含行和列的信息，包含loader的sourcemap
+    - cheap-source-map  只包含行，不包含列，也不包含loader的sourcemap, 又想包含loader则需要加module
+4. 最加实践： 
+    1. 开发环境： 我们在开发环境对sourceMap的要求是： 快（eval）, 信息全（module）, 此时代码没有压缩我们并不在意列信息所以用 cheap, 所有在开发环境的最佳配置: `devtool: cheap-module-eval-source-map`;
+    2. 生产环境：一般情况下我们并不希望任何人都可以在浏览器中直接看到我们未编译的源码，所以我们不应该直接提供sourceMap给浏览器，但我们又需要sourceMap来定位我们的错误信息，这时我们可以设置 `hidden-source-map`, 一方面webpack会生成sourcemap文件以提供给错误收集工具比如sentry,另一方面又不会为bundle添加引用注释，以避免浏览器使用。 
+
+### 8. 打包第三方类库。 用lodash举例。
+1. 直接引用
+    - `import _ from 'lodash'`
+2. 插件引入：webpack配置了ProvidePlugin后，在使用时将不需要import和require引用，直接使用即可
+    - `new webpack.ProvidePlugin({ _: 'lodash'})`
+    - 确定： 不能全局使用
+
+3. expose-loader: 解决了ProvidePlugin不能全局引用的问题,https://www.npmjs.com/package/expose-loader
+    - 需要安装 expose-loader  lodash
+    - 缺点： 
+    ```
+            rules: [
+            {
+                test: require.resolve("lodash"),
+                loader: "expose-loader",
+                options: {
+                    globalName: "_",
+                    override: true,
+                },
+            },
+            ],
+    ```
+4. cdn的方式引入 外链的方式引入
+    - 手动在index.html引入cdn的链接，然后配置externals, 直接就是全局的不需要在单独引入
+    ```
+        externals: [{
+            _: 'lodash'
+        }]
+    ```
+5. Html-webpack-externals-plugin 方式引入
+    - 只有当模块中使用了lodash, 那就可以动态的加载cdn的引入到index.html中。
+    ```
+        //entry还可以配置相对的static路径
+        new HtmlWebpackExternalsPlugin({
+            externals: [
+                {
+                    module: 'lodash',
+                    entry: 'https://cdn.bootcdn.net/ajax/libs/lodash.js/4.17.21/lodash.js',
+                    global: '_'
+                }
+            ]
+        })
+    ```
+### 9. 环境变量的配置
+1. 两种设置方式
+    1. --env=development 
+        - `"build": "webpack --env=development --open"`
+        - 访问方式: 如果webpack.config.js配置文件是function的话那么会在参数中接收到env, https://www.npmjs.com/package/webpack-cli
+
+    2. 设置process.env的NODE_ENV=development 或者 安装cross-env可以跨平台设置环境变量
+        - `set NODE_ENV=development && webpack serve` 或者 `cross-env NODE_ENV=development webpack`
+2. 怎么在代码中访问到环境变量，借用**DefinePlugin**
+    1. 定义一些全局变量，在编译的时候访问到这些全局变量
+    ```
+        new webpack.DefinePlugin({
+            PRODUCTION: JSON.stringify(process.env.NODE_ENV),
+        })
+    ```
+
+
+### 10. 开发和线上的环境配置
+
+### polyfill和runtime
+
+
 
 
 
