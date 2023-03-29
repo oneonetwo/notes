@@ -14,6 +14,9 @@ module.exports = {
     rules: {
         "indent": "off", //缩进风格
         "quotes": "off",    //引号风格
-        "no-console": "error"//禁止使用no-console
+        "no-console": "off",//禁止使用no-console
+        "no-unused-vars": "off",
+        "no-alert": "off",
+        "no-undef": "off",// _
     }
 }

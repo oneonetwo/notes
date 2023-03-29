@@ -4,14 +4,16 @@
  * @Author: D
  * @Date: 2023-03-23 15:53:41
  * @LastEditors: jy
- * @LastEditTime: 2023-03-24 17:38:32
+ * @LastEditTime: 2023-03-29 17:43:08
  */
 const { resolve, join } = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const webpack = require("webpack");
+const HtmlWebpackExternalsPlugin = require('html-webpack-externals-plugin')
 
 module.exports = {
 	mode: "development", //production development none
-	devtool: false,
+	devtool: 'cheap-source-map',
 	entry: "./src/index.js",
 	output: {
 		path: resolve(__dirname, "dist"), //输出文件的绝对路径
@@ -19,6 +21,17 @@ module.exports = {
 	},
 	module: {
 		rules: [
+			// {
+			// 	test: require.resolve("lodash"),
+			// 	loader: "expose-loader",
+			// 	options: {
+			// 		//重新命名
+			// 		exposes: {
+			// 		  globalName: "_",
+			// 		  override: true,
+			// 		},
+			// 	},
+			// },
 			{
 				test: /\.jsx?$/,
 				loader: 'eslint-loader', //先进行代码校验，在编译代码
@@ -63,8 +76,33 @@ module.exports = {
 	plugins: [
 		new HtmlWebpackPlugin({
 			template: "./public/index.html",
+			externals: [
+				{
+					module: 'lodash',
+					entry: '',
+					global: '_'
+				}
+			]
 		}),
+		new HtmlWebpackExternalsPlugin({
+			externals: [
+				{
+					module: 'lodash',
+					entry: 'https://cdn.bootcdn.net/ajax/libs/lodash.js/4.17.21/lodash.js',
+					global: '_'
+				}
+			]
+		})
+		// new webpack.ProvidePlugin({
+		// 	_: 'lodash'
+		// })
 	],
+	// 外链的方式引入
+	// externals: [
+	// 	{
+	// 		_:'lodash',
+	// 	}
+	// ],
 	//devServer会启动一个HTTP开发服务器，把一个文件夹作为静态根目录
 	devServer: {
 		static: {

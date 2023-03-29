@@ -4,7 +4,7 @@
  * @Author: D
  * @Date: 2023-03-23 16:08:17
  * @LastEditors: jy
- * @LastEditTime: 2023-03-24 11:15:07
+ * @LastEditTime: 2023-03-29 17:08:53
 -->
 <!DOCTYPE html>
 <html lang="en">
@@ -13,9 +13,15 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>webpack</title>
-<script defer src="main.js"></script></head>
+<script defer src="http://localhost:8080/lodash.js"></script><script defer src="main.js"></script></head>
 <body>
     <div id="root"></div>
     <!-- <script src="https://polyfill.io/v3/polyfill.min.js"></script>  -->
+    <!-- <script src="https://cdn.bootcdn.net/ajax/libs/lodash.js/4.17.21/lodash.js"></script> -->
+    <script>
+        setTimeout(()=>{
+            console.log('lodash', window._)
+        },1000)
+    </script>
 </body>
 </html>

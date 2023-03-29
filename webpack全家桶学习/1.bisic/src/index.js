@@ -1,7 +1,10 @@
+// 直接引入
+// import _ from 'lodash';
 
-let p = new Promise((resolve, reject)=>{
-    setTimeout(() => {
-        resolve(123);
-    }, 100);
-})
-p.then(data=>console.log(data));
+// expose 配合使用
+// require('lodash');
+
+// cdn方式引入
+import _ from 'lodash';
+
+alert(_.join(['a', 'b', 'c'], '_'));
