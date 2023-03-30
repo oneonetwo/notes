@@ -27,13 +27,13 @@
     2. babel-loader @babel/core @babel/core @babel/preset-env @babel/preset-react @babel/polyfill
         1. babel-loader使用babel和webpack转译javascript文件。
         2. @babel/@babel/core Babel的编译的核心包。
-        3. @babel/@babel/preset-ent为每一个环境的预设
+        3. @babel/@babel/preset-ent为每一个环境的预设, 只能转ES6语法，箭头函数等。
             -  `useBuiltIns: usage`会根据项目中用到的polyfill，按需引入
         4. @babel/@babel/preset-react React插件的babel预设
         5. @babel/plugin-proposal-decorators 把类和对象装饰器编译成ES5的babel插件
         6. @babel/plugin-proposal-class-properties 转化静态属性以及使用属性初始化语法声明的属性。
             -  使用解析Decorator装饰配置，babel使用两个插件。配置jsconfig.json
-        7. @babel/polyfill已经必废弃
+        7. @babel/polyfill 从 Babel 7.4.0 开始，这个包已被弃用，取而代之的是直接包含core-js/stable
             - 需要安装core-js@3 regenerator-runtime/runtime
     3. 解析步骤
         1. 先把ES6转成ES6语法树babelcore.
@@ -46,7 +46,32 @@
         - polyfill.io自动化的javascript Polyfill服务
         - polyfill.io通过分析请求头信息中的 UserAgent实现自动爱在浏览器所需要的的polyfills
         - <script src="https://polyfill.io/v3/polyfill.min.js"></script>  
-
+    6. **babel-polyfill 和 babel-runtime的区别的使用**
+        1. babel-polyfill 打包比较小适合在项目里面用
+            - Babel默认只转化javascript语法，而不转化新的API,比如Iterator, Generator, Set, Map, Proxy, Promise等全局对象。以及全局对象上的方法Object.assgin都不会转码
+            - 比如ES6上的Array.from方法，babel就不会转码这个方法，想让让实现，就必须用babel-polyfill
+            - `babel-polyfill`，是在构造函数的prototype上添加方法，引入polyfill,就可以使用es6编写了，缺点是会造成全局空间的污染，
+            - **@babel/@babel/preset-env** 为每一个环境预设
+                1. `useBuiltIns: false`此时不对polyfill做操作，如果引入了@babel/polufill,那么无视浏览器的配置，全量所有的polyfill. 
+                2. `useBuiltIns: entry` 根据浏览器的兼容性，引入浏览器不兼容的polyfill, 需要在入口文件手动 `import @babel/polyfill`, 会自动根据browserList引入浏览器不兼容的polyfill.
+                    - 如果 core-js的版本号是3的话，那么需要把`import @babel/polyfill`替换成`import 'core-js/stable'; import 'regenerator-runtime/runtime'`
+                2. `useBuiltIns: usage` 根据浏览器的兼容性以及代码中使用到的API，进行polyfill **首选**
+        2. babel-runtime 腻子垫片 需要什么引入什么不会污染全局变量 ，打包比较大适合在组件和类库中使用。
+            - npm i babel-runtime -D
+            - babel为了解决全局空间的污染问题，提供了单独的包babel-runtime用来编译模块的工具函数
+            - 简单来说runtime更加像是一种按需加载的实现，如果在哪里需要Promise,那么在文件头 `import Promise from'babel-runtime/core-js/promise'`就行了
+            -   **babel-plugin-transfrom-runtime** 不需要自己手动引入使用的API了，比如Promise.
+                - 启用插件后，Babel就会使用babel-runtime下的工具函数，插件能够将这些工具函数的代码转成require语句，指向对babel-runtime的引用。
+                ```
+                    plugins: [
+							"@babel/plugin-transform-runtime",
+							{
+							  "corejs": 3,
+							  "helpers": true, //false的话就会自己在模块内部实现工具方法
+							  "regenerator": true,
+							}
+						]
+                ```
 5. ESLint代码校验
     1. eslint(核心包), eslint-loader(loader), babel-eslint(es6的转化工具)
     2. 两步配置pugins, 添加.eslintrc.js文件

@@ -4,7 +4,7 @@
  * @Author: D
  * @Date: 2023-03-23 15:53:41
  * @LastEditors: jy
- * @LastEditTime: 2023-03-29 19:56:09
+ * @LastEditTime: 2023-03-30 11:52:47
  */
 const { resolve, join } = require("path");
 const HtmlWebpackExternalsPlugin = require('html-webpack-externals-plugin');
@@ -12,9 +12,8 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const webpack = require("webpack");
 
 module.exports = (env)=>{
-	console.log('env', env);
-	console.log('process', process.env.NODE_ENV);
-
+	// console.log('env', env);
+	// console.log('process', process.env.NODE_ENV);
 	return {
 	mode: "development", //production development none
 	devtool: 'cheap-source-map',
@@ -36,30 +35,39 @@ module.exports = (env)=>{
 			// 		},
 			// 	},
 			// },
-			{
-				test: /\.jsx?$/,
-				loader: 'eslint-loader', //先进行代码校验，在编译代码
-				enforce: 'pre', //强制指定顺序，pre之前 pre normal inline post
-				options: {fix: true}, //开启自动修复
-				include: resolve(__dirname, 'src'), //只检查src的目录的名单，白名单。
-				exclude: /node_modules/ //排除不用检查的代码
-			},
+			// {
+			// 	test: /\.jsx?$/,
+			// 	loader: 'eslint-loader', //先进行代码校验，在编译代码
+			// 	enforce: 'pre', //强制指定顺序，pre之前 pre normal inline post
+			// 	options: {fix: true}, //开启自动修复
+			// 	include: resolve(__dirname, 'src'), //只检查src的目录的名单，白名单。
+			// 	exclude: /node_modules/ //排除不用检查的代码
+			// },
             { test: /\.jsx?$/, use: [{
 				loader: "babel-loader",
 				options: {
 					presets: [
 						[
-							"@babel/preset-env",//可以转化js语法
-							// {
-							// 	useBuiltIns: 'usage', //按需加载 polyfill
-							// 	corejs: 3,//指定corejs的版本号 2或者3 polyfill
-							// }
+							"@babel/preset-env",//插件的集合，可以转化ES6语法
+							{
+								useBuiltIns: 'usage', //按需加载 polyfill
+								corejs: {version: 3},//指定corejs的版本号 2或者3 polyfill
+								targets: '>0.25%'
+							}
 						], 
 						"@babel/preset-react"//可以转化jsx语法
 					],
 					plugins: [
+						[
+							"@babel/plugin-transform-runtime",
+							{
+							  "corejs": 3,
+							  "helpers": true, //false的话就会自己在模块内部实现工具方法，适合些一些类库。
+							  "regenerator": true,
+							}
+						],
 						["@babel/plugin-proposal-decorators", {"legacy": true}],
-						// ["@babel/plugin-proposal-class-properties", {"loose": true}],  //不需要这个了
+						["@babel/plugin-proposal-class-properties", {"loose": true}],  //不需要这个了
 					]
 				}
 			}]},
