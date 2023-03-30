@@ -94,19 +94,33 @@
 2. 使用
     1.  webpack.config.js
         - devtool: 'cheap-source-map',
+        - 组合规则 [inline | hidden | eval] [nosources-][cheap-[module]] source-map
     2. 5个关键字： 看下配置很多，其实就是五个关键字的组合。
-        1. eval 使用eval包裹代码块，has best performance, 会缓存sourcemap在rebuild的时候。
+        1. eval 每个模块会有自己的souecemap,好缓存,使用eval包裹代码块，has best performance, 会缓存sourcemap在rebuild的时候。
         2. sourcemap 产生.map文件
         3. cheap 提示报错不包含列信息，也不包含loader的sourcemap.
         4. module 包含loader的sourcemap(比如jsx to js, babel的sourceMap) 否则无法定义源文件
         5. inline 将.map作为DataURI嵌入，不单独生成.map文件。
+        6. hidden 会生成sourcemap但是不会建立映射，在开发的借助工具使用。
 3. 分类
     - source-map 最全的信息，不需要写module, 包含行和列的信息，包含loader的sourcemap
     - cheap-source-map  只包含行，不包含列，也不包含loader的sourcemap, 又想包含loader则需要加module
 4. 最加实践： 
     1. 开发环境： 我们在开发环境对sourceMap的要求是： 快（eval）, 信息全（module）, 此时代码没有压缩我们并不在意列信息所以用 cheap, 所有在开发环境的最佳配置: `devtool: cheap-module-eval-source-map`;
     2. 生产环境：一般情况下我们并不希望任何人都可以在浏览器中直接看到我们未编译的源码，所以我们不应该直接提供sourceMap给浏览器，但我们又需要sourceMap来定位我们的错误信息，这时我们可以设置 `hidden-source-map`, 一方面webpack会生成sourcemap文件以提供给错误收集工具比如sentry,另一方面又不会为bundle添加引用注释，以避免浏览器使用。 
-
+5. 可以用**SourceMapDevToolPlugin**， `devtool: false`
+    - 实现了对source map生成，进行耕细粒度的控制，它可以替代devtool选项。
+    - 使用：
+        - 需要打开chrome的Enable JavaScript source maps
+        - 安装文件管理插件 fileManager-webpack-plugin //文件管理插件
+        - 
+    ```
+    module.exports = {
+        // ...
+        devtool: false,
+        plugins: [new webpack.SourceMapDevToolPlugin({})],
+    };
+    ```
 ### 8. 打包第三方类库。 用lodash举例。
 1. 直接引用
     - `import _ from 'lodash'`
@@ -168,9 +182,8 @@
 3. 设置mode的值
     `webpack --mode=development`
 
-### 10. 开发和线上的环境配置
-
-### polyfill和runtime
+### 10. watch 当代码变更之后可以重新编译数据
+    1. 
 
 
 
