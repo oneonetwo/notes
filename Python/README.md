@@ -107,9 +107,39 @@
         #捕获的 else: 可选 如果没有异常要做执行的代码
         #捕获的finaly: 可选 有没有都会执行的
     ```
-### 模块导入
+### 模块的概念和导入
 1. 基本语法
     - `import 模块名.方法名`
-    - `form [方法名] import 模块名`
+    - `form 模块名 import 方法名`
     - `from [模块名] import *` 下面可以直接用方法名
-    - 可以用as给模块或者方法名设置别名        
+    - 可以用as给模块或者方法名设置别名   
+2. 自定义模块
+    - 引用的模块会被直接运行，
+    - __name__  防止被运行的模块的函数调用
+    - __all__ 可以控制引用*的行为(*不写all就是全部)时候可以调用函数  `__all__=['test_A']`
+    ```
+        def test(a, b):
+            return a+b
+
+        if __name__ == '__main__': //mian是run的时候的文件的标识
+            test(1, 3)
+    ```
+3. python包
+    1. 是什么
+        - 文件夹里面是模块文件
+    1. 自定义python包  必须要有__init__.py文件
+4. 安装第三方包
+    1. 非Python内置的包
+    2. cmd普通安装  pip是python内置的安装模块
+       - `pip install '包名'`
+       - 默认是下载国外的包，可以用清华大学提供的镜像网址 https://pypi.tuna.tsinghua.edu.cn/simple
+           - `pip intall -i https://pypi.tuna.tsinghua.edu.cn/simple 包名`
+    3. pycharm安装
+       - 右下角点击选择interpreter settings 安装
+    4. 比较常用的包
+        - 科学计算  numpy
+        - 数据分析  pandas
+        - 大数据计算    pyspark apache-flink
+        - 图像可视化    matplotlib / ˈmɑːplɒt / pyecharts
+        - 人工智能  tensorflow / ˈtensər /
+
