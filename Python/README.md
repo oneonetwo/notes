@@ -91,8 +91,25 @@
     3. 关闭文件
         1. f.close();给文件占用停掉  内置了f.flush的功能。
     4. `with open("D"/") as f` 通过with open语法打开文件可以自动关闭。 
-3. 文件写入
-4. 文件的追加
-5. 文件操作综合案例
-
-        
+### 异常捕获
+1. 捕获方式以及API
+    1. try except  else finaly
+    ```
+        #捕获一个异常
+        try:
+            print(name)
+        except NameError as e:
+            e是错误对象。
+        #捕获多个异常  变量未定义或者1/0异常
+        except (NameError, ZeroDivisionError) as e:
+        #捕获全部的异常
+        except: === except Exception as e: 
+        #捕获的 else: 可选 如果没有异常要做执行的代码
+        #捕获的finaly: 可选 有没有都会执行的
+    ```
+### 模块导入
+1. 基本语法
+    - `import 模块名.方法名`
+    - `form [方法名] import 模块名`
+    - `from [模块名] import *` 下面可以直接用方法名
+    - 可以用as给模块或者方法名设置别名        
