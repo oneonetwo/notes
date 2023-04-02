@@ -143,3 +143,62 @@
         - 图像可视化    matplotlib / ˈmɑːplɒt / pyecharts
         - 人工智能  tensorflow / ˈtensər /
 
+
+
+### JSON的数据格式
+1. json 就是个字符串
+2. json格式数据转化
+    - 通过json.dumps(data) 把python数据转为json数据 如果有中文可以带上 ensure_ascii=False 参数来确保中文正常转换
+    - 通过json.loads(data) 方法把json数据转化为python列表或者字典。
+
+### pyechars模块
+1. 百度开源的数据可视化
+    - pyechars.org 
+    - 画廊 gallery.pyecharts.org
+2. 安装 pip install pyecharts
+
+### 类和对象
+1. class内置的方法
+    1. 构造方法_init__
+    2. __str__ __lt__ __le__ __eq__
+2. 私有成员的定义 __开头
+3. 继承 
+    1. 单继承 `class 子类名(父类名):`
+    2. 多继承 `class 类名(父类1，父类2，父类3...):`
+    3. 子类使用父类的成员
+        1. 父类名.成员名称(self)
+        2. super().成员名称();  成员方法不需要传self
+    4. 复写
+4. 类型注解 显示提醒类型注解，是建议性的而不是强制性的
+    1. 变量的类型注解
+
+        ```
+            # 类对象的类型注解。
+                class Student:
+                    pass
+                stu: Student = Student()
+            #容器的类型注解
+                my_list: list[int] = [1, 2, 3]
+                my_tuple: tuple[int, str] = [1, 'a']
+                my_dict: dict[str, int] = {"name": 666}
+        ```
+    2. 函数的类型注解
+        1. 形参的类型注解和返回值的类型注解
+        ```
+            def add(x: int, y: int) -> int:
+                return x + y
+        ```
+    3.  注释进行类型注解
+        `var_1 = random.randint(1, 10) # type: int`
+    4. Union类型(联合类型注解)： 多个类型中的一个
+        ```
+        from typing import Union
+        my_list: list[Union[str, int]] = [1,2,'name']
+        def fun_1(name: Union[str, int]) -> Union[str, int]:
+            pass
+        ```
+    5. 多态： 指的是多种状态，对于不同的对象执行同一个行为会得到不同的状态。
+        1. 多态也会用在抽象类上
+
+        
+    
