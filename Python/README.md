@@ -202,3 +202,65 @@
 
         
     
+
+### 闭包
+1. 有点
+    1. 不用定义全局变量既可以实现通过函数，持续访问修改某个值
+    2. 闭包使用的变量的所用于在函数内，难以被错误的调用修改。
+2. 缺点：
+    1. 由于内部函数持续引用外部函数的值，所以会导致这部分内存空间不被释放，一直占用内存。
+3. nonlocal 关键字
+    - 在闭包函数中想要修改外部函数的变量值，需要用nonlocal声明这个变量。
+
+### 装饰器  @outer
+
+### 多线程
+1. 进程，线程，并行执行
+    1. 进程：就是一个程序，运行在系统之上，那么久称这个程序为运行进程，并分配进程ID方便系统管理。
+    2. 线程：线程归属于进程，一个进程可以开启多个线程，执行不同的工作是进程的最小单位
+        - 进程之间内存隔离，线程之间内存共享
+    3. 一个操作系统可以运行不同的程序，就是说可以并行多个进程，除了进程外，线程也是可以并行的
+2. 多线程编程: 掌握使用`threading`模块完成多线程编程
+    1. 使用
+        - thread_obj = threading.Thread(target=func)
+        - thread_obj.start() 启动线程执行。
+    2. threading.Thread(group, target, name, args, kwargs)
+        - target 執行的任務名
+        - args以元祖的方式给任务传参 `(参数1, )`
+        - kwrags: 以字典的形式给任务传参`{keys: 参数1}`
+        - name：线程名，一般不设置
+### socket： 套接字，是进程之间通信的一个工具。
+    - Socket负责进程之间的网络数据的传输，好比数据的搬运工。
+    - 借助网络调试助手 `https://github.com/nicedayzhu/netAssist/releases`
+1. 服务端开发
+2. 客户端开发
+### 正则表达 使用re模块
+1. 三个基础方法 match search findall
+    1. re.match(匹配规则, 字符串)，
+        - 从匹配字符串的开头进行匹配，成功则返回匹配对象，不成功返回None
+        
+    2. search(匹配规则，字符串) 
+        - 搜索整个字符串，找出匹配的，从前向后，找到第一个就停止，不会继续向后, 找不到返回None
+    3. findall 匹配全部找到返回list，没找到返回空的list
+    ```
+        s = 'jingyuan 123 yang'
+        res = re.match('jing', s)
+        if res:
+            print(f"匹配的下标： {res.span()}")
+            print(f"匹配的规则： {res.group()}")
+
+
+        res2 = re.search('yuan', s)
+        if res:
+            print(res.span())
+            print(res.group())
+
+        res3 = re.findall('jingyuan', s)
+        print(f"findall匹配： {res3}")
+
+        res4 = re.findall(r'[\w\s](y)(\w)', s)
+        print(f"这是正则：{res4}")
+        # 这是正则：[('y', 'u'), ('y', 'a')]
+        
+    ```
+2. 元字符匹配
