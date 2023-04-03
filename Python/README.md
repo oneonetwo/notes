@@ -200,7 +200,33 @@
     5. 多态： 指的是多种状态，对于不同的对象执行同一个行为会得到不同的状态。
         1. 多态也会用在抽象类上
 
-        
+  ### SQL入门和实战
+1. mysql命令行环境  www.mysql.com
+    1. mysql -uroot -p  然后输入密码就进来了，
+    2. show databases 管理的数据库
+    3. use word 使用word数据库
+    4. show tables 查看word库中的表
+2. 安装工具
+    1. https://dbeaver.io/download
+3. SQL的概述
+    1. SQL全称：Structured Query Language 结构化查询语言，用于访问和处理数据库的标准的计算机语言。
+    2. SQL语言的分类
+        1. 数据定义DDL Data Definition Language
+            库的创建删除，表的创建删除
+        2. 数据操纵DML Data Manipulation Language
+            新增数据、删除数据、修改数据
+        3. 数据控制DCL Data Control Language 
+            新增用户、删除用户、密码修改、权限管理
+        4. 数据查询DQL Data query languagte
+            基于需求查询和计算数据
+
+### Spark   pySpark
+1. 介绍
+    - Apache Spark用与大规模数据，处理的统一分析引擎。
+    - Spark是一款分布式的计算框架，用于调度成败上千的服务器集群，计算TB，PB,以及EB级别的海量数据。
+2. PySpark 是Spark官方开发的python的语言第三方库
+    1. 作为python库进行数据处理
+    2. 提交至Spark集群进行分布式集群计算。      
     
 
 ### 闭包
