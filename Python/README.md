@@ -59,6 +59,31 @@
         - default - 当键 key 不存在时返回的值
     12. `dict.popitem()` 随机返回并删除字典中的最后一对键和值 
         - 如果字典已经为空，却调用了此方法，就报出 KeyError 异常。
+4. 集合
+    1. `set.add()`	为集合添加元素
+    2. `set.clear()`	移除集合中的所有元素
+    3. `set.copy()`	拷贝一个集合
+    4. `set.difference(set)` 返回集合的差集，即返回的集合元素包含在第一个集合中，但不包含在第二个集合(
+    5. `set.difference_update(set)`	方法是直接在原来的集合中移除元素，没有返回值。
+    6. `set.discard()`	删除集合中指定的元素
+    7. `set.intersection(set1, set2 ... etc)	 方法用于返回两个或更多集合中都包含的元素，即交集。
+    8. `set.intersection_update()`	方法是在原始的集合上移除不重叠的元素。
+    9. `set.isdisjoint()`	判断两个集合是否包含相同的元素，如果没有返回 True，否则返回 False。
+    10. `set.issubset()`	方法用于判断集合的所有元素是否都包含在指定集合中，如果是则返回 True，否则返回 False。
+    11. `set.issuperset()`	方法用于判断指定集合的所有元素是否都包含在原始的集合中，如果是则返回 True，否则返回 False。
+    12. `set.pop()`	法用于随机移除一个元素。
+    13. `set.remove()`	移除指定元素
+    14. `set.symmetric_difference()`	返回两个集合中不重复的元素集合。。
+    15. `set.symmetric_difference_update()`	移除当前集合中在另外一个指定集合相同的元素，并将另外一个指定集合中不同的元素插入到当前集合中。
+    16. `set.union()`	方法返回两个集合的并集，即包含了所有集合的元素，重复的元素只会出现一次。
+        - set1 -- 必需，合并的目标集合
+        - set2 -- 可选，其他要合并的集合，可以多个，多个使用逗号 , 隔开。
+    17. `set.update(set)`	合并两个集合，重复元素只会出现一次：
+    18. 运算
+        - 交集 & : x&y，返回一个新的集合，包括同时在集合 x 和y中的共同元素。
+        - 并集 | : x|y，返回一个新的集合，包括集合 x 和 y 中所有元素。
+        - 差集 - : x-y，返回一个新的集合,包括在集合 x 中但不在集合 y 中的元素。
+        - 补集 ^ : x^y，返回一个新的集合，包括集合 x 和 y 的非共同元素。
 ### 基础类型
 -   str int float bool list set map Dictionary
 1. list列表 有序存储
