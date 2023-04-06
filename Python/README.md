@@ -40,6 +40,25 @@
         - reverse = True 降序， reverse = False 升序（默认）。
     10. list.clear() 清空列表
     11. list.copy() 复制列表
+3. 字典
+    1. `dict.clear()` 删除字典内所有元素
+    2. `dict.copy()` 返回一个字典的浅复制
+    3. `dict.fromkeys(seq, [value])` 函数用于创建一个新字典，以序列 seq 中元素做字典的键，value 为字典所有键对应的初始值。
+        - seq -- 字典键值列表。value -- 可选参数, 设置键序列（seq）对应的值，默认为 None。
+    4. `dict.get(key, default=None)`  函数返回指定键的值。
+        - key -- 字典中要查找的键。
+        - value -- 可选，如果指定键的值不存在时，返回该默认值。
+    5.  `key in dict`  in 操作符用于判断键是否存在于字典中. not in
+    6. `dict.items()` 字典 items() 方法以列表返回视图对象，是一个可遍历的key/value 对。
+    7. `dict.keys()`
+    8. `dict.values()`
+    9. `dict.setdefault()`  setdefault() 方法和 get()方法 类似, 如果键不存在于字典中，将会添加键并将值设为默认值
+    10. `dict.update(dict2)` dict2 -- 添加到指定字典dict里的字典。
+    11. `pop(key[,default])` 删除字典 key（键）所对应的值，返回被删除的值。
+        - key - 要删除的键
+        - default - 当键 key 不存在时返回的值
+    12. `dict.popitem()` 随机返回并删除字典中的最后一对键和值 
+        - 如果字典已经为空，却调用了此方法，就报出 KeyError 异常。
 ### 基础类型
 -   str int float bool list set map Dictionary
 1. list列表 有序存储
