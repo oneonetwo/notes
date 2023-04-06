@@ -1,5 +1,31 @@
 # python基础语法入门
 ## 基础
+1. 数字类型
+    1. random.choice(seq) seq -- 可以是一个列表，元组或字符串。
+    2. random.randrange ([start,] stop [,step])
+    3. random()	随机生成下一个实数，它在[0,1)范围内。
+    4. seed([x])  当我们预先使用 random.seed(x) 设定好种子之后，其中的 x 可以是任意数字
+    5. shuffle(list)	将序列的所有元素随机排序
+    6. random.uniform(x, y) 随机数的最小值，包含该值。 随机数的最大值，包含该值。
+    ```
+    str_list = ['a', 'b', 'c']
+    print(random.choice(str_list))
+
+    # 从 1-100 中选取一个奇数
+    print("randrange(1,100, 2) : ", random.randrange(1, 100, 2))
+    # 从 0-99 选取一个随机数
+    print("randrange(100) : ", random.randrange(100))
+
+    random.seed()
+    print ("使用默认种子生成随机数：", random.random())
+    random.seed(10)
+    print ("使用整数 10 种子生成随机数：", random.random())
+
+    random.seed("hello",2)
+    print ("使用字符串种子生成随机数：", random.random())
+
+    print ("uniform(5, 10) 的随机浮点数 : ",  random.uniform(5, 10))
+    ```
 ### 基础类型
 -   str int float bool list set map Dictionary
 1. list列表 有序存储
