@@ -84,6 +84,27 @@
         - 并集 | : x|y，返回一个新的集合，包括集合 x 和 y 中所有元素。
         - 差集 - : x-y，返回一个新的集合,包括在集合 x 中但不在集合 y 中的元素。
         - 补集 ^ : x^y，返回一个新的集合，包括集合 x 和 y 的非共同元素。
+### Python的标准库
+### OS模块
+    - 对文件和目录的操作
+1. `os.rename('论文.txt', '我的论文.txt')` 文件重命名 
+2. `os.remove(filename)` 删除文件
+3. `os.mkdir('test/aa')` 创建目录
+4. `os.rmdir('test/aa')` 删除目录
+5. `os.getcwd()` get current working directory 获取当目录名称
+6. `os.chdir(目录名)` 切换目录      ../返回上一级
+7. `os.listdir()` 获取指定目录的内容， 返回列表
+
+### File模块
+### 类和对象
+1. self 作为类中方法的第一个形参，不需要手动传递实参
+2. 魔法方法：两个下划线开头和结尾，在满足某个条件下会自动调用。
+    1. __init__ 构造函数 `def __init(self):`
+        1. 调用时机：创建对象时会立即调用。
+        2. 作用：
+            1. 给对象添加属性，赋初始值
+            2. 创建对象时，需要执行的业务逻辑。
+
 ### 基础类型
 -   str int float bool list set map Dictionary
 1. list列表 有序存储
