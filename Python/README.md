@@ -3,7 +3,7 @@
 1. 数字类型
     1. random.choice(seq) seq -- 可以是一个列表，元组或字符串。
     2. random.randrange ([start,] stop [,step])
-    3. random()	随机生成下一个实数，它在[0,1)范围内。
+    3. random()	随机生成下一个实数，它在[0,1]范围内。
     4. seed([x])  当我们预先使用 random.seed(x) 设定好种子之后，其中的 x 可以是任意数字
     5. shuffle(list)	将序列的所有元素随机排序
     6. random.uniform(x, y) 随机数的最小值，包含该值。 随机数的最大值，包含该值。
@@ -84,6 +84,16 @@
         - 并集 | : x|y，返回一个新的集合，包括集合 x 和 y 中所有元素。
         - 差集 - : x-y，返回一个新的集合,包括在集合 x 中但不在集合 y 中的元素。
         - 补集 ^ : x^y，返回一个新的集合，包括集合 x 和 y 的非共同元素。
+5. 字符串
+    1. python中的字符串分为两种
+        - str: , 
+        - bytes: 字节，二进制，网络中数据的传输都是bytes类型
+    2. 转化
+        1. str=>bytes: `str.encode(编码类型)`
+        2. bytes=>str: `str.decode(编码类型)`
+    3. 常用的编码类型: gbk和UTF-8这两种编码类型，都是处理中文字符
+        - gbk: 将一个中文字符编码为2个字节
+        - utf-8: 将一个中文字符编码为3个字节
 ### Python的标准库
 ### OS模块
     - 对文件和目录的操作
@@ -95,7 +105,32 @@
 6. `os.chdir(目录名)` 切换目录      ../返回上一级
 7. `os.listdir()` 获取指定目录的内容， 返回列表
 
-### File模块
+### File模块: 文件操作
+1. 文件编码
+    1. 什么是编码
+        - 编码是一种规则集合，记录了内容和二进制间进行相互转换的逻辑。编码有许多中，我们常用的是UTF-8编码
+    2. 为什么需要编码
+        - 计算机值识别0和1，所以需要将内容翻译成0和1才能保存在计算机中，同时也需要编码，将计算机的0和1，反向翻译成可以识别的内容。 
+    
+2. 文件读取
+    1. 打开文件 open(name, mode, encoding)
+        1. name 是文件所在的具体路径
+        2. mode, 只读r，写入w，追加a 三种。
+        3. encoding 编码格式(推荐使用UTF-8) 是关键字参数直接指定。
+        4. f = open('python.txt', 'r', encoding="utf-8")
+    2. 读写文件
+        1. 读取
+            1. f.read(1); 文件的读取 read不传则读取所有文本，
+            2. f.readlines(); 读取所有行，返回一个list;
+            3. f.readline(); 每次读取一行数据
+            4. for循环读取 for line in open(...) //每次读取{line}一行
+        2. 写入： w模式，没有文件则创建，符覆盖文件的内容。
+            1. f.write('hello world'); 文件内筒写入到内存中
+            2. f.flush()  将内存中内容写入硬盘。
+        3. 追加模式 a, 如果文件不存在则创建文件，如果存在则追加，可以用\n来换行。
+    3. 关闭文件
+        1. f.close();给文件占用停掉  内置了f.flush的功能。
+    4. `with open("D"/") as f` 通过with open语法打开文件可以自动关闭。 
 ### 类和对象
 1. self 作为类中方法的第一个形参，不需要手动传递实参
 2. 魔法方法：两个下划线开头和结尾，在满足某个条件下会自动调用。
@@ -253,11 +288,68 @@
         2. I/O密集适合多线程，爬虫程序。
 10. 协程
 
+### TCP网络应用开发
+1. IP地址：网络设备中的唯一标识。
+2. 端口号：数据的传输通道，一个端口能确定一个应用程序
+3. tcp `Transform Control Protocol 传输控制协议`
+    1. 概念：面向连接的，可靠的，面向字节流的传输层控制协议。
+        - 发送应答机制、超时重传、错误校验、流量控制和阻塞管理
+    2. 步骤： 1.创建连接，2.进行通信，3.关闭连接
+5. socket
+    1.概念：进程之间通信的一个工具，进程之间想要进行网络通信需要基于这个socket
 
+### socket模块 tcp客户端程序开发
+1. 程序架构
+    - B/S: brower/server(浏览器/服务器)
+    - C/S: client/server(客户端/服务器)
+2. 流程
+    1. 导入socket模块 `import socket`
+    2. 创建socket对象(ip类型，协议) `my_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)`固定写法
+    3. 和服务器建立连接 `my_socket.connect('ip地址', 端口号)`
+    4. 发送信息 `my_socket.sent(字符串)` 
+        -  `my_socket.sent('信息'.encode())` bytes类型进行通讯 str.encode(类型)，默认类型时utf-8
+    5. 接收对方发的信息 `my_socket.redv()`一次接受多少字节的数据 
+        -  `buf = my_socket.redv(4096);   buf.decode() `4096字节数  
+        - 如果没法信息那么revc函数会阻塞等待
+    6. 关闭连接 `my_socket.close()`
+    - 借助网络调试助手 `https://github.com/nicedayzhu/netAssist/releases`
 
+### socket模块 tcp服户端程序开发
+1. 流程
+    1. 创建socket对象
+        - `server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)`
+    2. 绑定固定服务器的Ip和端口 bind('ip', 'prot')
+        - `server_socket.bind('', 9000)` #如果不写ip就是绑定服务器中任意一个网卡
+    3. 设置监听，参数，代表同时连接服务器的客户端数，连接成功后，就不占用这个名额。
+        -  `server_socket.listen(128)`
+    4. 阻塞等待客户端的连接,返回一个元组(新的socket, (客户端，端口))
+        - `new_socket, ip_port = server_socket.accept()`;
+    5. 新的socket接受信息
+        - `buf = new_socket.recv(4096)  but.decode()`
+    6. 新的socket发送信息
+        - `send_data = send(send_data.encode())`
+    7. 关闭
+        - new_socket.close()
+        - server_socket.close()
+2. 解决程序关闭端口需要等待才能被回收关闭的的问题，那么设置端口复用
+    - `sercer_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, True)`
+3. 判断客服端的断开
+    - 当连接成功之后的客户端 close之后，自己的socket不会在阻塞了。recv接受的时空字符串
+    ```
+    buf = socket.recv();
+    if buf:
+        pass
+    else: 
+        pass #关闭
+    ```
+4. 设置可以接受多个客服端的连接
+    1. **循环等待客户端的连接，创建线程执行任务**
+    ``` 
+        while True:
+            sub_tread = threading.Tread(target=handle_client_requst, args=(new_socket, ip_port))
+            sub_tread.start()
 
-
-
+    ```
 ### 基础类型
 -   str int float bool list set map Dictionary
 1. list列表 有序存储
@@ -323,32 +415,7 @@
      4. lambda 匿名函数, 只能写一行
         -  `def test_fun(lambda x,y: x+y)`
         
-### 文件操作
-1. 文件编码
-    1. 什么是编码
-        - 编码是一种规则集合，记录了内容和二进制间进行相互转换的逻辑。编码有许多中，我们常用的是UTF-8编码
-    2. 为什么需要编码
-        - 计算机值识别0和1，所以需要将内容翻译成0和1才能保存在计算机中，同时也需要编码，将计算机的0和1，反向翻译成可以识别的内容。 
-    
-2. 文件读取
-    1. 打开文件 open(name, mode, encoding)
-        1. name 是文件所在的具体路径
-        2. mode, 只读r，写入w，追加a 三种。
-        3. encoding 编码格式(推荐使用UTF-8) 是关键字参数直接指定。
-        4. f = open('python.txt', 'r', encoding="utf-8")
-    2. 读写文件
-        1. 读取
-            1. f.read(1); 文件的读取 read不传则读取所有文本，
-            2. f.readlines(); 读取所有行，返回一个list;
-            3. f.readline(); 每次读取一行数据
-            4. for循环读取 for line in open(...) //每次读取{line}一行
-        2. 写入： w模式，没有文件则创建，符覆盖文件的内容。
-            1. f.write('hello world'); 文件内筒写入到内存中
-            2. f.flush()  将内存中内容写入硬盘。
-        3. 追加模式 a, 如果文件不存在则创建文件，如果存在则追加，可以用\n来换行。
-    3. 关闭文件
-        1. f.close();给文件占用停掉  内置了f.flush的功能。
-    4. `with open("D"/") as f` 通过with open语法打开文件可以自动关闭。 
+
 ### 异常捕获
 1. 捕获方式以及API
     1. try except  else finaly
