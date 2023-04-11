@@ -546,6 +546,54 @@
             新增用户、删除用户、密码修改、权限管理
         4. 数据查询DQL Data query languagte
             基于需求查询和计算数据
+### PyMysql的使用
+1. 使用
+    1. 安装 导入
+        1. `pip install pymysql`, `pip uninstall 包名`
+        2. `pip show pymysql` 命令查看第三方包的信息
+        3. `pip list` 查看使用pip命令安装的第三方包的列表
+    2. 创建连接对象
+        1. `conn = connect(host='localhost', user='root', password='1234', database='py', port=3306, charset='utf8')`
+            - `host`
+            - `user`
+            - `password`
+            - `database`
+            - `port`
+            - `unix_socket`
+            - `charset`
+        2. 连接对象操作说明
+
+    3. 获取游标对象
+        - `cursor = conn.cursor()`
+    4. 执行SQL数据
+        - `sql = 'select * from stu;'`
+        - `row = cursor.execute(sql)` //返回时响应的行数,如果是0则没有查询到数据
+        - 获取查询结果,是元组类型，有两种方法
+            1. `cursor.fetchone() cursor.fetchall() cursor.techmany()`
+            2. 
+    5. 关闭游标
+        - `cursor.close()`
+    6. 关闭链接
+        - `conn.close()`
+7. 增删改操作
+    1. sql执行成功提交事务，执行失败回滚事务
+    ```
+        sql = 'insert into stu(name) values("纣王")'
+        try：
+            row = cursor.execute(sql);
+            conn.commit(); //提交事务
+        except Exception as e:
+            conn.rollback(); //回滚事务
+    ```
+8. sql注入问题以及解决
+    1. 用户提交带有恶意的数据与SQL语句进行字符串的拼接，从而影响了SQL语句的语义，最终产生数据泄露的现象。
+    2. 解决：`SQL语句参数化` 不使用字符串拼接，使用execute的第二个参数 
+    ```
+        name = input('请输入名字')
+        sql = 'slect * from stu where name=%s;'
+        cursor.excute(sql, [name])
+    ```
+
 
 ### Spark   pySpark
 1. 介绍
@@ -556,17 +604,6 @@
     2. 提交至Spark集群进行分布式集群计算。
 
     
-
-### 闭包
-1. 有点
-    1. 不用定义全局变量既可以实现通过函数，持续访问修改某个值
-    2. 闭包使用的变量的所用于在函数内，难以被错误的调用修改。
-2. 缺点：
-    1. 由于内部函数持续引用外部函数的值，所以会导致这部分内存空间不被释放，一直占用内存。
-3. nonlocal 关键字
-    - 在闭包函数中想要修改外部函数的变量值，需要用nonlocal声明这个变量。
-
-### 装饰器  @outer
 
 ### 多线程
 1. 进程，线程，并行执行
