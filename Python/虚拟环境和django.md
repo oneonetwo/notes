@@ -32,8 +32,19 @@
 2. 创建项目工程
 	1. django-admin startproject  bookmanager
 	2. 设置pycharm的interpreter解释器
-	3. `python manage.py runserver` 启动服务
+	3. `python manage.py runserver` 启动服务 默认是127.0.0.1：8000
+		1. python manage.py runserver 0.0.0.0:8888 可以指定ip和端口号  需要修改settings中的ALLOWED_HOSTS 
 3. 项目子应用 
 	1. 创建 `python mamage.py startapp book` 	 book为子任务名称
 	2. 注册安装到工程 在settings.py 中INSTALL_APPS
+
+三. 使用Django进行数据库开发的步骤
+1. 使用django定义模型类
+	2. models.py
+3. 模型迁移(建表) 迁移分两步
+	1.  生成迁移文件：根据模型类生成迁移表的语句
+		`python manage.py makemigrations`    	
+	3.  执行迁移：根据第一步生成的语句在数据库中创建表
+		`python manage.py migrate`
+5. 操作数据库
  	 
