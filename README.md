@@ -181,5 +181,19 @@ https://ttk-fed.github.io/blog/html/22.cookie.html
         str.match(reg2); //['aacb', index: 0, input: 'aacbacbc', groups: undefined]
     ```
 
+##### 2023 07 27
+
+使用 decoding=async 实现图片的异步解码
+除了 loading=lazy，HTML5 还新增了一个非常有意思的属性增强图片的用户体验。那就是 decoding 属性。
+
+HTMLImageElement 接口的 decoding 属性用于告诉浏览器使用何种方式解析图像数据。
+
+它的可选取值如下：
+
+sync: 同步解码图像，保证与其他内容一起显示。
+async: 异步解码图像，加快显示其他内容。
+auto: 默认模式，表示不偏好解码模式。由浏览器决定哪种方式更适合用户。
+上文其实也提及了，浏览器在进行图片渲染展示的过程中，是需要对图片文件进行解码的，这一个过程快慢与图片格式有关。
+
 
 
