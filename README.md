@@ -195,5 +195,16 @@ async: 异步解码图像，加快显示其他内容。
 auto: 默认模式，表示不偏好解码模式。由浏览器决定哪种方式更适合用户。
 上文其实也提及了，浏览器在进行图片渲染展示的过程中，是需要对图片文件进行解码的，这一个过程快慢与图片格式有关。
 
-
+#### 2023 08 02
+- https://zh.javascript.info/onload-ondomcontentloaded#readystate
+- `DomContentLoaded`事件，脚本已经执行完成，DOM已经就绪，因此处理程序可以查找DOM节点，并初始化接口。
+    - document.readyState 有3个值
+        - loading 文档正在被加载，
+        - interactive 文档全部读取
+        - complete 文档被全部读取，并且所有资源（例如图片等）都已加载完成。 
+- `load`事件，外部资源已加载完成，样式已被应用，图片大小也已知
+- `beforeunload`事件，用户正在离开：我们可以检查用户是否保存了更改，并询问是否真的要离开。
+    - 如果访问者触发了离开页面的导航（navigation）或试图关闭窗口,beforeunload 处理程序将要求进行更多确认。
+- `unload`事件，用户已经离开了，但是我们仍然可以启动一些操作，例如发送统计数据
+- `readystatechange` 事件是跟踪文档加载状态的另一种机制，它很早就存在了。现在则很少被使用。
 
