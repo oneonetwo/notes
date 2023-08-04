@@ -36,16 +36,172 @@
 3. 编程语言是什么？
     1. 用来定义计算机程序的形式语言，我们通过编程语言来编写程序代码，在通过语言处理程序执行向计算机发送指令，让计算机完成对应的工作。
 ### 二. 初始python与Pycharm设置
+1. pep 8
+    1. 行内注释需要两个空格
+    2. 最后一行代码 要有个回车换行
+    3. 代码要顶格
 ### 三. 变量定义与使用
+1. 变量以及类型
+    1. Numbers  
+        1. int, long,  float,  complex
+    2. 布尔类型
+        1. True, False
+    3. String
+    4. List
+    5. Tuple
+    6. Dictionnary
+2. type(a) 函数可以得到数据类型
+3. 标识符
+    1. python中变量区分大小写
+    2. 小驼峰
+    3. python中的标识符 多用下划线。
+4. 关键字
 ### 四. Python的输入与输出
+1. 输出 %d %f  %s
+    - %f 输出小数，默认保留六位小数。`%.nf` 保留n位小数
+```python
+name = 'jingyuan'
+print("我的名字是%s" % name)
+height = 170.5
+print("我的身高是%.2f cm" % height)
+print("我的名字是%s,年龄是%d岁" % (name, age))
+
+#输出50% 使用格式化输出的时候，想要输出一个%,需要使用两个%%
+print("及格人数占比为%d%%" % 50)
+
+#python3.6版本开始使用f-string, 占位统一使用{}占位
+print(f"我的名字是{name}")
+#指定小数点的位数
+print(f"我的身高是{height:.2f}") 
+
+# 转义字符\n 换行
+# print()函数输出后，会默认添加一个换行，这个换行可以去掉
+print("hello", end='')  #end必须是一个字符串
+print("这是一个段落和另一个段落")
+```
+2. 输入 input 从键盘获取输入的内容，存入计算机程序， 得到的都是字符串类型。
+
+```py
+password = input("请输入密码：")
+print(f"密码是{password}")
+```
 ### 五. 类型转化
+1. 将原始数据转化为我们需要的数据类型，在这个过程中，不会改变原始的数据，会生成一个新的数据。
+2. 整数类型字符串=>int整数，小数类型的字符串=>float小数
+3. eval('10') 去掉字符串的引号。 `eval('num1')去掉引号就是一个变量`
+```py
+#1.基本运算符
++ - * / // ** % ()
+#2.比较运算符
+==  !=  < > <= >=
+#3.逻辑运算符
+    and 逻辑与 
+    or 逻辑或
+    not 逻辑非
+```
 ### 六. 分支结构-if-else
+1. 判断的基本格式
 ### 七. 分支结构-if嵌套与应用
+1. 三目运算
+```py
+变量 = 表达式1 if 判断条件 else 表达式2
+```
 ### 八. 循环结构-while
+1. while
+```py
+while True:  #无限循环
+    print("这是，")
+
+```
 ### 九. 循环结构-for
+1. `for 临时变量 in  列表或者字符串等可迭代对象:`
+```py
+# range(n) 会生成[0, n)的数据序列，不包含n
+for i in range(5):  # 0 1 2 3 4  
+# range(a, b) 会生成[a, b)的整数序列，不包含b
+for i in range(3, 7)
+#  range(a, b, step) 的整数序列，但是每个数字之间的间隔（步长）是step
+for i in range(1, 10, 3) # 1 4 7
+```
 ### 十. 循环中的关键词语总结
+1. `break continue pass`
+2. for 配合 else的使用
+```py
+for x in xxx:
+    if(x):
+        break
+else:   # for循环结束，但是不被break终止的时候会执行
+    xxx
+```
 ### 十一. 字符串的定义与切片
+1. 字符串  `'hello' * 2  #hellohello` 
+2. `f-strings`
+3. `下标my.str[0]  获取长度 len(my_str)`
+4. 切片：字符串，列表，元祖都支持切片操作
+    1. 语法：【起始：结束：步长】
+```py
+my_str = "hello"
+#1. step如果是1，即默认值，则可以不写
+my_str[2:4]  #ll
+#2. end位置不写，表示len(), 既可以取到最后一个元素
+my_str[2:]  #llo
+#3. start位置不写，表示是0，表示是0
+my_str[:3]  #hel
+
+#开始位置和结束位置都不写
+my_str[::2]  #hlo
+my_str[-4:-1] #ell
+my_str[:]  #hello
+
+#步长可以是负数
+my_str[3:1:-1] 
+my_str[::-1] 字符串的逆置
+```
 ### 十二. 字符串常用方法
+1. 字符串查找相关的
+```py
+find(sub_str, start, end)   # 找到返回下标，未找到返回-1
+rfind(sub_str, start, end)  #从后面开始查找。
+index(sub_str, start, end)  #找到返回下标，没有找到代码会报错。
+rinde(sub_str, start, end)
+count(sub_str, start, end)  #子字符串出现的次数，没有返回0， 
+```
+2. 字符串替换相关
+```py
+replace(old_str, new_str2, count) # old替换成new, count默认全部替换， 返回得到一个新写字符串，不会改变原来的字符串。
+```
+3. 字符串切割 和 链接
+```py
+split(str, count) #字符串以str进行切割，count为切割的次数
+rsplit(str, count)
+
+join(seq) #seq为可迭代的对象（str,tuple, list），
+'-'.join(['a','b','c'])  #a-b-c
+```
+4. 字符串其他
+```py
+capitalize() #第一个字母变为大写
+title() #每个单词的首字母变成大写
+upper() #全部转为大写
+lower() # 全部转为小写
+startswith(str) # 以str开头
+endswith(str) #以什么结尾
+	
+center(width, fillchar) # 返回一个指定的宽度 width 居中的字符串，fillchar 为填充的字符，默认为空格
+rjust(20)
+ljust(20)
+strip() #去掉空格
+lstrip()
+rstrip()
+partition(str) #按照str切割成及分布
+
+isalpha() #查看是否全是字母或者数字中文
+isalnum() #字母或者数字
+isdigit() #是否全是数字
+isnumeric() #是否只包含数字
+isspace()
+
+```
 ### 十三. 列表定义与基本使用
 ### 十四. 列表嵌套与应用与元祖
 ### 十五. 字典定义与基本使用
