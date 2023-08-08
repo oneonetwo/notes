@@ -163,7 +163,7 @@ my_str[::-1] 字符串的逆置
 find(sub_str, start, end)   # 找到返回下标，未找到返回-1
 rfind(sub_str, start, end)  #从后面开始查找。
 index(sub_str, start, end)  #找到返回下标，没有找到代码会报错。
-rinde(sub_str, start, end)
+rindex(sub_str, start, end)
 count(sub_str, start, end)  #子字符串出现的次数，没有返回0， 
 ```
 2. 字符串替换相关
@@ -203,8 +203,81 @@ isspace()
 
 ```
 ### 十三. 列表定义与基本使用
+1. 常用的方法
+```py
+len(lists)
+max(lists)
+min(lists)
+list(seq) #将元祖转化为列表
+
+lsit1.index('jingyuan') #根据数据返回下标，没有找到则报错
+lsit1.count('jingyuan') #当前元素在数组中出现的次数
+'jingyuan' in list1  # in /not in  
+
+list1.append(数据) #向尾部追加数据
+list1.insert(1, 'jingyuan') 
+list1.extend(list2) #在列表末尾一次性追加另一个序列的多个值 
+
+list1.pop([index=-1]) #移除默认是尾部元素，返回这个元素的值
+lsit1.remove('jingyuan') #移除列表中匹配的第一项，没有返回值， 不存在则报错
+del list[2] #删除列表中的元素
+
+list1.sort(key=None, reverse=False)  #直接在原列表进行排序，默认是升序处理
+#补充 sorted(list1) 不会再原列表中进行排序，会返回新的列表
+list1.reverse() #原列表中操作。   如果想操作新的列表使用切片 [::-1]
+list1.clear()
+list1.copy() #复制后的新列表想 相当于a[:]
+```
+
+2. enumerate(my_list) #将可迭代的元素所咋的小标和具体的元素放在元组中 `for i k enumerate(my_list):`
 ### 十四. 列表嵌套与应用与元祖
+1. 元祖的重点注意
+    1. 元组的值不可以修改
+    2. `(2,)`必须要有逗号，没有则不时元祖
+2. 方法
+```py
+tup3 = tup1 + tup2 #创建一个新的元祖
+del tup #删除整个元祖
+('Hi!',) * 4 #复制
+3 in (1, 2, 3) #元素是否存在
+
+tuple(list1) #转为元组
+```
 ### 十五. 字典定义与基本使用
+1. get的使用
+    1. 如果key如果不存在，直接获取会报错，可以用get获取 `dict1.get('name')`  如果key不存在，则返回None,`dict1.get('name', 'jingyuan')`
+2. 字段的方法
+```py
+my_dict = {}
+# 1. 字段中添加和修改数据
+my_dict['name'] = 'jingyuan'
+my_dict.setdefault(key, default=None) # 和get()类似, 但如果键不存在于字典中，将会添加键并将值设为default
+my_dict.update(dict2) #把字典dict2的键/值对更新到dict里
+
+# 2. 字典中删除数据
+del my_dect #直接删除这个字段了，之后就不能访问这个变量了
+del my_dict['name']
+my_dict.pop('name') #返回删除的元素
+my_dict.popitem() #返回并删除字典中最后一对键值
+my_dict.clear() #删除字典左右元素
+
+# 3. 遍历 以及 拆包
+my_dict.items()     # 获取字典中所有的键值对，得到的是 dict_items，key, value组成的元组类型， 1.可以使用list()，进行类型转换。2.可以用for循环遍历
+my_dict.keys()      # 获取字典中所有的key，得到的是 dict_keys类型, 1.可以使用list()，进行类型转换。2.可以用for循环遍历
+mu_dict.values()    # 获取所有的value,得到的是 dict_values类型，1.list(), 2.可用for
+for k, v my_dict.items(): # k是元组中第一个数据，v是元组中的第二个数据。
+
+# 4. key in dict #如果键在字典dict里返回true，否则返回false
+```
+
+3. 公共方法 和 python的内置函数
+    1. `+`
+    2. `* 整数`
+    3. `in、not in`
+    3. `max/min` 如果是字典，那么比较key值的大小
+    3. `del()` del加空格 del()
+    3. `len()`
+    3. `count()`
 ### 十六. 函数定义函数作用域
 ### 十七. 函数返回-嵌套调用及应用
 ### 十八. 函数答疑总结复习
