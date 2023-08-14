@@ -69,6 +69,9 @@ print("我的名字是%s,年龄是%d岁" % (name, age))
 #输出50% 使用格式化输出的时候，想要输出一个%,需要使用两个%%
 print("及格人数占比为%d%%" % 50)
 
+age = 6
+print("我的年龄是%03d" % age)
+print(f"我的年龄是{age: 03d}")
 #python3.6版本开始使用f-string, 占位统一使用{}占位
 print(f"我的名字是{name}")
 #指定小数点的位数
@@ -273,17 +276,165 @@ for k, v my_dict.items(): # k是元组中第一个数据，v是元组中的第�
 3. 公共方法 和 python的内置函数
     1. `+`
     2. `* 整数`
-    3. `in、not in`
-    3. `max/min` 如果是字典，那么比较key值的大小
-    3. `del()` del加空格 del()
-    3. `len()`
-    3. `count()`
+    3. `in/not in`
+    4. `max/min` 如果是字典，那么比较key值的大小
+    5. `del()` del加空格 del()
+    6. `len()`
+    7. `count()`
 ### 十六. 函数定义函数作用域
+1. 函数的定义 `def func():` 函数前端和后面都需要两个空行
+2. 文档说明 
+```py
+def help():
+    """
+    这是一个打印的帮助函数
+    """
+    print('hello world')
+```
+
+3. 全局变量和局部变量
+    1. 局部变量：只能在函数内部使用，不能在函数外部使用
+        1. 作用域：当前函数内部
+        2. 生命周期：当函数调用的时候被创建，函数调用结之后，被回收销毁。
+    2. 全局变量：函数外部定义的变量
+        1. 函数内部能访问全局变量的值，不能直接修改全局变量的值。
+        2. 想要在函数内部修改全局变量的值，则 需要声明这个变量为全局变量`global g_num`
 ### 十七. 函数返回-嵌套调用及应用
+1. return返回值
+    1. 可以任意类型的数据， 返回多个值的情况：
+    2. 可以不写数据值，默认代表返回None.
+    ```py
+    def func(a, b)
+        return a+1, b+1     #默认是组成元祖进行返回的
+    result =  func(1,2)
+    result[0]
+    result[1]
+    ```
 ### 十八. 函数答疑总结复习
 ### 十九. 函数不定长参数及拆包
-### 二十. 引用及引用参数
-### 二十一. 学员管理系统-面向过程版本
-### 二十二. 递归函数与匿名函数
-### 二十三. 匿名函数使用及列表推导式
+1. 函数传参的两种形式
+    1. 位置传参： 按照形参的位置顺序
+    2. 关键字传参: 指定实参传给哪个形参,`关键字参数要写在位置实参的后面。`
+    3. 缺省参数：形参，在函数定义的时候给形参一个默认值，这个参数就是缺省参数。
+        1. `缺省参数后面的形参都必须为缺省参数`
+    4. 不定长参数：`*args`不定长元组形参 `**kwargs`不定长关键字形参
+```py
+# 1.普通，缺省参数
+def func(a, b=1, ):
+    pass
+# 2. 普通参数，不定长位置参数
+def func(a, *args)
+    pass
+# 3. 普通参数，缺省参数，位置参数，虽然这样写语法不会报错，但是缺省参数总不能用默认值。
+def func(a, b=1, *args):
+    pass
+def func(a, *args, b=1):
+    pass
 
+# 4. 完整的顺序： 普通参数，不定长位置参数，缺省参数，关键字参数
+def func(a, *args, b=1, **kwargs):
+    pass
+```
+2. 拆包和组包
+    1. 组包：将对个数据的值，给一个变量, 会默认组成一个元祖
+    2. 拆包：将容器的数据分别给多个变量，需要注意数据的个数和变量的个数要保持一致。
+    3. 应用：交换两个变量的值
+```py
+#组包
+a = 1, 2, 3
+print(a) #(1,2,3)
+#拆包 元祖，字符串，字典都可以拆包
+x, y, z = a
+
+my_list = [10, 20]
+x, y = my_list
+
+my_str = 'abc'
+x,y,z = my_str
+print(x,y,z)
+
+my_dict = {'name': 'jingyuan', 'age': '123'}
+x, y = my_dict
+print(x, y) # name, age
+```
+### 二十. 引用及引用参数
+1. 不可变类型和可变类型
+    1. 不可变类型： int fload boolean str  tuple
+    2. 可变类型：dict list
+```py
+# 不可变类型：地址一样的，python内存优化，对与不可变类型进行的。 交互终端：小整数默认范围-5~255则使用相同的引用地址，如果不是，那么开辟新的内存。
+a = 10
+b = 10
+print(id(a), id(b))  
+```
+2. 函数传参传递的也是引用
+```py
+# 对于可变类型 函数内部只有修改变量中的引用值时，需要global
+my_list = [1,2,4]
+def func():
+    my_list.append(5)  # 因为是一个引用，所以不需要global
+    global my_list  # 改变my_list的
+    my_list = [1] 
+    pass
+
+# 对于列表的 += 相当于extend不会改变引用的地址，a = a + a会改变。
+```
+### 二十一. 学员管理系统-面向过程版本
+1. 主要功能：增删改查的一些操作，存储学生的信息，功能菜单，业务框架。
+### 二十二. 递归函数与匿名函数
+1. 递归：1自己调用自己，2结束条件
+2. 匿名函数： 使用lambda关键字定义的函数 `lambda 参数列表： 表达式 ` 例：`lambda: 1+2`, `lambda a, b: print(a, b)`
+    1. 不能使用if语句，while循环，for循环。只能编写单行的表达式，或者函数调用，普通函数都可以。
+    2. 匿名函数中返回结果不需要使用return,表达式的运行结果就是返回结果，普通函数返回结果必须return。
+    3. 函数中也可以不返回结果，例如：`lambda: print('hello world')`
+```py
+#1. 无参数无返回值
+(lambda: print('hello lambda'))()
+f1 = lambda: print('hello lambda')  #不建议赋值给一个变量
+f1()
+#2. 无参数有返回值
+f2 = lambda: 1+2
+f2()
+#3. 有参数无返回值 
+f3 = lambda name: print(name)
+f3('hello')
+#4. 有参数有返回值
+f4 = lambda *args: args
+f4(1,2,3,4)
+
+```
+
+### 二十三. 匿名函数使用及列表推导式
+1. 匿名函数作为函数参数使用
+2. 匿名函数在列表排序中的使用
+```py
+my_list = [1,3,5,4,2,1]
+my_list.sort()
+print(my_list)
+
+list2 = [{'name':'b', 'age': 18}, {'name':'aa', 'age': 22}, {'name':'cc', 'age': 35}]
+list2.sort(key=lambda x: x['name'], reverse=False)
+# 当第一个规则大小一致，会按照第二个规则进行排序
+# sort(key= lambda 形参: (规则1, 规则2, ...))
+list2.sort(key=lambda x: (x['age'], x['name']))
+```
+3. 列表推导式
+```py
+#1. 变量 = [生成规则 for 临时变量 in xxx]
+my_list = [f"num_{i}" for i in range(5)]
+#2. 变量 = [生成数据的规则 for 临时变量 in xxx if xxx]
+my_list = [i for i in range(5) if i%2=0]
+#3. 变量 = [生成规则 for i in xxx for j in xxx] 嵌套循环
+my_list = [(i, j) for i in range(5) for j in range(6,11)]
+```
+4. 字典推导式
+```py
+# 变量 = {生成规则 for 临时变量 in  xxx}
+my_dict = {f"name{i}": i for i in range(3)}
+```
+5. 集合 set {x1, x2,...}
+    1. 集合中的数据必须是不可变类型
+    2. 集合是可变类型
+    3. 集合中的数据是无序的
+    4. 集合中的数据没有重复数据
+    5. remove(), pop(), add(), clear()
