@@ -36,5 +36,5 @@ emitter.listeners('事件名称');//返回EventEmitter对象某个时间监听�
 
 
 // once 
-// preoendListenter
+// prependListenter
 // removeAllListeners() //不传移除所有的事件，传参数只移除写入的
