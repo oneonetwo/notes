@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <input type="file">
+    <button>上创</button>
+    <script>
+        //文件上传按钮
+        const button = doucument.querySelector('button')
+        button.onClick = function () {
+            const formData = new FormData()
+            const input = document.querySelector('input')
+            formData.set('photo', input.files[0])
+            axios({
+                method: 'post',
+                url: 'http://localhost:8000',
+                data: formData,
+                headers: {
+                    'Content-Type': 'multipart/form-data' //指定数据为二进制类型 传文件图片mp3
+                }
+            }).then(res => {
+
+            })
+        }
+    </script>
+</body>
+
+</html>

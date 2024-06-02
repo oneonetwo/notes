@@ -7,7 +7,7 @@ const server = http.createServer((req, res) => {
     res.setHeader('Content-Type', 'text/plain;charset=utf8')
     // 2. 跟code状态码一起
     res.writeHead(200, {
-        'Content-type': 'application/json;charset=utf8'
+        'Content-Type': 'application/json;charset=utf8'
     })
     res.end(JSON.stringify({
         name: '杨景渊'
