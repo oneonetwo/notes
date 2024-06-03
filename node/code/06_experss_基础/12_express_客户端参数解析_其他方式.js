@@ -11,6 +11,9 @@
  *     }) //可以传任意类型
  *        
  * 3. res.status(200) 设置状态码。
+ * 更多
+ * https://www.expressjs.com.cn/4x/api.html#res
+ * 
  */
 
 const express = require('express')
