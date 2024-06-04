@@ -1,5 +1,5 @@
 /**
- * 
+ * 跟express 用的库 是一样的
  * 
  * 
  * 
@@ -38,6 +38,7 @@ router.get('/photos', upload.array('files'), (ctx, next)=>{
 })
 
 app.use(router.routes())
+app.use(router.allowedMethods())
 
 
 app.listen(300, _=>{
