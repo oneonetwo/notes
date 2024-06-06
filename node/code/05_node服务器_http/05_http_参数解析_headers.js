@@ -13,7 +13,7 @@ const http = require('http');
 const server = http.createServer((req, res) => {
     const headers = req.headers
     headers['content-type'] //数据类型
-    headers['contetn-lenght'] //数据
+    headers['content-length'] //数据
 
 
     const token = req.headers['acthorization']

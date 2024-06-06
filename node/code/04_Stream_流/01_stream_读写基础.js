@@ -31,20 +31,20 @@ readerSteam = fs.createReadStream('input.txt', {
 //设置编码utf8
 readerStream.setEncoding('UTF8')
 //处理流事件
-readerSteam.on('data', chunk=>{
+readerStream.on('data', chunk=>{
     data += chunk
-    readerSteam.pause(); //每次读取三个字节 暂停
+    readerStream.pause(); //每次读取三个字节 暂停
     setTimeout(()=>{
-        readerSteam.resume(); //恢复
+        readerStream.resume(); //恢复
     })
 })
-readerSteam.on('end', ()=>{
+readerStream.on('end', ()=>{
     console.log('读到end为止，文件会自动关闭， 不需要手动关闭')
 })
-readerSteam.on('close', ()=>{
+readerSrteam.on('close', ()=>{
     console.log('文件被关闭')
 })
-readerSteam.on('error', (err)=>{
+readerStream.on('error', (err)=>{
     console.log(err.stack)
 })
 
