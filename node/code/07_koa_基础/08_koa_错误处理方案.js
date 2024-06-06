@@ -36,6 +36,7 @@ app.on('error', (code, ctx)=>{
             message = '未授权'
             break
     }
+    //使用ctx给body返回，做出响应
     ctx.body = {
         code,
         message
