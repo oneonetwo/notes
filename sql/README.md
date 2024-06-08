@@ -1,5 +1,31 @@
 # Mysql基础
 
+#### 基础认识
+1. 终端操作数据库
+    1. 两种方式
+        1. `mysql -uroot -proot`
+        2. `mysql -uroot -p`//enter输入密码
+    2. mysql默认的数据库
+        1. information_schema: 信息数据库，其中包括mysql在维护的其他数据库，表，列，访问权限等信息
+        2. mysql：存储数据库的管理者的用户信息，权限信息，以及一些日志信息
+        3. sys：相当于简易版的performance_schema,将性能数据库中的数据汇总成更容易理解的形式
+        4. performance_schema：性能数据库，记录着Mysql_Server数据库引擎在运行过程中的一些资源消耗相关的信息
+2. 认识SQL语句 Structured Query Language
+    1. 规范
+        1. 通常用关键词大写，比如CREATE TABLE SHOW等等
+        2. 一条语句结束后，需要以；结尾
+        3. 如果遇到关键字作为表名或者字段名称，需要使用‘’包裹
+    2. SQL语句的分类 四大类
+        1. DDL（data definition languge）： 
+            - 对数据库或者表进行：创建，删除，修改等操作  
+        2. DML(data manipulation languge):
+            - 对表进行 添加，修改，删除操作
+        3. DQL(data query language):
+            - 通过DQL从数据库中查询记录
+        4. DCL(data control languge):
+            - 对数据库，表的相关访问权限等进行操作
+
+
 [优化相关](https://www.cnblogs.com/lijiasnong/p/9963905.html)  
 [基础相关](https://www.cnblogs.com/yangyangfubin/p/8179172.html)
 #### 一. 事务
