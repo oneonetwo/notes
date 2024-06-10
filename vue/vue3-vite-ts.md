@@ -7,7 +7,7 @@
             > `volar`工具对.vue文件进行实时的类型错误反馈
             > `TypeScript Vue Plugin`工具用于支持在TS中 import *.vue文件
         2. 打包阶段
-            > `vuw-tsc`工具负责打包时最终的类型检查
+            > `vue-tsc`工具负责打包时最终的类型检查
 2. ref标注类型 赋值做代码提示，访问时做代码约束
     ```ts
     //1. 简单类型 类型推导
@@ -282,19 +282,20 @@
     //1
     pnpm create vue 需要Typescript Pinia Router ESlint Prettier
     pnpm install
-    pnpm lint
+    pnpm lint //根据设置修复所有代码规范
     pnpm dev
     ```
 2. 项目配置
-    1. Eslint配置代码风格，配置文件.eslintrc.cjs
+    1. Eslint配置代码风格，配置文件`.eslintrc.cjs`
         1. prettier风格配置https://prettier.io,一定要安装Eslint且配置保存修复，不要开启默认的自动保存格式化。
             - 单引号
             - 不使用分好
             - 宽度80字符
-            - 不见对象|数组最后都好
+            - 不加对象|数组最后都好
             - 换行符号不限制
-        2. vue组件名称多单次组成（忽略index.vue）
-        3. props结构（关闭）
+        2. vue组件名称多单词组成（忽略index.vue）
+        3. props解构（关闭）
+        4. 设置之后再跑一次`pnpm lint`修改代码风格
     2. 开启TS托管模式
         1. 安装`Volar`插件 语法高亮，代码提示，支持vue3新特性
         2. 安装`TypeScript Vue Plugin(Volar)(已废弃用vue-official)`,让TS服务知道.vue文件
