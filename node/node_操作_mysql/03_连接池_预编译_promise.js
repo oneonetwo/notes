@@ -12,10 +12,10 @@
  * 
  * 
  * 
-*/
+ */
 // 1. prepared 预编译
 const statement = 'SELECT * FROM products WHERE price > ? and brand = ?;'
-connection.execute(statement, [1000, '华为'], (err, results)=>{
+connection.execute(statement, [1000, '华为'], (err, results) => {
     console.log(results)
 })
 // 链接吃
@@ -28,9 +28,9 @@ const connectionPool = mysql.createPool({
     connectionLimit: 5
 })
 
-connectionPool.promise().execute(statement, [1000, '华为']).then(res=>{
+connectionPool.promise().execute(statement, [1000, '华为']).then(res => {
     let [values, fields] = res;
     console.log(res)
-}).catch(err=>{
+}).catch(err => {
     console.log(err)
 })
