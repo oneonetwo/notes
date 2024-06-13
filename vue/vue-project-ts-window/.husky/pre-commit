@@ -1,0 +1,7 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+# npm test
+# pnpm lint
+# npm run lint:lint-staged --allow-empty
+pnpm lint-staged

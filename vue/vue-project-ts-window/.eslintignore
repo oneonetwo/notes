@@ -1,0 +1,13 @@
+dist 
+node_modules 
+public 
+.husky 
+.vscode 
+.idea 
+*.sh 
+*.md 
+
+index.html 
+.eslintrc.cjs 
+.prettierrc.json 
+.stylelintrc.cjs
