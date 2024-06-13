@@ -13,7 +13,8 @@ export default defineConfig({
   plugins: [
     vue(),
     AutoImport({
-      resolvers: [VantResolver()]
+      // importStyle: false //已经全局引入样式，关闭对应导入
+      resolvers: [VantResolver({ importStyle: false })]
     }),
     Components({
       resolvers: [

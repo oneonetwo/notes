@@ -7,8 +7,12 @@ export {}
 /* prettier-ignore */
 declare module 'vue' {
   export interface GlobalComponents {
+    CpNavBar: typeof import('./src/components/CpNavBar.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     VanButton: typeof import('vant/es')['Button']
+    VanCheckbox: typeof import('vant/es')['Checkbox']
+    VanCheckout: typeof import('vant/es')['Checkout']
+    VanNavBar: typeof import('vant/es')['NavBar']
   }
 }
