@@ -9,7 +9,7 @@ class UserService {
         // 2. 拼接statement
         const statement = 'insert into `user` (name, password) values (?, ?);'
         // 3. 执行sql
-        const [ result ] = connection.execute(statement, [name, password])
+        const [ result ] = await connection.execute(statement, [name, password])
         return result
     }
     async queryUsersByName(name){

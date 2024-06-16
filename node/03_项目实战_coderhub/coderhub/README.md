@@ -20,4 +20,15 @@
    ```
    4. 创建 middleware 文件夹，创建 user.middleware.js 中间件，存放验证逻辑
    5. 创建 utils 工具，处理handle-error.js
-   
+   6. 对用户的密码进行加密   
+5. 用户登录接口
+   1. 用户登录接口 
+      1. router编写
+      2. 处理函数controller的编写
+   2. 验证中间件
+      1. 账号和密码是否为空
+      2. 用户名是否存在
+      3. 校验密码是否一致
+   3. 登录成功返回凭证
+      1. cookie + session
+      2. Token 令牌

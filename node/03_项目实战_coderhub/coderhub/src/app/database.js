@@ -1,9 +1,17 @@
+/*
+ * @Description: 
+ * @Author: yjy
+ * @Date: 2024-06-15 21:43:47
+ * @LastEditTime: 2024-06-16 12:58:56
+ * @LastEditors: yjy
+ * @Reference: 
+ */
 const mysql = require('mysql2')
 // 1. 创建链接池
 const connectionPool = mysql.createPool({
     host: 'localhost',
     port: 3306,
-    database: 'music_db',
+    database: 'coderhub',
     user: 'root',
     password: 'root',
     connectionLimit: 5
