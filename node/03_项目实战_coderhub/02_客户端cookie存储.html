@@ -1,0 +1,29 @@
+1. 为什么需要登录凭证？
+    - 因为http是一个无状态的协议，每个访问都是一次单独的请求。
+2. 认识cookie
+    - 分为内存cookie和硬盘cookie
+    
+<script>
+// 3. 客户端设置cookie
+console.log(document.cookie)
+// 3.1 这个cookie会在页面关闭时删除
+document.cookie = "name=jingyuan"
+document.cookie = "age=18"
+
+// 设置过期时间、100秒
+document.cookie = "name=jingyuan;max-age=100"
+
+
+</script>
+
+<!-- 4. cookie常见的属性 -->
+1. cookie的生命周期
+    - 默认的话就是内存cookie，就是会话cookie, 浏览器关闭就会消失
+2. 可以设置 expires 或者 max-age 来设置过期时间
+    - expires 设置的是Date.toUTCString() 时间节点
+    - max-age：设置的是过期的秒钟  max-age-in-seconds
+3. cookie的作用域
+    - Domain 默认是origin, 不包含子域名
+    - 指定Domain, 则包含子域名，Domain=mozilla.org, 则包含develop.mozilla.org
+    - Path: 指定主机下哪些路径可以接受cookie
+        - Path=/docs ， 则/docs/*下面的路径都可以访问到
