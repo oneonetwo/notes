@@ -8,6 +8,4 @@ const userRouter = new KoaRouter({prefix: '/users'})
 // 2.1处理用户注册
 userRouter.post('/', verifyUser, handlePassword, userController.create)
 
-module.exports = {
-    userRouter
-}
+module.exports = userRouter

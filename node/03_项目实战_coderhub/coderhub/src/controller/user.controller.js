@@ -2,8 +2,8 @@
  * @Description: 
  * @Author: yjy
  * @Date: 2024-06-15 21:43:47
- * @LastEditTime: 2024-06-16 13:10:28
- * @LastEditors: yjy
+ * @LastEditTime: 2024-06-19 16:45:27
+ * @LastEditors: jy
  * @Reference: 
  */
 const userService = require("../service/user.service")
@@ -24,6 +24,7 @@ class UserController {
             message: '用户创建成功',
             data: result
         }
+        return
     }
 }
 

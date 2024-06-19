@@ -1,6 +1,8 @@
-const { NAME_OR_PASSWORD_IS_REQUIRED, PASSWORD_IS_INCORRECT, NAME_IS_NOT_EXISTS } = require("../config/error-cons")
+const { NAME_OR_PASSWORD_IS_REQUIRED, PASSWORD_IS_INCORRECT, NAME_IS_NOT_EXISTS, UNAUTHORIZED } = require("../config/error-cons")
+const jwt = require('jsonwebtoken')
 const userService = require("../service/user.service")
 const md5password = require("../utils/md5-password")
+const { PUBLIC_KEY } = require("../config/screct")
 
 const verifyLogin = async (ctx, next) => {
     const { name, password } = ctx.request.body
@@ -25,7 +27,25 @@ const verifyLogin = async (ctx, next) => {
     await next()
 }
 
+const verifyAuth = async (ctx, next) => {
+    const { authorization } = ctx.headers
+    if(!authorization){
+        ctx.app.emit('error', UNAUTHORIZED, ctx)
+        return
+    }
+    const token = authorization.replace('Bearer ', '')
+    try {
+        const result = jwt.verify(token, PUBLIC_KEY, {
+            algorithms: ['RS256']
+        })
+        ctx.user = result
+        await next()
+    } catch (error) {
+        ctx.app.emit('error', UNAUTHORIZED, ctx)        
+    }
+}
 
 module.exports = {
-    verifyLogin
+    verifyLogin,
+    verifyAuth
 }

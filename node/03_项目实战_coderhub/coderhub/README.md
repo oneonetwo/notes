@@ -10,12 +10,12 @@
    2. 创建 service 管理数据库的操作
    3. 创建 database.js 链接数据库
    ```sql
-   CREATE TABLE IF NOT  EXISTS `user`(
-       id INT PRIMARY KEY AUTO_INCREMENT,
-       name VARCHAR(30) NOT NULL UNIQUE,
-       password VARCHAR(30) NOT NULL,
-       createAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-       updateAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+   create TABLE  if not EXISTS `user`(
+      id INT PRIMARY KEY AUTO_INCREMENT,
+      name VARCHAR(30) NOT NULL UNIQUE,
+      password VARCHAR(200) NOT NULL,
+      createAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+      updateAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
    )
    ```
    4. 创建 middleware 文件夹，创建 user.middleware.js 中间件，存放验证逻辑
@@ -32,3 +32,24 @@
    3. 登录成功返回凭证
       1. cookie + session
       2. Token 令牌
+6. 验证token
+   1. test 中间件 去验证每次请求的token
+   2. postman设置全局的变量的token
+   ```js
+   const res = pm.response.json()
+   pm.globals.set('token', res.data.token)
+   ```
+   3. 动态注册全部的路由
+   
+7. 动态发布
+   ```sql
+   CREATE TABLE IF NOT EXISTS `moment`(
+      id INT PRIMARY KEY AUTO_INCREMENT,
+      content VARCHAR(1000) NOT NULL,
+      user_id INT NOT NULL,
+      createAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+      updateAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+      FOREIGN KEY(user_id) REFERENCES user(id)
+   )
+   ```
+

@@ -21,6 +21,13 @@ class LoginController {
             }
         }
     }
+
+    test(ctx, next){
+        ctx.body = {
+            code: 0,
+            message: '身份验证成功'
+        }
+    }
 }
 
 module.exports = new LoginController
