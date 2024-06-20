@@ -30,12 +30,36 @@ class MomentController{
 
     async detailById(ctx, next){
         //获取params  /detail/:id
-        const { id } = ctx.request.params
-        const result = await momentService.queryById(id)
+        const { momentId } = ctx.request.params
+        const result = await momentService.queryById(momentId)
         ctx.body = {
             code: 0,
             message: "成功",
             data: result[0]
+        }
+    }
+
+    // 更新
+    async update(ctx, next){
+        const { momentId} = ctx.request.params
+        const { content } = ctx.request.body
+        const result = await momentService.update(content, momentId)
+        ctx.body = {
+            code: 0,
+            message: "修改动态成功",
+            data: result
+        }
+
+    }
+
+    // 删除某个动态
+    async remove(ctx, next){
+        const { momentId} = ctx.request.params
+        const result = await momentService.remove(momentId)
+        ctx.body = {
+            code: 0,
+            message: "删除动态成功",
+            data: result
         }
     }
 }
