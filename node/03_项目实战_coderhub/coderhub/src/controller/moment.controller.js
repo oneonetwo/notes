@@ -28,14 +28,14 @@ class MomentController{
         }
     }
 
-    async queryById(ctx, next){
+    async detailById(ctx, next){
         //获取params  /detail/:id
         const { id } = ctx.request.params
         const result = await momentService.queryById(id)
         ctx.body = {
             code: 0,
             message: "成功",
-            data: result
+            data: result[0]
         }
     }
 }
