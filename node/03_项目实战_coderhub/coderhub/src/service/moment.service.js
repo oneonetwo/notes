@@ -1,3 +1,11 @@
+/*
+ * @Description: 
+ * @Author: yjy
+ * @Date: 2024-06-21 22:58:14
+ * @LastEditTime: 2024-06-22 00:37:43
+ * @LastEditors: yjy
+ * @Reference: 
+ */
 const connection = require('../app/database')
 
 class MomentService{
@@ -35,19 +43,25 @@ class MomentService{
     }
 
     async queryById(id){
-        const statement = `SELECT m.id, m.content, m.createAt createTime, m.updateAt updateTime,
+        const statement = `SELECT m.id, m.content,
         JSON_OBJECT('id', u.id, 'name', u.name) AS users, 
+        (
+        SELECT JSON_ARRAYAGG(JSON_OBJECT(
+            'id', c.id, 'content', c.content, 'commentId', c.comment_id, 'momentId', c.moment_id,
+        'user',  JSON_OBJECT('id', cu.id, 'name', cu.name)
+        )) 
+        FROM comment c
+        LEFT JOIN user cu ON cu.id=c.user_id
+        WHERE c.moment_id=m.id
+        ) commentList,
         (JSON_ARRAYAGG(JSON_OBJECT(
-            'id', c.id, 
-            'content', c.content, 
-            'commentId', c.comment_id, 
-            'momentId', c.moment_id, 
-            'user',  JSON_OBJECT('id', cu.id, 'name', cu.name)
-        )))  commentList
+            'id', l.id,
+            'name', l.name
+        ))) labelList
         FROM moment m 
         LEFT JOIN user u ON  m.user_id = u.id
-        LEFT JOIN comment c ON m.id=c.moment_id
-        LEFT JOIN user cu ON cu.id=c.user_id
+        LEFT JOIN moment_label ml ON ml.moment_id=m.id
+        LEFT JOIN label l ON ml.label_id = l.id
         WHERE m.id=?
         GROUP BY m.id;
         `
@@ -73,9 +87,12 @@ class MomentService{
     }
     async batchAddLabels(momentId, labels){
         const placeholder = labels.map(_=>'( ?, ?)').join(',')
-        const params = labels.map()
+        const params = []
+        labels.forEach(({ id }) => {
+            params.push(momentId, id)
+        })
         const statement = `INSERT IGNORE INTO moment_label (moment_id, label_id) VALUES ${placeholder};`
-        const [rows, fields] = await connection.execute(statement, labels)
+        const [rows, fields] = await connection.execute(statement, params)
         return rows
     }
 }
