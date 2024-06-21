@@ -66,11 +66,39 @@ JSON_OBJECT('id', u.id, 'name', u.name) AS users,
 	'content', c.content,
 	'commentId', c.comment_id,
 	'momentId', c.moment_id,
-	'userId', c.user_id
+  'user',  JSON_OBJECT('id', cu.id, 'name', cu.name)
 ))) commentList
 FROM moment m 
 LEFT JOIN `user` u ON  m.user_id = u.id
-LEFT JOIN `comment` c ON c.comment_id=m.id
+LEFT JOIN `comment` c ON c.moment_id=m.id
+LEFT JOIN user cu ON cu.id=c.user_id
 WHERE m.id=2
 GROUP BY m.id;
+
+
+
+-- 5. 创建标签表
+CREATE TABLE IF NOT EXISTS `label` (
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  name VARCHAR(10) NOT NULL UNIQUE,
+  creatAt TIMESTAMP DEFAULT(CURRENT_TIMESTAMP),
+  updateAt TIMESTAMP DEFAULT(CURRENT_TIMESTAMP) ON UPDATE CURRENT_TIMESTAMP
+)
+-- 5.1 创建动态和标签的关系表 多对多   PRIMARY KEY(moment_id, label_id) 联合主键是不能重复的
+CREATE TABLE IF NOT EXISTS `moment_label` (
+  moment_id  INT NOT NULL,
+  label_id INT NOT NULL,
+  creatAt TIMESTAMP DEFAULT(CURRENT_TIMESTAMP),
+  updateAt TIMESTAMP DEFAULT(CURRENT_TIMESTAMP) ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY(moment_id, label_id),
+  FOREIGN KEY (moment_id) REFERENCES moment(id) ON DELETE CASCADE ON UPDATE CASCADE,
+  FOREIGN KEY (label_id) REFERENCES label(id) ON DELETE CASCADE ON UPDATE CASCADE
+)
+
+-- 5.2 查询已经存在的label
+SELECT * FROM label WHERE name IN  ("动物", "植物", "蔬菜", "足球", "篮球");
+-- 5.3 批量插入 
+INSERT INTO label (name) VALUES ('动物'), ('植物'), ('蔬菜');
+-- 5.4插入关系表
+INSERT IGNORE INTO moment_label (moment_id, label_id) VALUES (2, 2);
 

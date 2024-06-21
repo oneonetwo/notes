@@ -7,7 +7,7 @@ class LoginController {
         const { id, name } = ctx.user
         // 2. 颁发令牌
         const token = jwt.sign({ id, name }, PRIVATE_KEY, {
-            expiresIn: 60 * 60, //一小时
+            expiresIn: 60 * 60 * 24, //一小时
             algorithm: 'RS256' //非对称加密
         })
 

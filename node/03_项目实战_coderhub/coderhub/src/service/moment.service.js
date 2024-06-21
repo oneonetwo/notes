@@ -65,6 +65,19 @@ class MomentService{
         const [rows, fields] = await connection.execute(statement, [momentId])
         return rows
     }
+    //查看当前momentId下所有关联的label
+    async labelsByMomentId(momentId){
+        const statement = 'SELECT moment_id momentId, label_id labelId FROM moment_label WHERE moment_id = ?'
+        const [rows, fields] = await connection.execute(statement, [momentId])
+        return rows
+    }
+    async batchAddLabels(momentId, labels){
+        const placeholder = labels.map(_=>'( ?, ?)').join(',')
+        const params = labels.map()
+        const statement = `INSERT IGNORE INTO moment_label (moment_id, label_id) VALUES ${placeholder};`
+        const [rows, fields] = await connection.execute(statement, labels)
+        return rows
+    }
 }
 
 module.exports = new MomentService

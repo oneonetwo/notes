@@ -59,10 +59,41 @@
    4. 删除动态
    5. 抽象提取 verifyPermission  不是只验证moment的权限 
 
-8. 评论
+8. 评论 （子表查询，左链查询）
    1. 新增评论
    2. 新增回复评论
    3. 查询动态的时候，显示评论信息
       1. 查询多个动态，显示评论的个数
       2. 查询单个动态，显示评论的列表
 
+   
+9. 创建标签的表 （多对多的关系）关系表
+   1. 定义router
+      1. 创建标签的接口
+      2. 获取标签列表接口
+   2. 创建标签和动态关系表
+   3. 定义给动态添加标签的接口
+   4. 查询标签的接口
+   6. 中间件
+      1. 是否登录
+      2. 验证是否有操作这个动态的权限
+      3. 额外中间件，验证label的那么是否已经在label中
+            1. 如果存在，那么直接使用
+            2. 如果没有存在，那么需要先将label的name添加label表
+      4. 最终步骤
+         1. 所有的labels都在已经label表
+         2. 动态2和 labels关系添加到关系表中
+   ```sql 
+   <!-- 使用联合主键 创建标签和动态的关联表  -->
+   CREATE TABLE IF NOT EXISTS `moment_label` (
+      moment_id  INT NOT NULL,
+      label_id INT NOT NULL,
+      createAt TIMESTAMP DEFAULT(CURRENT_TIMESTAMP),
+      updateAt TIMESTAMP DEFAULT(CURRENT_TIMESTAMP) ON UPDATE CURRENT_TIMESTAMP,
+      PRIMARY KEY(moment_id, label_id),
+      FOREIGN KEY (moment_id) REFERENCES moment(id) ON DELETE CASCADE ON UPDATE CASCADE,
+      FOREIGN KEY (label_id) REFERENCES label(id) ON DELETE CASCADE ON UPDATE CASCADE
+   )
+   ```
+   7. 插入已存在的数据
+      在 MySQL 中，INSERT IGNORE 是一种插入数据的方法，它在遇到违反唯一性约束的情况下不会抛出错误，而是忽略这些冲突的记录并继续插入其他记录。这样可以避免由于重复键或其他约束冲突而导致的插入操作失败。

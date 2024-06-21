@@ -62,6 +62,28 @@ class MomentController{
             data: result
         }
     }
+
+    //为moment添加labels
+    async addLabels(ctx, next){
+        const { momentId } = ctx.request.params
+        const labels = ctx.labels
+
+        // 1. 把label_id和comment_id的关系插入到表中
+        // 需要查看是否已经有创建的关系
+        const existsMomentLabels = await momentService.labelsByMomentId(momentId)
+        console.log('existsMomentLabels', existsMomentLabels);
+        const needInsetLabels = labels.filter(label=>{
+            return existsMomentLabels.findIndex(l=>l.labelId===label.id) === -1
+        })
+        //2. 插入未创建的数据
+        const result = await momentService.addLabels(momentId, needInsetLabels)
+
+        ctx.body = {
+            code: 0,
+            message: "添加成功",
+            data: result
+        }
+    }
 }
 
 
