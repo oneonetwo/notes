@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: yjy
  * @Date: 2024-06-21 22:58:14
- * @LastEditTime: 2024-06-22 00:37:43
+ * @LastEditTime: 2024-06-22 12:15:28
  * @LastEditors: yjy
  * @Reference: 
  */
@@ -44,11 +44,11 @@ class MomentService{
 
     async queryById(id){
         const statement = `SELECT m.id, m.content,
-        JSON_OBJECT('id', u.id, 'name', u.name) AS users, 
+        JSON_OBJECT('id', u.id, 'name', u.name, 'avatarUrl', u.avatar_url) AS users,
         (
         SELECT JSON_ARRAYAGG(JSON_OBJECT(
             'id', c.id, 'content', c.content, 'commentId', c.comment_id, 'momentId', c.moment_id,
-        'user',  JSON_OBJECT('id', cu.id, 'name', cu.name)
+        'user',  JSON_OBJECT('id', cu.id, 'name', cu.name, 'avatarUrl', cu.avatar_url)
         )) 
         FROM comment c
         LEFT JOIN user cu ON cu.id=c.user_id

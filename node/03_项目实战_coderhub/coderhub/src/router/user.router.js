@@ -8,4 +8,7 @@ const userRouter = new KoaRouter({prefix: '/users'})
 // 2.1处理用户注册
 userRouter.post('/', verifyUser, handlePassword, userController.create)
 
+// 2.2 为用户提供头像展示
+userRouter.get('/avatar/:userId', userController.showAvatarImage)
+
 module.exports = userRouter
