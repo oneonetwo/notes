@@ -3,7 +3,7 @@
     2. 注册表（Registry）：NPM 包注册表是一个数据库，存储了所有公开发布的 NPM 包。默认的注册表是 https://registry.npmjs.org/。
     3. 命令行工具：NPM 提供了 npm 命令行工具，用于执行各种操作，例如安装、更新、卸载包等
 
-2. NPM 的核心功能
+2. NPM 的核心功能 更多命令查看文档`https://docs.npmjs.com/cli/v8/commands`
     1. 安装包：`npm install <package>`：
         - 从注册表中安装一个包到当前项目中，并添加到 node_modules 目录。n
         - pm install：根据 package.json 文件中的依赖项安装所有依赖包。
@@ -15,6 +15,8 @@
         - 将包发布到 NPM 注册表中，使其可以被其他人使用。
     5. 管理依赖项：`npm init`
         - package.json 文件中定义了项目的依赖项及其版本信息。NPM 使用这个文件来管理项目的依赖。
+    6. 重新安装依赖包： `npm rebuild`
+    7. 清楚缓存：`npm cache clean`
 3. NPM的工作原理
     1. 安装包
         - 查询注册表：NPM 查询默认的 NPM 注册表来获取包的信息，包括版本、依赖等。
@@ -47,3 +49,20 @@
         - `x.y.z`: 表示的是一个明确的版本号
         - `^x.y.z`: 表示x保持不变，y 和 z 永远安装最新的版本
         - `~x.y.z`: 表示 x 和 y 不变，z 永远安装最新的版本
+
+5. `npm install`细节
+    1. `npm i yarn -g` 全局安装
+    2. `npm i yarn` 默认是局部local安装
+        1. `npm i axios -D`  `npm install webpack --save-dev` 开发依赖
+
+        
+6.  `package-lock.json`
+    - 详细记录了项目中所有安装的依赖项的具体版本及其依赖关系。它的主要目的是确保在不同的环境中安装相同的依赖树，保证项目的稳定性和一致性。
+    - 两个概念 一是标识符 二是明确包对应的准确版本
+    1. name 和 version：项目的名称和版本。
+    2. lockfileVersion：锁文件的版本。NPM 7 引入了版本 2 的锁文件格式，具有更好的性能和兼容性。
+    3. requires：指示是否需要解析依赖关系。
+    4. dependencies：高层次的依赖关系，指示哪些依赖包被安装以及它们的版本。
+    5. integrity: 用来从缓存中获取索引，在通过索引获取压缩包文件
+        - npm安装的包会有缓存的概念，package-lock中会有查找包缓存对应的标识符
+    6. resolved: 来源
