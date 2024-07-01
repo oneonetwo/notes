@@ -31,5 +31,26 @@
         1. 当安装软件包时,其包含的所有文件都会硬链接到此位置,而不会占古用额外的硬盘空间
         2. 这让你可以在项目之间方便地共享相同版本的依赖包;
 
+### pnpm常用的命令
+1. npm install -g pnpm
+2. pnpm init
+3. pnpm install <package_name>
+4. `pnpm install <package_name> --save-dev` 安装开发依赖
+5. `pnpm add -g <package_name>` 安装全局包
+6. `pnpm install`
+7. `pnpm remove 包名`
+8. `pnpm update 包名` 更新包
+9. `pnpm run <script name>` 运行脚本
+- 信息调试
+10. `pnpm info 包名` 查看包信息
+11. `pnpm list` 查看安装的包
+12. `pnpm outdated` 查看过时的包
+- 清理和缓存
+13. `pnpm cache clean` 清理缓存
+13. `pnpm prune` 删除`node_modules`文件夹中未使用的依赖
+13. `pnpm store prune` 从store中删除当前违背引用的包来释放store的空间
+13. `pnpm store path` 获取当前活跃的store目录
+
+
 
 
