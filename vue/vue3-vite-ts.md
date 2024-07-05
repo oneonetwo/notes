@@ -307,6 +307,7 @@
             - 出现 TypeScript and Javasript Language插件然后在工作区禁用
 3. 配置代码检查工作流
     1. 初始化`husky`配置工具,执行`pnpm dlx husky-init && pnpm install`(执行配置文件，安装husky)
+        - window下用`pnpm dlx husky-init %% pnpm install`
         - 根目录下的.husky
     2. 修改.husky/pre-commit文件，这文件是在git commit之前执行的。
         `去掉npm test 添加pnpm lint来检查` 
