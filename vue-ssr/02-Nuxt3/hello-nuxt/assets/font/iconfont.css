@@ -1,0 +1,21 @@
+@font-face {
+  font-family: "iconfont"; /* Project id  */
+  src: url('@/assets/font/iconfont.ttf') format('truetype');
+}
+
+.iconfont {
+  font-family: "iconfont" !important;
+  font-size: 16px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-mtiIcon-caozuo-baocun:before {
+  content: "\e6e2";
+}
+
+.icon-a-mtiIcon-caozuo-bianjixiugai:before {
+  content: "\e6e3";
+}
+
