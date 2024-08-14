@@ -15,4 +15,8 @@ definePageMeta({
         'auth'
     ]
 })
+
+onMounted(()=>{
+    console.log('home page oncreated')
+})
 </script>

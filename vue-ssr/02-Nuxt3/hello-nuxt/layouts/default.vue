@@ -6,16 +6,16 @@
 		<nuxt-link to="/home"><button>home</button></nuxt-link>
 		<nuxt-link to="/login"><button>login</button></nuxt-link>
 		<nuxt-link to="/plugins"> <button>plugins demo</button></nuxt-link>
-		<nuxt-link to="/profile"><button>profile</button></nuxt-link>
-		<nuxt-link to="/more" replace><button>replace more</button></nuxt-link>
+		<nuxt-link to="/use-fetch"><button>useFetch封装 demo</button></nuxt-link>
+		<nuxt-link to="/request-demo" replace><button>request demo page</button></nuxt-link>
 		<nuxt-link
 			:to="{
-				path: '/more',
+				path: '/request-lazy',
 				query: {
 					id: 100,
 				},
 			}"
-			><button>more</button></nuxt-link
+			><button>request-lazy</button></nuxt-link
 		>
 		<nuxt-link to="http://www.baidu.com" target="_blank"
 			><button>baidu.com</button></nuxt-link
