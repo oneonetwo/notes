@@ -5,6 +5,8 @@
 		<nuxt-link to="/"> <button>首页</button></nuxt-link>
 		<nuxt-link to="/home"><button>home</button></nuxt-link>
 		<nuxt-link to="/login"><button>login</button></nuxt-link>
+		<nuxt-link to="/use-state"> <button>useState全局共享数据</button>	</nuxt-link>
+		<nuxt-link to="/pinia-demo"><button>pinia  demo</button></nuxt-link>
 		<nuxt-link to="/plugins"> <button>plugins demo</button></nuxt-link>
 		<nuxt-link to="/use-fetch"><button>useFetch封装 demo</button></nuxt-link>
 		<nuxt-link to="/request-demo" replace><button>request demo page</button></nuxt-link>
