@@ -7,7 +7,8 @@
 </template>
 
 <script setup>
-
+// definePageMeta 是 Nuxt 3 中用于定义页面级别的元数据（Meta Data）的一个方法。它允许你在单个页面组件中设置该页面的标题、描述、元标签、布局、缓存策略等信息，而不需要在 nuxt.config.js 全局配置文件中进行设置。
+// 定义使用的layout
 definePageMeta({
     layout: "custom-layout"
 })

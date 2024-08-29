@@ -4,6 +4,8 @@ export default defineNuxtConfig({
   // devtools: { enabled: true },
   // 全局样式配置
   css: [
+    //reset 统一样式样式
+    "normalize.css",
     "@/assets/styles/main.css", 
     "@/assets/styles/global.scss",
     "@/assets/font/iconfont.css"
@@ -20,4 +22,20 @@ export default defineNuxtConfig({
     }
   },
   modules: ['@pinia/nuxt'], //引入pinia
+  app: {
+    head: {
+      title: '这是项目的title',
+      meta: [
+        {
+          name: 'description',
+          content: '这是项目的描述'
+        },{
+          name: 'keywords',
+          content: '这是项目的 关键字'
+        }
+      ],
+      link: [{rel: "icon", type:"image/x-icon", href:"/favicon.ico"}],
+      noscript: [{children: "Javascript is required"}]
+    }
+  }
 })

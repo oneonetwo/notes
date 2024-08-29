@@ -1,6 +1,6 @@
 
-
-
+//手动导入
+@use "./variables.scss" as *; 
 // @import './variables.scss';
 $color: red;
 
