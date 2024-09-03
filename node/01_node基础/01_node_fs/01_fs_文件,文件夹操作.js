@@ -4,7 +4,7 @@
  */
 const fs = require('fs');
 // 1. 同步讀取
-const res1 = fs.readFileSync('./abc.txt', {
+const res1 = fs.readFileSync('./abc.txt', { 
     encoding: 'utf8'
 });
 

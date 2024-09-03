@@ -1,35 +1,4 @@
-/**********************************************************************
-1. 以下是 Node.js 模块系统的简化实现，展示了 module.exports 和 exports 的关系：
-/*
-*/
-function Module(id){
-    this.id = id
-    this.exports = {}
-}
-Module.prototype.load = function(){
-    const module = this
-    const exports = module.exports 
 
-    //模拟模块代码执行环境
-    (function(exports, require, module, __filename, __dirname){
-        //这里的代码就是模块的内容
-        exports.a = 1
-        exports.b = 2
-
-        //如果这里改成module.exports = function(){}， 将覆盖原来的module.exports 对象
-    })(exports, require, module, __filename, __dirname)
-}
-
-// 模拟require函数 创建模块实例，加载模块，并返回 module.exports 的值。
-function require(id){
-    const module = new Module(id)
-    module.load()
-    return module.exports
-}
-
-// //测试 
-const myModule = require('./myModule')
-console.log(myModule)
 /*
 *
 **********************************************************************
@@ -50,7 +19,8 @@ function Module(id, parent){
 Module._cache = {} //缓存已加载的模块
 Module._extensions = {} //文件扩展名与处理函数的映射
 Module._resolveFilename = function(request){
-    // 简化解析文件名 相对路径解析为绝对路径
+    // 简化解析文件名 相对路径解析为绝对路径 它还会自动处理并去除路径中的 . 和 ..，并移除重复的斜杠
+    // 如果在处理过程中遇到一个绝对路径（例如，以 / 开头的路径），则前面的路径片段会被忽略。
     return path.resolve(__dirname, request)
 }
 Module.prototype.load = function(filename){
@@ -62,7 +32,9 @@ Module.prototype.load = function(filename){
     this.loaded = true
 }
 Module._extensions['.js'] = function(module, filename){
-    const content = fs.readFileSync(filename, 'uft8')
+    const content = fs.readFileSync(filename, { 
+        encoding: 'utf8'
+    })
     module._compile(content, filename)
 }
 Module.prototype._compile = function(content, filename){
@@ -95,6 +67,7 @@ Module.prototype.require = function require(file){
 }
 
 //測試代碼
-const myModule = require('./myModule.js');
-console.log(myModule);
+const moduleInstance = new Module();
+const myModule = moduleInstance.require('./myModule.js');
+console.log(myModule.multiply(2, 3));
 
