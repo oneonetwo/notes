@@ -30,10 +30,16 @@ function require(id){
 // //测试 
 const myModule = require('./myModule')
 console.log(myModule)
-/*
+/**
 *
 **********************************************************************
-//2. 以下是完整的简化版的实现
+* 2. 以下是完整的简化版的实现
+*
+* 模块的解析与路径处理（_resolveFilename）
+* 模块的缓存管理（_cache）
+* 模块的加载与编译（load, _extensions, _compile）
+* JavaScript 代码的隔离与执行（vm.runInThisContext）
+* 模块的导出与导入（exports, require）*
 */
 const path = require('path')
 const fs = require('fs')

@@ -37,6 +37,8 @@ Module._extensions['.js'] = function(module, filename){
     })
     module._compile(content, filename)
 }
+
+// 作用: 编译和执行模块的 JavaScript 代码。
 Module.prototype._compile = function(content, filename){
     const wrapper = Module.wrap(content)
     // vm.runInThisContext 方法的作用是将字符串形式的 JavaScript 代码编译并在当前上下文中运行，类似于 eval，但具有更好的安全性和隔离性。它允许我们指定一个独立的上下文（即一个隔离的执行环境），并在其中运行代码。
@@ -50,11 +52,11 @@ Module.prototype._compile = function(content, filename){
     compiledWrapper.call(exports, exports, require, this, __filename, __dirname)
 
 }
-
+// 将模块的代码包装在一个立即执行函数中。
 Module.wrap = function(content){
     return `(function(exports, require, module, __filename, __dirname){ ${content} \n});`
 }
-
+// 加载指定模块，并返回其 exports 对象。
 Module.prototype.require = function require(file){
     const filename = Module._resolveFilename(file)
     if(Module._cache[filename]){
