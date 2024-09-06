@@ -16,7 +16,7 @@ const server = http.createServer((req, res) => {
     headers['content-length'] //数据
 
 
-    const token = req.headers['acthorization']
+    const token = req.headers['authorization']
     response.end('hello world')
 
 });
