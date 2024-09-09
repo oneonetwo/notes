@@ -13,6 +13,7 @@ app.use(async(ctx, next)=>{
     // 1. 请求对象
     console.log(ctx.request) //koa封装的请求对象
     console.log(ctx.req) //Node封装的请求对象
+    next()
     // 2. 相应对象
     console.log(ctx.response) //koa封装的响应对象
     console.log(ctx.res) //Node封装的响应对象
@@ -21,6 +22,10 @@ app.use(async(ctx, next)=>{
     console.log(ctx.query)
 
     ctx.body = 'hello world'
+})
+app.use(async(ctx, next)=>{
+    console.log('第二个中间件')
+    next()
 })
 
 
