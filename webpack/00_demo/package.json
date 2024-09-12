@@ -10,8 +10,11 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "autoprefixer": "^10.4.20",
     "css-loader": "^7.1.2",
     "less-loader": "^12.2.0",
+    "postcss-loader": "^8.1.1",
+    "postcss-preset-env": "^10.0.3",
     "sass": "^1.78.0",
     "sass-loader": "^16.0.1",
     "style-loader": "^4.0.0",

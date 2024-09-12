@@ -6,3 +6,6 @@ html,body{
 .testcss{
     color: blue;
 }
+img{
+    width: 100px;
+}

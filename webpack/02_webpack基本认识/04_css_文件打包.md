@@ -31,8 +31,62 @@
 #### less-loader 处理less文件
 1. 安装`npm i less-loader -D`
 
-### sass-loader处理sass文件
+### sass-loader 处理sass文件
 1. 安装`npm i sass-loader sass -D`
+
+### 认识PostCSS工具
+1. 什么是PostCSS呢?
+    1. PostCSS是一个通过JavaScript来转换样式的工具;
+    2. 这个工具可以帮助我们进行一些`CSS的转换和适配`,比如自动活添加浏览器前缀、css样式的重置;
+        - 但是实现这些功能,我们需要借助于`PostCSS对应的插件`:
+2. 如何使用PostCSS呢?主要就是两个步骤:
+    1. 第一步: 直找PostCSS在构建工具中的扩展,比如webpack中的`postcss-loader`;
+    2. 第二步: 选择可以添加你需要的`PostCSS相关的插件`;
+3. 使用 `postcss-loader`
+    1. 我们来安装postcss-loader: `npm install postcss-loader -D`
+    2. 我们修改加载css的loader:(配置文件已经过多,给出一部分了)
+    3. 注意:**因为postcss需要有对应的插件才会起效果,所以我们需要记置它的plugin;**
+    ```js
+    {
+        loader: 'postcss-loader',
+        options: {
+            postcssOptions: {
+                plugins: [
+                    'autoprefixer'
+                ]
+            }
+        }
+    }
+
+    ```
+4. 单独的`postcss`配置文件
+    1. 因为需要添加前缀，需要安装`autoprefixer`
+    2. 我们可以将这些配置信心放在一个单独的文件中进行管理
+        1. 在根目录下创建 `postcss.config.js`
+        ```js
+        module.exports = {
+            plugins: [
+                require("autoprefixer")
+            ]
+        }
+
+        ```
+5. postcss-preset-env
+    1. 事实上,在`配置postcss-loader时,我们配置插件并不需要使用autoprefixer`
+    2. 我们可以使用另外一个插件:`postcss-preset-env`
+        1. postcss-preset-env也是一个postcss的插件;
+        2. 它可以帮助我们将一些现代的CSS特性,转成大多数浏览器认识的CSS,并且会根据目标浏览器或者运行时环境添加所需的`polyfill`;
+        3. 也包括会自动帮助我们添加autoprefixer(所以相当于已经内置了);
+    3. 首先,我们需要安装`postcss-preset-env`: `npm install postcss-preset-env -D`
+    4. 之后,我们直接修改掉之前的autoprefixer即可:
+    ```js
+        plugins: [
+            require("postcss-preset-env")
+        ]
+    ```
+
+
+
 
 
 
