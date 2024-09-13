@@ -75,6 +75,13 @@ module.exports = {
             }
         ]
     },
+    resolve: {
+        extensoins: ['.js', '.json', '.vue', '.jsx'],
+        alias: {
+            '@': './src',
+            utils: path.resolve(__dirname, './src/utils')
+        }
+    },
     plugins: [
         new VueLoaderPlugin(), //VueLoaderPlugin 是 vue-loader 4.x+ 版本必须的一个插件
     ]
