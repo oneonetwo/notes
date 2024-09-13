@@ -1,8 +1,11 @@
+const { CleanWebpackPlugin } = require('clean-webpack-plugin')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
 const path = require('path')
 const { VueLoaderPlugin } = require('vue-loader')
+const { DefinePlugin } = require('webpack')
 
 module.exports = {
-    mode: 'production',
+    mode: 'development',
     entry: './src/index.js',
     output: {
         filename: 'bundle.js',
@@ -66,6 +69,7 @@ module.exports = {
             },
             {
                 test: /.m?js$/,
+                exclude: /node_modules/, // 排除 node_modules 文件夹
                 use: [
                     'babel-loader'
                 ]
@@ -76,7 +80,7 @@ module.exports = {
         ]
     },
     resolve: {
-        extensoins: ['.js', '.json', '.vue', '.jsx'],
+        extensions: ['.js', '.json', '.vue', '.jsx'],
         alias: {
             '@': './src',
             utils: path.resolve(__dirname, './src/utils')
@@ -84,5 +88,17 @@ module.exports = {
     },
     plugins: [
         new VueLoaderPlugin(), //VueLoaderPlugin 是 vue-loader 4.x+ 版本必须的一个插件
+        new CleanWebpackPlugin(),
+        new HtmlWebpackPlugin({
+            title: 'My Custom App',
+            filename: 'index.html',
+            template: './index.html',
+            meta: {
+              viewport: 'width=device-width, initial-scale=1',
+            },
+        }),
+        new DefinePlugin({
+            version: "'1.1.0'"
+        }),
     ]
 }
