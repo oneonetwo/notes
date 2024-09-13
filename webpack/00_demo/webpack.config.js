@@ -1,4 +1,5 @@
 const path = require('path')
+const { VueLoaderPlugin } = require('vue-loader')
 
 module.exports = {
     mode: 'production',
@@ -62,7 +63,19 @@ module.exports = {
                     filename: 'img/[name]_[hash:8][ext]' 
                 }
 
+            },
+            {
+                test: /.m?js$/,
+                use: [
+                    'babel-loader'
+                ]
+            }, {
+                test: /.vue$/,
+                use: ["vue-loader"]
             }
         ]
-    }
+    },
+    plugins: [
+        new VueLoaderPlugin(), //VueLoaderPlugin 是 vue-loader 4.x+ 版本必须的一个插件
+    ]
 }
