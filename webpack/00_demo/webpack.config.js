@@ -8,8 +8,18 @@ module.exports = {
     mode: 'development',
     entry: './src/index.js',
     output: {
+        clean: true, //能做的很多，可以用正则 等等
         filename: 'bundle.js',
         path: path.resolve(__dirname, './build')
+    },
+    devServer: {
+        hot: true,
+        host: '0.0.0.0',
+        port: 8888,
+        compress: true,
+        static: {
+            directory: path.join(__dirname, 'public'), //public/ 目录当中的所有内容并提供一个本地服务(serve)
+        },
     },
     module: {
         rules: [
@@ -88,7 +98,7 @@ module.exports = {
     },
     plugins: [
         new VueLoaderPlugin(), //VueLoaderPlugin 是 vue-loader 4.x+ 版本必须的一个插件
-        new CleanWebpackPlugin(),
+        // new CleanWebpackPlugin(), // 可用代替 output: { clean: true }
         new HtmlWebpackPlugin({
             title: 'My Custom App',
             filename: 'index.html',
