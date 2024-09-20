@@ -6,6 +6,7 @@ const {merge} = require('webpack-merge')
 
 module.exports = merge( commonConfig, {
     mode: 'development',
+    devtool: 'eval',
     output: {
         clean: true, //能做的很多，可以用正则 等等
         filename: 'bundle.js',

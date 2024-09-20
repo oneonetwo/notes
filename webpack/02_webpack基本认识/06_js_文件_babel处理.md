@@ -86,7 +86,7 @@
                         "@babel/preset-env"，
                          {
                             targets: {
-                            browsers: ['> 1%', 'last 2 versions', 'not dead'],
+                                browsers: ['> 1%', 'last 2 versions', 'not dead'],
                             },
                             useBuiltIns: 'usage', // 自动引入 polyfill
                             corejs: 3,            // 使用 core-js 版本 3
@@ -97,6 +97,21 @@
         }
     }
 ```
+
+
+### 六. Babel的底层原理
+
+1. babel是如何做到将我们的一段代码(ES6、TypeScript、Readt)转成另外一段代码(ES5)的呢?
+    1. 就是`编译器`,事实上我们可以将babel看成就是一个`编译器`
+    2. `Babel编译器的作用就是将我们的源代码,转换成浏览器可以直接识别的另外一段源代码;
+2. `Babel也拥有编译器的工作流程`:
+    1. **解析阶段(Parsing)**
+    2. **转换阶段(Transformation)**
+    3. **生成阶段(CodeGeneration)**
+3. 一个小的编译器：可以看看源码`https://github.com/jamiebuilds/the-super-tiny-compiler`
+4. babel编译器执行原理
+    1. 原生源代码 => 词法分析(lexical Analysis) => tokens数组 => 语法分析(syntactic analysis) => AST抽象语法树
+    2. 目标源代码 <= 新的AST  <=  应用插件(plugin)  <=  访问(visitor)  <=  遍历(Traversal)  <= AST抽象语法树
 
 
 
