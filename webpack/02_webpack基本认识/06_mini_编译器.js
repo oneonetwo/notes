@@ -1,4 +1,8 @@
- /* We're just going to take our string of code and break it down into an array
+
+//https://github.com/jamiebuilds/the-super-tiny-compiler/blob/master/the-super-tiny-compiler.js#L937
+
+
+/* We're just going to take our string of code and break it down into an array
  * of tokens.
  * For the following syntax:
  *
@@ -14,6 +18,11 @@
  *     { type: 'name',   value: 'subtract' },
  *     { type: 'number', value: '4'        },
  *     { type: 'number', value: '2'        },
+ *     { type: 'paren',  value: ')'        },
+ *     { type: 'paren',  value: '('        },
+ *     { type: 'name',   value: 'add' },
+ *     { type: 'number', value: '3'        },
+ *     { type: 'number', value: '7'        },
  *     { type: 'paren',  value: ')'        },
  *     { type: 'paren',  value: ')'        },
  *   ]
@@ -107,6 +116,9 @@ function parser(tokens){
                 if(token.value === '('){
                     node.params.push(renderNode())
                 }
+                if(token.value === ')'){
+                    node.params.push(renderNode())
+                }
                 token = tokens[++current]
             }
         }
@@ -116,9 +128,10 @@ function parser(tokens){
     //   (add 2 2)
     //   (subtract 4 2)
     //
-    while (current < tokens.length) {
-        ast.body.push(walk());
+    while(current < tokens.length-1){
+        ast.body.push(renderNode())
     }
+    renderNode()
     return ast
 }
 
@@ -166,7 +179,7 @@ function transformer(ast){
         NumberLiteral: {
             enter(node, parent){
                 parent._context.push({
-                    type: 'NumberLiterral',
+                    type: 'NumberLiteral',
                     value: node.value
                 })
             },
@@ -202,3 +215,50 @@ function transformer(ast){
     })
     return newAst
 }
+
+
+function codeGenerator(node){
+    switch(node.type){
+        case 'Program':
+            return node.body.map(codeGenerator).join(',')
+        case 'ExpressionStatement':
+            return codeGenerator(node.expression)
+        case 'CallExpression':
+            return node.callee.name + '(' 
+            + node.arguments.map(codeGenerator).join(',')
+            + ')'
+        case 'NumberLiteral':
+            return node.value
+        case 'StringLiteral':
+            return '"' + node.value + '"';
+        default:
+            throw new TypeError(node.type) 
+    }
+}
+
+function compiler(input) {
+    let tokens = tokenizer(input);
+    let ast    = parser(tokens);
+    let newAst = transformer(ast);
+    let output = codeGenerator(newAst);
+  
+    // and simply return the output!
+    return output;
+  }
+  
+  /**
+   * ============================================================================
+   *                                   (๑˃̵ᴗ˂̵)و
+   * !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!YOU MADE IT!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+   * ============================================================================
+   */
+  
+  // Now I'm just exporting everything...
+  module.exports = {
+    tokenizer,
+    parser,
+    traverser,
+    transformer,
+    codeGenerator,
+    compiler,
+  };
