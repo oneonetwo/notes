@@ -1,0 +1,1 @@
+console.log('devserve static public dir import  a.js')

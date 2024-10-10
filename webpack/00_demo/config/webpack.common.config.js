@@ -62,19 +62,25 @@ module.exports = {
 
             },
             {
-                test: /.m?js$/,
+                test: /.m?jsx?$/,
                 exclude: /node_modules/, // 排除 node_modules 文件夹
                 use: [
                     'babel-loader'
                 ]
-            }, {
+            }, 
+            {
                 test: /.vue$/,
                 use: ["vue-loader"]
+            }, 
+            {
+                test: /.ts$/,
+                // use: ["ts-loader"] //添加ts预设之后修改为babel-loader
+                use: ["babel-loader"]
             }
         ]
     },
     resolve: {
-        extensions: ['.js', '.json', '.vue', '.jsx'],
+        extensions: ['.js', '.json', '.vue', '.jsx', 'ts'],
         alias: {
             '@': './src',
             utils: path.resolve(__dirname, '../src/utils')

@@ -57,3 +57,40 @@ if(module.hot){
         - 另外推荐在配置中传入一个值;
 
 
+### 五. 静态资源
+1. 在devserver中配置static，静态资源目录之后，
+```js
+    // 在devserver中配置
+    static: {
+        directory: path.join(__dirname, 'public'), //public/ 目录当中的所有内容并提供一个本地服务(serve)
+    },
+
+    // 比如在index.html中 直接引入文件public/a.js
+    <script src="./a.js"></script>
+```
+2. 打包时，将 public 目录下的文件复制到 dist 目录
+```js
+const CopyWebpackPlugin = require('copy-webpack-plugin');
+    plugins: [
+        new CleanWebpackPlugin(), // 可用代替 output: { clean: true }
+        new CopyWebpackPlugin({
+            patterns: [
+              { from: 'public', to: '../build' }, // 将 public 目录下的文件复制到 build 目录
+            ],
+        })
+    ],
+```
+
+### 六. Proxy代理
+1. `proxy`是我们开发中非常常用的一个配置选项,它的目的设置代理来解决跨域访问的问题:
+    1. 比如我们的一个api请求是`http://localhost:8888`,但是本地启动服务器的域名是http://localhost:8080,这个时候发送网络请求就会出现跨域的问题;
+    2. 那么我们可以将请求先发送到一个代理服务器,代理服务器和AP服务器没有跨域的问题,就可以解决我们的跨域问题了;
+2. 我们可以进行如下的设置:
+    1. `target`:表示的是代理到的目标地址,比如`/api-hy/moment`会皮代理到`http://localhost:8888/api-hy/moment`;
+    2. `pathRewrite`:默认情况下,我们的`/api-hy`也会被写入到URL中,如果希望删除,可以使用`pathRewrite`;
+    3. `changeOrigin`:它表示是否更新代理后请求的headers中host地址;
+
+### 七. historyApiFallback
+1. `historyApiFallback`是开发中一个非常常见的属性,它主要的作用是是解决SPA页面在路由跳转之后,进行页面刷新时,返回404的错误。
+    1. boolean值:默认是false
+    2. 如果设置为true,那么在刷新时,返回404错误时,会自动返回index.html的内容;

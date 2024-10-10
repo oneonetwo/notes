@@ -88,7 +88,7 @@
                             targets: {
                                 browsers: ['> 1%', 'last 2 versions', 'not dead'],
                             },
-                            useBuiltIns: 'usage', // 自动引入 polyfill
+                            useBuiltIns: 'usage', // 自动引入 polyfill  //"entry"：手动引入 polyfills，提供更多的控制
                             corejs: 3,            // 使用 core-js 版本 3
                         }
                     ]
