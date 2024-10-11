@@ -78,7 +78,7 @@ module.exports = {
         minimize: true, // 是否启用代码压缩。设置为 true 时，Webpack 会使用压缩插件
         splitChunks: {
             chunks: 'all', // 对所有的 chunk 进行分割 'all': 分割同步和异步引入的代码块。'async': 仅分割异步加载的代码块（默认值）。'initial': 仅分割同步引入的代码块。
-            minSize: 20000, // 大小超过 20KB 时才分割
+            minSize: 100000, // 大小超过 100KB 时才分割
             maxSize: 0, //规定代码块的最大大小。超过该大小时，Webpack 会尝试进一步分割该代码块。 默认值: 0（即不限制大小）
             cacheGroups: {//允许你定义如何将不同模块分组到不同的代码块中
                 //专门处理来自 node_modules 的第三方库，将这些库分割到单独的 vendors 代码块中。
