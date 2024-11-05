@@ -24,5 +24,6 @@ const root = ReactDOM.createRoot(document.getElementById('root'))
 root.render(<App/>)
 
 //6. 使用typescript代码
+.
 console.log(sum(20, 30))
 
