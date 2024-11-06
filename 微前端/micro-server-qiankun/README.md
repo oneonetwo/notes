@@ -132,3 +132,7 @@ if (!qiankunWindow.__POWERED_BY_QIANKUN__) {
 ### 五. 上线部署，打包路径以及环境区分
 1. 主应用注册微应用时，entry的值为子应用的base路径
 2. 子应用修改vite.config.js的base路径为子应用的base路径
+
+
+
+https://juejin.cn/post/7326093660704292876
