@@ -9,7 +9,10 @@ const isDev = process.env.NODE_ENV === 'development'
 export default defineConfig({
   base: isDev ? '/' : 'http://127.0.0.1:8056/',
   build: {
-    outDir: resolve(__dirname, '../dist-sub')
+    outDir: resolve(__dirname, '../dist-sub'),
+    assetsDir: 'assets',
+    // 确保资源路径正确
+    assetsPublicPath: '/sub-app-vite/'
   },
   plugins: [
     vue(),

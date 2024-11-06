@@ -6,7 +6,7 @@ import piniaInstance from './store'
 
 let app = null
 let container = null
-
+const isDev = process.env.NODE_ENV === 'development'
 renderWithQiankun({
     mount(props) {
         // 挂载
@@ -34,6 +34,20 @@ function render(props = {}) {
 //     // state: 变更后的状态; prev 变更前的状态
 //     console.log('变更后的状态; prev 变更前的状态', state, prev);
 //   });
+if(qiankunWindow.__POWERED_BY_QIANKUN__ && !isDev){
+    router.beforeEach((to, from, next) => {
+    console.log('to.path', )
+    if(!to.path.includes('/sub-app-vite/live')){
+      next({
+        path: '/sub-app-vite/live/' + to.path
+      })
+    }else{
+      next()
+    }
+  })
+}
+
+
   app.use(router)
 
   // 使用主应用的store

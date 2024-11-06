@@ -1,4 +1,4 @@
-import { createRouter, createWebHashHistory } from 'vue-router'
+import { createRouter, createWebHashHistory, createWebHistory } from 'vue-router'
 import Home from '../views/home/index.vue'
 
 const routes = [
@@ -8,7 +8,13 @@ const routes = [
     component: Home
   },
   {
-    path: '/sub-app-vite/:pathMatch(.*)',
+    path: '/sub-app-vite/live',
+    name: 'sub-app',
+    component: () => import('../views/subApp/index.vue')
+  },
+  {
+    path: '/sub-app-vite/live/:pathMatch(.*)',
+    hidden:true,
     name: 'sub-app-vite',
     component: () => import('../views/subApp/index.vue')
   }

@@ -15,6 +15,15 @@ module.exports = merge(commonConfig, {
                 publicPath: '/assets' // 将 public 目录映射到 /assets 路径
             },
 		],
-		historyApiFallback: true,
+        historyApiFallback: {
+            // 添加重写规则
+            rewrites: [
+                // 将子应用的路由重定向到主应用的 index.html
+                { 
+                    from: /^\/sub-app-vite\/.*$/,
+                    to: '/'
+                }
+            ]
+        },
 	}
 });

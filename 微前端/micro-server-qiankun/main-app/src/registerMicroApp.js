@@ -11,7 +11,7 @@ export const qianduanRender = (app, piniaInstance) => {
       name: 'sub-app-vite', // 子应用名称
       entry: isDev?'//localhost:5173':'//127.0.0.1:8056', // 子应用入口，根据实际端口配置
       container: '#sub-app-container', // 子应用挂载的容器
-      activeRule: '/#/sub-app-vite/', // 子应用激活的路由规则
+      activeRule: '/#/sub-app-vite/live', // 子应用激活的路由规则
       props: ()=>({
         piniaStore: piniaInstance,
                 // 添加基础路由配置传递给子应用

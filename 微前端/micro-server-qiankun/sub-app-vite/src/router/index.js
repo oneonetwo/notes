@@ -16,7 +16,7 @@ const routes = [
   }
 ]
 const router = createRouter({
-  history: createWebHashHistory(qiankunWindow.__POWERED_BY_QIANKUN__ ? '/#/sub-app-vite' : '/'),
+  history: createWebHashHistory(qiankunWindow.__POWERED_BY_QIANKUN__ ? '/#/sub-app-vite/live' : '/'),
   routes
 })
 
