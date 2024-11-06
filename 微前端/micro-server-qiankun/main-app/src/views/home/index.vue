@@ -1,7 +1,7 @@
 <template>
     <div>
         <h2 class="title">{{ title }}</h2>
-        <img src="/1.jpg" alt="">
+        <img src="assets/1.jpg" alt="">
     </div>
 </template>
 <script setup>

@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "webpack  --config ./config/webpack.prod.config.js",
+    "build": "webpack  --config ./config/webpack.pro.config.js",
     "dev": "webpack serve  --config ./config/webpack.dev.config.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -31,6 +31,7 @@
     "webpack-merge": "^6.0.1"
   },
   "dependencies": {
+    "pinia": "^2.2.6",
     "qiankun": "^2.10.16",
     "vue": "^3.5.12",
     "vue-router": "^4.4.5"

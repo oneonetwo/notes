@@ -11,8 +11,8 @@ module.exports = {
     resolve: {
         extensions: ['.js', '.json', '.vue'],
         alias: {
-            '@': path.resolve(__dirname, './src'),
-            '@components': path.resolve(__dirname, './src')
+            '@': path.resolve(__dirname, '../src'),
+            '@components': path.resolve(__dirname, '../src/components')
         },
         modules: ['node_modules'] //模块目录
     },
@@ -21,7 +21,12 @@ module.exports = {
             {
                 test: /\.s?css$/,
                 use: [
-                  MiniCssExtractPlugin.loader, // 替换 style-loader
+                    {
+                        loader: MiniCssExtractPlugin.loader, // 替换 style-loader
+                        options: {
+                            publicPath: '../' // 修复CSS中引用资源的路径
+                        }
+                    },
                   'css-loader', 'sass-loader', 'postcss-loader',
                 ],
             },
@@ -36,7 +41,7 @@ module.exports = {
                 test:/\.(png|svg|jpg|jpeg|gif)$/i,
                 type:"asset",
                 generator:{
-                    filename: "img/[name]_[hash:6][ext]"
+                    filename: "assets/images/[name]_[hash:6][ext]"
                 },
                 parser: {
                     dataUrlCondition:{ 
@@ -53,7 +58,8 @@ module.exports = {
     plugins: [
         new VueLoaderPlugin(), //VueLoaderPlugin 是 vue-loader 4.x+ 版本必须的一个插件
         new MiniCssExtractPlugin({
-            // filename: 'styles.css', // 输出的 CSS 文件名称
+            filename: 'assets/css/[name].[contenthash:8].css', // CSS 输出到 assets/css
+            chunkFilename: 'assets/css/[name].[contenthash:8].chunk.css'
         }),
         new HtmlWebpackPlugin({
             title: '微服务-乾坤-测试',

@@ -1,11 +1,12 @@
 <template>
   <div class="about">
-    <h3>子应用关于页面</h3>
+    <h3>用户信息：{{ userStore.user.name }} {{ userStore.user.age }}</h3>
   </div>
 </template>
 
-<script>
-export default {
-  name: 'About'
-}
+<script setup>  
+import { inject, watch } from 'vue'
+import { useUserStore } from '../../../../main-app/src/store';
+const userStore = useUserStore()
+
 </script> 

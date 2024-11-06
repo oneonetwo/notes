@@ -2,6 +2,7 @@ import { createApp } from 'vue'
 import App from './App.vue'
 import router from './router'
 import { renderWithQiankun, qiankunWindow } from 'vite-plugin-qiankun/dist/helper'
+import piniaInstance from './store'
 
 let app = null
 let container = null
@@ -27,10 +28,21 @@ function render(props = {}) {
   // 保存容器引用
   container = props.container ? props.container.querySelector('#app') : document.querySelector('#app')
   app = createApp(App)
+  // 注册子应用的pinia
+  app.use(piniaInstance)
+//   props.onGlobalStateChange((state, prev) => {
+//     // state: 变更后的状态; prev 变更前的状态
+//     console.log('变更后的状态; prev 变更前的状态', state, prev);
+//   });
   app.use(router)
+
+  // 使用主应用的store
+  app.use(props.piniaStore)
+
   // 确保容器存在后再挂载
   app.mount(container)
 }
+
 
 // qiankun 独立运行时
 if (!qiankunWindow.__POWERED_BY_QIANKUN__) {
