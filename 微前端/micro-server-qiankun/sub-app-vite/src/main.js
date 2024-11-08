@@ -4,6 +4,8 @@ import router from './router'
 import { renderWithQiankun, qiankunWindow } from 'vite-plugin-qiankun/dist/helper'
 import piniaInstance from './store'
 
+
+console.log('子应用。。。。。')
 let app = null
 let container = null
 const isDev = process.env.NODE_ENV === 'development'
@@ -34,18 +36,18 @@ function render(props = {}) {
 //     // state: 变更后的状态; prev 变更前的状态
 //     console.log('变更后的状态; prev 变更前的状态', state, prev);
 //   });
-if(qiankunWindow.__POWERED_BY_QIANKUN__ && !isDev){
+  if(qiankunWindow.__POWERED_BY_QIANKUN__){
     router.beforeEach((to, from, next) => {
-    console.log('to.path', )
-    if(!to.path.includes('/sub-app-vite/live')){
-      next({
-        path: '/sub-app-vite/live/' + to.path
-      })
-    }else{
-      next()
-    }
-  })
-}
+      if(!to.path.includes('/microApp')){
+        console.log('to paht', '/microApp/sub-app-vite' + to.path)
+        next({
+          path: '/microApp/sub-app-vite' + to.path
+        })
+      }else{
+        next()
+      }
+    })
+  }
 
 
   app.use(router)

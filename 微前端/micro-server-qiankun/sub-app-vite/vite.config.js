@@ -7,18 +7,18 @@ import { resolve } from 'path'
 const isDev = process.env.NODE_ENV === 'development'
 // https://vite.dev/config/
 export default defineConfig({
-  base: isDev ? '/' : 'http://127.0.0.1:8056/',
+  base: isDev?'/':'http://127.0.0.1:8056/',
   build: {
     outDir: resolve(__dirname, '../dist-sub'),
     assetsDir: 'assets',
     // 确保资源路径正确
-    assetsPublicPath: '/sub-app-vite/'
+    // assetsPublicPath: '/sub-app-vite/'
   },
   plugins: [
     vue(),
     //这里的名称要和主应用改造是配置项中的name保持一致
     qiankun('sub-app-vite', {
-      useDevMode: true
+      useDevMode: true,
     })
   ],
   server: {

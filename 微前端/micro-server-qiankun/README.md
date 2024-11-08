@@ -134,5 +134,5 @@ if (!qiankunWindow.__POWERED_BY_QIANKUN__) {
 2. 子应用修改vite.config.js的base路径为子应用的base路径
 
 
-
-https://juejin.cn/post/7326093660704292876
+### 主应用地址：http://127.0.0.1:8055/dist/#/
+### 子应用地址：http://10.2.45.33:8056/#/
