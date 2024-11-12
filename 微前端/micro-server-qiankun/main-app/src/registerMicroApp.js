@@ -11,9 +11,9 @@ export const qianduanRender = (app, piniaInstance) => {
   registerMicroApps([
     {
       name: 'sub-app-vite', // 子应用名称
-      entry: isDev?'//localhost:5173/':'//127.0.0.1:8056', // 子应用入口，根据实际端口配置
+      entry: isDev?'//localhost:5173':'//127.0.0.1:8056', // 子应用入口，根据实际端口配置
       container: '#sub-app-container', // 子应用挂载的容器
-      activeRule: getActiveRule('#/microApp/sub-app-vite'), // 子应用激活的路由规则
+      activeRule: getActiveRule('#/sub-app-vite'), // 子应用激活的路由规则
       props: ()=>({
         piniaStore: piniaInstance,
       })

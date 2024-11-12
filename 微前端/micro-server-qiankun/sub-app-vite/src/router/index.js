@@ -7,7 +7,7 @@ let prefix = ''
 
 // // 判断是 qiankun 环境则增加路由前缀
 if(qiankunWindow.__POWERED_BY_QIANKUN__){
-  prefix = '/microApp/sub-app-vite'
+  prefix = '/sub-app-vite'
 }
 
 const routes = [
@@ -23,7 +23,6 @@ const routes = [
   }
 ]
 const router = createRouter({
-  // history: createWebHashHistory(qiankunWindow.__POWERED_BY_QIANKUN__ ? '/#/sub-app-vite/' : '/'),
   history: createWebHashHistory(),
   routes
 })

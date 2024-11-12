@@ -38,10 +38,10 @@ function render(props = {}) {
 //   });
   if(qiankunWindow.__POWERED_BY_QIANKUN__){
     router.beforeEach((to, from, next) => {
-      if(!to.path.includes('/microApp')){
-        console.log('to paht', '/microApp/sub-app-vite' + to.path)
+      console.log('to.path', to.path)
+      if(!to.path.includes('/sub-app-vite')){
         next({
-          path: '/microApp/sub-app-vite' + to.path
+          path: '/sub-app-vite' + to.path
         })
       }else{
         next()

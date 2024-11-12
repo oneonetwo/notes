@@ -8,7 +8,7 @@ const routes = [
     component: Home
   },
   {
-    path: '/microApp/sub-app-vite/:pathMatch(.*)',
+    path: '/sub-app-vite/:pathMatch(.*)',
     hidden:true,
     name: 'sub-app-vite',
     component: () => import('../views/subApp/index.vue')
