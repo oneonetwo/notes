@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shadow DOM 进阶示例 - 自定义视频播放器</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+            color: #333;
+        }
+        
+        h1, h2 {
+            color: #2c3e50;
+        }
+        
+        .container {
+            margin: 40px 0;
+        }
+        
+        .back-link {
+            display: inline-block;
+            margin-bottom: 20px;
+            color: #3498db;
+            text-decoration: none;
+        }
+        
+        .back-link:hover {
+            text-decoration: underline;
+        }
+        
+        .note {
+            background-color: #f8f9fa;
+            border-left: 4px solid #3498db;
+            padding: 10px 15px;
+            margin: 20px 0;
+        }
+        
+        code {
+            background-color: #f5f5f5;
+            padding: 2px 4px;
+            border-radius: 3px;
+            font-family: Consolas, Monaco, 'Andale Mono', monospace;
+        }
+    </style>
+</head>
+<body>
+    <a href="index.html" class="back-link">← 返回主演示页面</a>
+    
+    <h1>Shadow DOM 进阶示例 - 自定义视频播放器</h1>
+    
+    <div class="note">
+        <p>这个示例展示了如何使用Shadow DOM创建一个自定义视频播放器组件，包含自定义控制界面。</p>
+        <p>Shadow DOM在这种场景中的优势：</p>
+        <ul>
+            <li>样式完全封装，不会被页面上的其他CSS影响</li>
+            <li>DOM结构隔离，提高安全性和可靠性</li>
+            <li>组件可以轻松地在不同项目之间重用</li>
+        </ul>
+    </div>
+    
+    <div class="container">
+        <h2>自定义视频播放器</h2>
+        
+        <!-- 使用自定义元素 -->
+        <custom-video-player>
+            <!-- 将视频源作为插槽内容传入 -->
+            <source src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.webm" type="video/webm">
+            <p>您的浏览器不支持视频播放。</p>
+        </custom-video-player>
+    </div>
+    
+    <div class="container">
+        <h2>如何使用这个组件？</h2>
+        <p>在HTML中引入自定义视频播放器非常简单：</p>
+        <pre><code>&lt;custom-video-player&gt;
+    &lt;source src="your-video.mp4" type="video/mp4"&gt;
+    &lt;p&gt;您的浏览器不支持视频播放。&lt;/p&gt;
+&lt;/custom-video-player&gt;</code></pre>
+    </div>
+    
+    <script>
+        // 定义自定义视频播放器组件
+        class CustomVideoPlayer extends HTMLElement {
+            constructor() {
+                super();
+                
+                // 创建Shadow DOM
+                this.attachShadow({ mode: 'open' });
+                
+                // 设置初始HTML内容
+                this.shadowRoot.innerHTML = `
+                    <style>
+                        :host {
+                            display: block;
+                            width: 100%;
+                            max-width: 640px;
+                            margin: 0 auto;
+                            border-radius: 8px;
+                            overflow: hidden;
+                            box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+                        }
+                        
+                        .video-container {
+                            position: relative;
+                            width: 100%;
+                            background-color: #000;
+                        }
+                        
+                        video {
+                            width: 100%;
+                            display: block;
+                        }
+                        
+                        .controls {
+                            position: absolute;
+                            bottom: 0;
+                            left: 0;
+                            right: 0;
+                            background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
+                            padding: 10px;
+                            display: flex;
+                            align-items: center;
+                            transition: opacity 0.3s;
+                            opacity: 0;
+                        }
+                        
+                        .video-container:hover .controls {
+                            opacity: 1;
+                        }
+                        
+                        .play-pause {
+                            background: transparent;
+                            border: none;
+                            color: white;
+                            width: 30px;
+                            height: 30px;
+                            font-size: 16px;
+                            cursor: pointer;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                        }
+                        
+                        .timeline {
+                            flex-grow: 1;
+                            margin: 0 10px;
+                            position: relative;
+                            height: 5px;
+                            background-color: rgba(255,255,255,0.3);
+                            border-radius: 5px;
+                            overflow: hidden;
+                            cursor: pointer;
+                        }
+                        
+                        .progress {
+                            height: 100%;
+                            background-color: #3498db;
+                            width: 0;
+                            transition: width 0.1s;
+                        }
+                        
+                        .volume-control {
+                            display: flex;
+                            align-items: center;
+                            color: white;
+                        }
+                        
+                        .volume-icon {
+                            margin-right: 5px;
+                            font-size: 16px;
+                        }
+                        
+                        .volume-slider {
+                            width: 60px;
+                            cursor: pointer;
+                        }
+                        
+                        .time-display {
+                            color: white;
+                            font-size: 12px;
+                            margin-left: 10px;
+                            min-width: 80px;
+                            text-align: center;
+                        }
+                    </style>
+                    
+                    <div class="video-container">
+                        <video>
+                            <slot></slot>
+                        </video>
+                        
+                        <div class="controls">
+                            <button class="play-pause">▶</button>
+                            
+                            <div class="timeline">
+                                <div class="progress"></div>
+                            </div>
+                            
+                            <div class="volume-control">
+                                <span class="volume-icon">🔊</span>
+                                <input type="range" class="volume-slider" min="0" max="1" step="0.1" value="0.7">
+                            </div>
+                            
+                            <div class="time-display">0:00 / 0:00</div>
+                        </div>
+                    </div>
+                `;
+                
+                // 获取元素
+                this.video = this.shadowRoot.querySelector('video');
+                this.playPauseBtn = this.shadowRoot.querySelector('.play-pause');
+                this.timeline = this.shadowRoot.querySelector('.timeline');
+                this.progress = this.shadowRoot.querySelector('.progress');
+                this.volumeSlider = this.shadowRoot.querySelector('.volume-slider');
+                this.timeDisplay = this.shadowRoot.querySelector('.time-display');
+                
+                // 绑定事件处理方法
+                this.playPauseBtn.addEventListener('click', () => this.togglePlay());
+                this.video.addEventListener('timeupdate', () => this.updateProgress());
+                this.video.addEventListener('loadedmetadata', () => this.updateTimeDisplay());
+                this.timeline.addEventListener('click', (e) => this.seek(e));
+                this.volumeSlider.addEventListener('input', () => this.adjustVolume());
+                
+                // 设置初始音量
+                this.video.volume = this.volumeSlider.value;
+            }
+            
+            // 切换播放/暂停
+            togglePlay() {
+                if (this.video.paused || this.video.ended) {
+                    this.video.play();
+                    this.playPauseBtn.textContent = '❚❚';
+                } else {
+                    this.video.pause();
+                    this.playPauseBtn.textContent = '▶';
+                }
+            }
+            
+            // 更新进度条
+            updateProgress() {
+                const percent = (this.video.currentTime / this.video.duration) * 100;
+                this.progress.style.width = `${percent}%`;
+                this.updateTimeDisplay();
+            }
+            
+            // 拖动进度条
+            seek(e) {
+                const rect = this.timeline.getBoundingClientRect();
+                const percent = (e.clientX - rect.left) / rect.width;
+                this.video.currentTime = percent * this.video.duration;
+            }
+            
+            // 调整音量
+            adjustVolume() {
+                this.video.volume = this.volumeSlider.value;
+                if (this.video.volume === 0) {
+                    this.shadowRoot.querySelector('.volume-icon').textContent = '🔇';
+                } else {
+                    this.shadowRoot.querySelector('.volume-icon').textContent = '🔊';
+                }
+            }
+            
+            // 格式化时间
+            formatTime(seconds) {
+                const minutes = Math.floor(seconds / 60);
+                seconds = Math.floor(seconds % 60);
+                return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+            }
+            
+            // 更新时间显示
+            updateTimeDisplay() {
+                const currentTime = this.formatTime(this.video.currentTime);
+                const duration = this.formatTime(this.video.duration || 0);
+                this.timeDisplay.textContent = `${currentTime} / ${duration}`;
+            }
+        }
+        
+        // 注册自定义元素
+        customElements.define('custom-video-player', CustomVideoPlayer);
+    </script>
+</body>
+</html> 

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shadow DOM 演示</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <h1>Shadow DOM 使用演示</h1>
+    
+    <div class="guide-link-container">
+        <a href="shadow-dom-guide.md" class="guide-link">查看 Shadow DOM 详细使用指南</a>
+    </div>
+    
+    <section class="demo-section">
+        <h2>1. 基本的Shadow DOM封装</h2>
+        <p>这个例子展示了如何创建和使用基本的Shadow DOM</p>
+        <div id="basic-host" class="demo-host">
+            <!-- Shadow DOM将附加到这里 -->
+        </div>
+    </section>
+
+    <section class="demo-section">
+        <h2>2. 样式隔离演示</h2>
+        <p>这个例子展示了Shadow DOM的样式隔离特性</p>
+        <div class="style-container">
+            <p class="red-text">这是主文档中的红色文本</p>
+            <div id="style-isolation-host" class="demo-host">
+                <!-- Shadow DOM将附加到这里 -->
+            </div>
+        </div>
+    </section>
+
+    <section class="demo-section">
+        <h2>3. 自定义元素与Shadow DOM</h2>
+        <p>这个例子展示了如何将Shadow DOM与自定义元素结合使用</p>
+        <my-custom-card 
+            title="自定义卡片标题" 
+            image="https://via.placeholder.com/150" 
+            description="这是一个使用Shadow DOM的自定义卡片组件">
+        </my-custom-card>
+    </section>
+
+    <section class="demo-section">
+        <h2>4. 槽位(Slots)使用演示</h2>
+        <p>这个例子展示了如何使用Shadow DOM的slots功能</p>
+        <fancy-button>
+            <span slot="icon">🚀</span>
+            点击我
+        </fancy-button>
+    </section>
+
+    <section class="demo-section">
+        <h2>5. 主题定制演示</h2>
+        <p>这个例子展示了如何使用CSS变量穿透Shadow DOM边界进行主题定制</p>
+        <div class="theme-container">
+            <button id="toggle-theme">切换主题</button>
+            <themed-component></themed-component>
+        </div>
+    </section>
+
+    <section class="demo-section">
+        <h2>进阶示例</h2>
+        <p>查看更复杂的Shadow DOM使用场景：</p>
+        <a href="advanced-example.html" class="advanced-link">自定义视频播放器示例 →</a>
+    </section>
+
+    <script src="shadow-dom.js"></script>
+</body>
+</html> 
