@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+ <!-- 查看b站https://www.bilibili.com/video/BV12K4y1T7t7/?spm_id_from=333.337.search-card.all.click&vd_source=74c5f066317d6a5a93581408c3c939ca -->
+</head>
+<body>
+    <script>
+
+        // 创建音频上下文
+        const audioContext = new AudioContext();
+        console.log(audioContext.sampleRate)
+        // 创建一个1秒的缓冲区
+        const buffer = audioContext.createBuffer(
+            1, // 声道数
+            audioContext.sampleRate * 1, // 采样率
+            audioContext.sampleRate // 采样率
+        )
+        // 获取缓冲区的第一个通道的数据
+        const channelData = buffer.getChannelData(0);
+        
+        // 生成一个1秒的白噪声
+        for(let i=0;i<buffer.length;i++){
+            channelData[i] = Math.random() * 2 - 1;
+        }
+        
+
+        // // 创建一个源
+        // const whiteNoiseSource = audioContext.createBufferSource();
+        // // 设置源的缓冲区
+        // whiteNoiseSource.buffer = buffer;
+        
+        // 创建一个主音量控制器
+        const primaryGainControl = audioContext.createGain();
+        // 设置主音量控制器的音量
+        primaryGainControl.gain.setValueAtTime(0.05, 0);
+
+        // 连接源和主音量控制器
+        // whiteNoiseSource.connect(primaryGainControl);
+        // 连接主音量控制器和扬声器
+        primaryGainControl.connect(audioContext.destination);
+
+        const button = document.createElement('button');
+        button.innerText= '白噪音'
+        button.addEventListener('click',()=>{
+
+            // 创建一个源
+            const whiteNoiseSource = audioContext.createBufferSource();
+            // 设置源的缓冲区
+            whiteNoiseSource.buffer = buffer;
+            whiteNoiseSource.connect(primaryGainControl);
+            whiteNoiseSource.start();
+        })
+        document.body.appendChild(button);
+        
+        // 创建一个鼓点滤波器
+        const snareFilter = audioContext.createBiquadFilter();
+        // 设置鼓点滤波器的类型
+        snareFilter.type = 'highpass';
+        // snareFilter.frequency.setValueAtTime(1000, 0);
+        snareFilter.frequency.value = 1500;
+        snareFilter.connect(primaryGainControl);
+
+        const snareButton = document.createElement('button');
+        snareButton.innerText= '鼓点'
+        snareButton.addEventListener('click',()=>{
+            // 创建一个源
+            const snareSource = audioContext.createBufferSource();
+            snareSource.buffer = buffer;
+            snareSource.connect(snareFilter);
+            snareSource.start();
+        })
+
+        document.body.appendChild(snareButton);
+
+
+        // 
+        const kickButton = document.createElement('button');
+        kickButton.innerText= '低音鼓'
+        kickButton.addEventListener('click',()=>{
+            // 创建一个低音鼓振荡器
+            const kickOscillator = audioContext.createOscillator();
+            // 设置低音鼓振荡器的频率
+            kickOscillator.frequency.setValueAtTime(266.1, 0);
+            // 设置低音鼓振荡器的类型
+            kickOscillator.type = "sawtooth";
+
+            // 设置低音鼓振荡器的音量
+            // kickOscillator.frequency.exponentialRampToValueAtTime(0.001, audioContext.currentTime + 0.5);
+            // 连接低音鼓振荡器和主音量控制器
+            kickOscillator.connect(primaryGainControl);
+            // 启动低音鼓振荡器
+            kickOscillator.start();
+            kickOscillator.stop(audioContext.currentTime + 0.5);
+            })
+        document.body.appendChild(kickButton);
+    </script>
+</body>
+</html>

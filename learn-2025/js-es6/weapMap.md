@@ -70,7 +70,7 @@
     // 3. 缓存或临时数据存储
     const cache = new WeakMap();
 
-    function processObject(obj) {
+    function processObject(obj) {****
         if (cache.has(obj)) {
             return cache.get(obj); // 返回缓存结果
         }

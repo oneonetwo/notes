@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>实时音量监测 Demo</title>
+    <style>
+        #volume-bar {
+            width: 200px;
+            height: 20px;
+            background: #eee;
+            margin: 20px;
+            border-radius: 4px;
+        }
+        #volume-fill {
+            height: 100%;
+            width: 0%;
+            background: #42b983;
+            transition: width 0.1s;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <button id="start-btn">启动麦克风</button>
+    <div id="volume-bar">
+        <div id="volume-fill"></div>
+    </div>
+
+    <script>
+        // 1. 创建音频上下文（需用户点击后初始化）
+        let audioContext;
+
+        document.getElementById('start-btn').addEventListener('click', async () => {
+            try {
+                // 初始化音频上下文
+                audioContext = new AudioContext();
+                
+                // 2. 加载 AudioWorklet 处理器脚本
+                await audioContext.audioWorklet.addModule('volume-processor.js');
+
+                // 3. 获取麦克风输入流
+                const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                const micSource = audioContext.createMediaStreamSource(stream);
+
+                // 4. 创建 AudioWorkletNode 
+                const volumeNode = new AudioWorkletNode(audioContext, 'volume-processor');
+
+                // 5. 连接音频节点：麦克风 → 处理器 → 扬声器
+                micSource.connect(volumeNode).connect(audioContext.destination);
+
+                // 6. 接收音量数据并更新 UI
+                volumeNode.port.onmessage = (e) => {
+                    const volume = e.data.volume;
+                    const volumeFill = document.getElementById('volume-fill');
+                    volumeFill.style.width = `${Math.min(volume * 100, 100)}%`; // 音量条动态变化
+                };
+
+                document.getElementById('start-btn').disabled = true;
+            } catch (err) {
+                console.error('初始化失败:', err);
+            }
+        });
+    </script>
+</body>
+</html>
