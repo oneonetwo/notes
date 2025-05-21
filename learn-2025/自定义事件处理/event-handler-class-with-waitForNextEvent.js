@@ -107,7 +107,22 @@ export class RealtimeEventHandler {
     }
     return true;
   }
-
+//   async waitForNext(eventName, timeout = null) {
+//     return new Promise((resolve, reject) => {
+//         const handler = (event) => {
+//             resolve(event);
+//         };
+        
+//         this.onNext(eventName, handler);
+        
+//         if (timeout) {
+//             setTimeout(() => {
+//                 this.offNext(eventName, handler);
+//                 resolve(null);
+//             }, timeout);
+//         }
+//     });
+// }
   /**
    * 等待特定类型的下一个事件并返回其载荷
    * @param {string} eventName
