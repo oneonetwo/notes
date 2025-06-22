@@ -1,5 +1,14 @@
 # NodeJS 基础
 > 概念  
+1. 内置模块（Built-in Modules）
+```bash
+node -p "require('module').builtinModules"
+```
+2. 第三方模块
+3. 自定义模块
+4. node的全局对象
+
+
 > 常见问题  
 > API
 
