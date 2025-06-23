@@ -34,7 +34,25 @@ emitter.getMaxListeners(); //返回当前EventMitter对象最大监听数量
 emitter.listenerCount('事件名称'); //返回当前事件名称的监听器的个数
 emitter.listeners('事件名称');//返回EventEmitter对象某个时间监听器上所有的监听器数组
 
+/**
+ * 
+ * 常用方法
+| 方法名 | 作用说明 |
+|----------------------|---------------------------------------------|
+| on(event, listener) | 监听某个事件，事件触发时执行 listener 回调 |
+| once(event, listener) | 只监听一次，事件触发后自动移除监听器 |
+| emit(event, [...args]) | 触发某个事件，并传递参数给监听器 |
+| off(event, listener) | 移除某个事件的指定监听器（Node 10+，等价于 removeListener）|
+| removeListener(event, listener) | 移除某个事件的指定监听器 |
+| removeAllListeners([event]) | 移除某个事件的所有监听器 |
+| listeners(event) | 返回某个事件的所有监听器数组 |
+| eventNames() | 返回已注册的所有事件名数组 |
 
-// once 
-// prependListenter
-// removeAllListeners() //不传移除所有的事件，传参数只移除写入的
+ * 
+ * 
+ * 
+ * 
+ * 
+*/
+
+
