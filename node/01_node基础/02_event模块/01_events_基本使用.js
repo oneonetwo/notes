@@ -50,9 +50,14 @@ emitter.listeners('事件名称');//返回EventEmitter对象某个时间监听�
 
  * 
  * 
- * 
+ * 2. 与其他模块的关系
+ * 2.1  fs、http、net	都基于 EventEmitter 实现
+ * 2.2  stream.Readable	触发 'data', 'end', 'error' 等事件
+ * 2.3  child_process	可监听 'exit', 'error', 'close' 等
+ * 2.4  process	本身就是一个 EventEmitter 实例（如 SIGINT, uncaughtException）
  * 
  * 
 */
+
 
 

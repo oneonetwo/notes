@@ -1,8 +1,13 @@
 // 1. process.env - 环境变量
 // console.log(process.env.NODE_ENV); // 'development' / 'production'
 
-// 设置：在命令行运行时设置
+// 1.1 需要在命令行运行时设置, 才能读取
 // NODE_ENV=production node app.js （Windows 下：set NODE_ENV=production）
+// 1.2 在.env文件中设置，需要配合 dotenv 模块使用
+// 1.3 vite 项目中，命令行 --mode 指定环境，使用 `import.meta.env.MODE` 读取
+
+
+
 
 // 2. process.argv - 命令行参数数组
 // 获取执行脚本时命令行参数

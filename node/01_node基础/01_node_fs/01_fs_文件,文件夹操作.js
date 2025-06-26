@@ -91,4 +91,19 @@ fs.mkdir("/tmp/test/",function(err){
 // 以上代码执行结果如下：
 // 可以添加 recursive: true 参数，不管创建的目录 /tmp 和 /tmp/a 是否存在：
 
-fs.readDir('./why', {withFileTypes: true}, (err, files)=>{ })
+
+// 5.读取目录：readdir
+fs.readdir('./why', {withFileTypes: true}, (err, files)=>{ })
+
+// 6. 判断文件/目录存在
+fs.existsSync('./somefile.txt'); // true or false
+
+// 7. 判断是否是文件/目录
+const stat = fs.statSync('myfile'); // 文件
+console.log(stat.isFile())
+console.log(stat.isDirectory)
+
+// 8. 和路径模块配合使用
+const path = require('path');
+const filePath = path.join(__dirname, 'data', 'config.json');
+fs.readFile(filePath, 'utf-8', (err, data) => {});
