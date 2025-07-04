@@ -2,8 +2,8 @@
  * @Description: 
  * @Author: yjy
  * @Date: 2024-06-18 22:05:09
- * @LastEditTime: 2024-06-18 22:53:58
- * @LastEditors: yjy
+ * @LastEditTime: 2025-07-03 14:41:33
+ * @LastEditors: jy
  * @Reference: 
  */
 /**
@@ -53,6 +53,7 @@ const secretKey = 'this is a secretkey'
 
 
 userRouter.get('/login', (ctx, next)=>{
+    console.log(ctx)
     // 1. 颁发token
     const payload = {
         id: 111,
