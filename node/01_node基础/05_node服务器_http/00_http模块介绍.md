@@ -60,12 +60,41 @@ req.on('end', ()=>{
 ##### 📤 4. 响应对象 res（http.ServerResponse）
 | 方法/属性               | 描述          |
 | ------------------- | ----------- |
-| `res.writeHead()`   | 设置状态码和响应头   |
-| `res.setHeader()`   | 单独设置响应头     |
-| `res.write()`       | 写入响应体内容     |
-| `res.end()`         | 结束响应（必须调用）  |
+| `res.writeHead(statusCode, headers)`   | 设置状态码和响应头   |
+| `res.setHeader(name, value)`   | 单独设置响应头     |
+| `res.write(chunk[, encoding])`       | 写入响应体内容     |
+| `res.end(chunk[, encoding])`         | 结束响应（必须调用）  |
 | `res.statusCode`    | 设置状态码（快捷方式） |
-| `res.statusMessage` | 设置状态信息      |
+| `res.statusMessage = 'Custom Message'` | 设置状态信息      
+
+```js
+// 用于设置响应的状态码和响应头，一旦调用，将会发送响应头
+res.writeHead(200, {
+  'Content-Type': 'text/plain',
+  'X-Custom-Header': 'hello'
+})
+// 用于单独设置某个响应头，可以在 writeHead 之前设置。 可多次调用，每次设置一个。
+res.setHeader('Content-Type', 'application/json')
+res.setHeader('X-Powered-By', 'Node.js')
+
+// 写入响应体的内容，支持多次调用，不会自动结束响应。  最后必须配合 res.end() 一起使用。
+res.write('Hello ')
+res.write('World!')
+
+// 结束响应，可选地写入最后一块数据。
+res.end('Goodbye') // 写入并结束响应
+
+
+// 直接设置响应状态码（快捷方式，等效于 writeHead 的 statusCode）。
+res.statusCode = 404
+res.setHeader('Content-Type', 'text/plain')
+res.end('Not Found')
+
+// 可选地修改响应状态信息（HTTP 的状态文本，例如 "OK"）。
+res.statusCode = 403
+res.statusMessage = 'Forbidden Access'
+res.end('You do not have permission.')
+```
 
 
 ### 4. http 模块的客户端功能：发送请求

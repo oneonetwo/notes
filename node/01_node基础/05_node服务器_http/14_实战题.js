@@ -42,3 +42,27 @@ const server = http.createServer((req, res)=>{
 server.listen(3000, ()=>{
     console.log(`✅ 静态文件服务器已启动：http://localhost:${PORT}`);
 })
+
+
+// 题 3：如何使用 http 模块模拟一个爬虫访问远程页面？
+
+
+const http = require('http');
+
+http.get('http://example.com', (res) => {
+  let html = '';
+
+  res.setEncoding('utf-8'); // 保证中文正常读取
+
+  res.on('data', chunk => {
+    html += chunk;
+  });
+
+  res.on('end', () => {
+    console.log('抓取到的 HTML：');
+    console.log(html);
+  });
+}).on('error', (err) => {
+  console.error('❌ 请求失败：', err.message);
+});
+
